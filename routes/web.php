@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/category/{c}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
             Route::get('/checkPosts', [PostController::class, 'show'])->name('admin.posts');
-            Route::put('/updatePosts', [PostController::class, 'update'])->name('admin.post');
+            Route::put('/acceptPosts', [PostController::class, 'accept'])->name('admin.post');
 
             Route::prefix('settings')->group(function () {
                 
@@ -66,19 +66,19 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/user/{u}', [UserController::class, 'user'])->name('user');
 
-            Route::resource('versions', VersionController::class)->only([
-                'index', 'store', 'show', 'update', 'destroy'
-            ]);
+            Route::get('/version/{c}', [VersionController::class, 'store'])->name('version');
 
-            Route::put('/version', [VersionController::class, 'updateData'])->name('version.update');
+            // Route::resource('versions', VersionController::class)->only([
+            //     'index', 'store', 'show', 'update', 'destroy'
+            // ]);
+
+            // Route::put('/version', [VersionController::class, 'updateData'])->name('version.update');
 
         });
 
         Route::middleware('user')->group(function () {
 
-            Route::resource('posts', PostController::class)->except([
-                'show', 'update'
-            ]); 
+            Route::resource('posts', PostController::class)->except(['show']);
 
         });
 

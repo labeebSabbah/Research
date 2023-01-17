@@ -64,17 +64,57 @@ class PostController extends Controller
         return view('dashboard.admin.posts', compact('posts'));
     }
 
-    public function edit(Post $p)
+    public function edit(Post $post)
     {
-        //
+        if ($post->status == 0 || auth()->user()->id != $post->author_id) {return redirect()->route('dashboard.posts.index');}
+
+        $categories = Category::all();
+        return view('dashboard.posts.edit', compact(['post', 'categories']));
     }
 
-    public function update(Request $r)
+    public function update(Request $r, Post $post)
+    {
+        $r->validate([
+            'author_id' => 'required|numeric',
+            'name' => 'required',
+            'title' => 'required',
+            'university' => 'required',
+            'specialty' => 'required',
+            'supervisor' => 'required',
+            'pages' => 'required|numeric|integer',
+            'category_id' => 'required',
+            'keywords' => 'required',
+            'file' => 'nullable|file'
+        ]);
+
+        $data = $r->all();
+
+        if ($r->hasFile('file'))
+        {
+            unlink($post->file);
+
+            if ($data['file']->getClientOriginalExtension() != 'pdf') {
+                return back()->withErrors('');
+            }
+
+            $target = "uploads/files/";
+            $filename = $data['name'] . '_' . $data['title'] . ".pdf";  
+            $data['file']->move($target, $filename);
+            $data['file'] = $target . $filename;
+        }
+
+        $post->update($data);
+
+        return redirect()->route('dashboard.posts.index');
+    }
+
+    public function accept(Request $r)
     {
         $data = $r->all();
         $p = Post::find($data['id']);
         
         if ($data['accepted']) {
+            VersionController::store($p->category_id, $p->file, $p->id);
             $date = date('Y-m-d');
             $p->update([
                 'status' => 2,

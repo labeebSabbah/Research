@@ -12,10 +12,11 @@ class Version extends Model
     protected $fillable = [
         'title',
         'description',
-        'image'
+        'file',
+        'created_at',
+        'updated_at',
+        'category_id'
     ];
-
-    public $timestamps = false;
 
     public function posts()
     {

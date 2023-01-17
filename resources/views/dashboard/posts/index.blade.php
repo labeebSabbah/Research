@@ -41,6 +41,7 @@
                       <th>الحالة</th>
                       <th>تاريخ النشر</th>
                       <th>الدفع</th>
+                      <th>تعديل</th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -51,6 +52,7 @@
                       <th>الحالة</th>
                       <th>تاريخ النشر</th>
                       <th>الدفع</th>
+                      <th>تعديل</th>
                     </tr>
                   </tfoot>
                   <tbody>
@@ -80,6 +82,11 @@
                             <span class="btn-circle btn-sm btn-success mx-2"><i class="fas fa-check"></i></span>تم الدفع
                           @else
                             <button class="btn btn-primary">ادفع</button>
+                          @endif
+                        </td>
+                        <td>
+                          @if ($p->status != 0)
+                            <a role="button" class="btn btn-primary" href="{{ route('dashboard.posts.edit', ['post' => $p->id]) }}">تعديل</a>
                           @endif
                         </td>
                       </tr>
