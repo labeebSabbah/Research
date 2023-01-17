@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VersionController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +84,9 @@ Route::middleware('auth')->group(function () {
         });
 
     });
+
+    Route::put('/notifications/seen', [NotificationController::class, 'seen'])->name('notifications.seen');
+    Route::put('/notifications/read', [NotificationController::class, 'read'])->name('notifications.read');
 
     Route::put('/{u}/update', [UserController::class, 'update'])->name('user.update');
 

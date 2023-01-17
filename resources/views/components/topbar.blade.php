@@ -1,3 +1,12 @@
+@php
+  use App\Models\Notification;
+  $count = count( Notification::where('seen', 0)->where('reciever_id', auth()->user()->id)->get() );
+@endphp
+<style>
+  .not {
+    background: lightgray;
+  }
+</style>
 <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -42,18 +51,18 @@
             </li>
 
             <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
+            <li class="nav-item dropdown no-arrow mx-1" onclick="seen()">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
+                <span class="badge badge-danger badge-counter" id="counter">{{ $count }}</span>
               </a>
               <!-- Dropdown - Alerts -->
               <div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in" aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
                   Alerts Center
                 </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
+                {{-- <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="mr-3">
                     <div class="icon-circle bg-primary">
                       <i class="fas fa-file-alt text-white"></i>
@@ -63,29 +72,15 @@
                     <div class="small text-gray-500">December 12, 2019</div>
                     <span class="font-weight-bold">A new monthly report is ready to download!</span>
                   </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fas fa-donate text-white"></i>
-                    </div>
-                  </div>
+                </a> --}}
+                @foreach (auth()->user()->notifications as $n)
+                <a class="dropdown-item d-flex align-items-center @if(!$n->read) not @endif" href="#" onclick="read({{ $n->id }})" id="{{ $n->id }}">
                   <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
+                    <div class="small text-gray-700">{{ date_format($n->created_at, 'Y-m-d') }}</div>
+                    <span class="font-weight-bold" style="font-size: medium">{{ $n->sender->name }}</span> {{ $n->message }}
                   </div>
                 </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
+                @endforeach
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
             </li>
@@ -199,3 +194,34 @@
     </div>
   </div>
 </div>
+
+<script>
+  function seen()
+  {
+    $.ajax({
+      url: '{{ route('notifications.seen') }}',
+      type: 'PUT',
+      data: {
+        '_token' : '{{ csrf_token() }}',
+      },
+      success: function(){
+        $('#counter').html('0');
+      }
+    });
+  }
+
+  function read(id)
+  {
+    $.ajax({
+      url: '{{ route('notifications.read') }}',
+      type: 'PUT',
+      data: {
+        '_token' : '{{ csrf_token() }}',
+        'id': id
+      },
+      success: function(){
+        $(`#${id}`).removeClass('not');
+      }
+    });
+  }
+</script>

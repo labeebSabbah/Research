@@ -112,6 +112,7 @@
                 @method('PUT')
                 <input type="hidden" id="accepted" name="accepted" value="0">
                 <input type="hidden" id="id" name="id">
+                <input type="hidden" name="reason" id="reason">
                 <div class="mb-3">
                     <label class="form-label">اسم المؤلف</label>
                     <input type="text" class="form-control" id="name" readonly>
@@ -150,8 +151,34 @@
             </form>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-danger" type="button" data-dismiss="modal" onclick="$('#accepted').val('0'); $('#add').submit()">رفض</button>
+          <button class="btn btn-danger" type="button" data-dismiss="modal" data-toggle="modal" data-target="#declineModal" >رفض</button>
           <a class="btn btn-success text-white" onclick="$('#accepted').val('1');$('#add').submit()">قبول</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="declineModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-sm-flex align-items-center justify-content-between">
+          <h5 class="modal-title" id="exampleModalLabel">رفض</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3 text-right">
+              <label class="form-label">سبب الرفض</label>
+              <textarea cols="30" rows="10" class="form-control reason" style="resize: none;"></textarea>
+            </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">الغاء</button>
+          <a class="btn btn-danger text-white" onclick="
+          $('#accepted').val('0');
+          $('#reason').val( $('.reason').val() );
+          $('#add').submit();
+          ">رفض</a>
         </div>
       </div>
     </div>

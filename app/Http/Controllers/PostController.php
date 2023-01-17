@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\User;
 
 class PostController extends Controller
 {  
@@ -49,6 +50,11 @@ class PostController extends Controller
           $data['file'] = $target . $filename;
 
           Post::create($data);
+
+          $message = 'added a new post.';
+          $reciever = User::where('admin', 1)->first()->id;
+
+          NotificationController::new($reciever, $message);
         } 
         catch (Exception $e)
         {
@@ -120,10 +126,12 @@ class PostController extends Controller
                 'status' => 2,
                 'published_on' => $date
             ]);
+            NotificationController::new($p->author_id, "Accepted");
         } else {
             $p->update([
                 'status' => 0
             ]);
+            NotificationController::new($p->author_id, "Rejected for " . $data['reason']);
         }
 
         return redirect()->back();
