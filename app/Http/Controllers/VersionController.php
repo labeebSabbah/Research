@@ -7,17 +7,31 @@ use App\Models\Post;
 use App\Models\Version;
 use App\Models\Category;
 use Webklex\PDFMerger\Facades\PDFMergerFacade as PDFMerger;
+use setasign\Fpdi\Fpdi;
+use Illuminate\Support\Facades\Storage;
+
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
+use Endroid\QrCode\Label\Alignment\LabelAlignmentCenter;
+use Endroid\QrCode\Label\Font\NotoSans;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
 
 class VersionController extends Controller
 {
+
     public static function store($c, $f, $id)
     {
+
+        $category = Category::find($c)->name;
+
         $v = Version::where('category_id', $c)->latest()->first();
         if ($v === NULL) {
 
             $v = Version::create([
                 'title' => 1,
-                'file' => VersionController::merge([$f]),
+                'file' => VersionController::merge([$f], 1, $category),
                 'category_id' => $c
             ]);
 
@@ -27,9 +41,10 @@ class VersionController extends Controller
             {
                 $v = Version::create([
                     'title' => ($v->title + 1),
-                    'file' => VersionController::merge([$f]),
+                    'file' => VersionController::merge([$f], $v->title + 1, $category),
                     'category_id' => $c
                 ]);
+
             } else {
 
                 $files = [];
@@ -43,27 +58,57 @@ class VersionController extends Controller
 
                 unlink(public_path() . '/' . $v->file);
 
-                $v->update([ 'file' => VersionController::merge($files)]);
+                $v->update([ 'file' => VersionController::merge($files, $v->title, $category)]);
 
             }
         }
         $v->posts()->attach($id);
     }
 
-    public static function merge($files)
+    public static function merge($files, $number, $category)
     {
         $pdf = PDFMerger::init();
+
+        $filename = 'uploads/versions/' . time() . '.pdf';
+
+        $pdf->addPDF(VersionController::fill($number, $category, $filename));
 
         foreach ($files as $file)
         {
             $pdf->addPDF($file, 'all');
         }
 
-        $filename = 'uploads/versions/' . time() . '.pdf';
         $pdf->merge();
         $pdf->save($filename);
 
         return $filename;
+    }
+
+    public static function fill($no, $cat, $link)
+    {
+        $result = Builder::create()
+        ->writer(new PngWriter())
+        ->writerOptions([])
+        ->data($link)
+        ->encoding(new Encoding('UTF-8'))
+        ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
+        ->size(300)
+        ->margin(10)
+        ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
+        ->validateResult(false)
+        ->build();
+
+        $pdf = new FPDI;
+
+        $output = Storage::disk('local')->path('output.pdf');
+
+        $pdf->AddPage();
+        $pdf->setFont("helvetica", "", 20);
+        $pdf->Text(30, 20, "No. " . $no);
+        $pdf->Text(100, 120, $cat . " Category");
+        $pdf->Image($result->getDataUri(), 30, 250, 30, 30, 'png');
+        $pdf->Output($output, 'F');
+        return $output;
     }
 
     // public function index()
