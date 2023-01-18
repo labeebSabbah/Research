@@ -24,24 +24,24 @@ class VersionController extends Controller
     public static function store($c, $f, $id)
     {
 
-        $category = Category::find($c)->name;
+        $category = Category::find($c);
 
         $v = Version::where('category_id', $c)->latest()->first();
         if ($v === NULL) {
 
             $v = Version::create([
                 'title' => 1,
-                'file' => VersionController::merge([$f], 1, $category),
+                'file' => VersionController::merge([$f], 1, $category->name),
                 'category_id' => $c
             ]);
 
         } else {
 
-            if (count($v->posts) == 5)
+            if (count($v->posts) >= $category->num_of_posts)
             {
                 $v = Version::create([
                     'title' => ($v->title + 1),
-                    'file' => VersionController::merge([$f], $v->title + 1, $category),
+                    'file' => VersionController::merge([$f], $v->title + 1, $category->name),
                     'category_id' => $c
                 ]);
 
@@ -58,11 +58,13 @@ class VersionController extends Controller
 
                 unlink(public_path() . '/' . $v->file);
 
-                $v->update([ 'file' => VersionController::merge($files, $v->title, $category)]);
+                $v->update([ 'file' => VersionController::merge($files, $v->title, $category->name)]);
 
             }
         }
         $v->posts()->attach($id);
+
+        return $v->title;
     }
 
     public static function merge($files, $number, $category)

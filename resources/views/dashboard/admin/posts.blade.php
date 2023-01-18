@@ -113,6 +113,7 @@
                 <input type="hidden" id="accepted" name="accepted" value="0">
                 <input type="hidden" id="id" name="id">
                 <input type="hidden" name="reason" id="reason">
+                <input type="hidden" name="desc" id="desc">
                 <div class="mb-3">
                     <label class="form-label">اسم المؤلف</label>
                     <input type="text" class="form-control" id="name" readonly>
@@ -170,13 +171,22 @@
         <div class="modal-body">
             <div class="mb-3 text-right">
               <label class="form-label">سبب الرفض</label>
-              <textarea cols="30" rows="10" class="form-control reason" style="resize: none;"></textarea>
+              <select class="form-control reason">
+                @foreach ($reasons as $r)
+                  <option value="{{ $r->name }}">{{ $r->name }}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="mb-3 text-right">
+              <label class="form-label">وصف (اختياري)</label>
+              <textarea cols="30" rows="10" class="form-control desc" style="resize: none;"></textarea>
             </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">الغاء</button>
           <a class="btn btn-danger text-white" onclick="
           $('#accepted').val('0');
           $('#reason').val( $('.reason').val() );
+          $('#desc').val( $('.desc').val() );
           $('#add').submit();
           ">رفض</a>
         </div>

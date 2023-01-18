@@ -53,12 +53,14 @@
       <span>الاعدادات</span>
   
     </a>
-    <div id="collapseUtilities" class="collapse @if($route == 'dashboard.about' || $route == 'dashboard.contact' || $route == 'dashboard.social') show @endif" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+    <div id="collapseUtilities" class="collapse @if($route == 'dashboard.about' || $route == 'dashboard.contact' || $route == 'dashboard.social' || $route == 'dashboard.share' || $route == 'dashboard.reject') show @endif" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">الاعدادات</h6>
         <a class="collapse-item @if($route == 'dashboard.social') active @endif" href="{{ route('dashboard.social') }}" id="social">التواصل الاجتماعي</a>
         <a class="collapse-item @if($route == 'dashboard.contact') active @endif" href="{{ route('dashboard.contact') }}" id="contact">اتصل بنا</a>
         <a class="collapse-item @if($route == 'dashboard.about') active @endif" href="{{ route('dashboard.about') }}" id="about">نبذة عنا</a>
+        <a class="collapse-item @if($route == 'dashboard.share') active @endif" href="{{ route('dashboard.share') }}" id="share">سياسة النشر</a>
+        <a class="collapse-item @if($route == 'dashboard.reject') active @endif" href="{{ route('dashboard.reject') }}" id="share">اسباب الرفض</a>
       </div>
     </div>
   </li>

@@ -17,6 +17,7 @@ class CategoryController extends Controller
     {  
         $r->validate([
             'title' => 'required',
+            'num_of_posts' => 'required|numeric'
         ]);
 
         $data = $r->all();
@@ -54,7 +55,8 @@ class CategoryController extends Controller
     {
         $r->validate([
             'id' => 'required',
-            'title' => 'required'
+            'title' => 'required',
+            'num_of_posts' => 'required|numeric'
         ]);
 
         $data = $r->all();

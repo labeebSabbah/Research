@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\User;
+use App\Models\Settings;
 
 class PostController extends Controller
 {  
@@ -67,7 +68,8 @@ class PostController extends Controller
     public function show()
     {
         $posts = Post::where('paid', 1)->where('status', 1)->get();
-        return view('dashboard.admin.posts', compact('posts'));
+        $reasons = Settings::where('page', 4)->get();
+        return view('dashboard.admin.posts', compact(['posts', 'reasons']));
     }
 
     public function edit(Post $post)
@@ -120,13 +122,13 @@ class PostController extends Controller
         $p = Post::find($data['id']);
         
         if ($data['accepted']) {
-            VersionController::store($p->category_id, $p->file, $p->id);
+            $v = VersionController::store($p->category_id, $p->file, $p->id);
             $date = date('Y-m-d');
             $p->update([
                 'status' => 2,
                 'published_on' => $date
             ]);
-            NotificationController::new($p->author_id, "Accepted");
+            NotificationController::new($p->author_id, "Accepted and shared in research NO. " . $v);
         } else {
             $p->update([
                 'status' => 0

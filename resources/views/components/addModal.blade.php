@@ -16,8 +16,12 @@
                     <input type="text" class="form-control" name="name">
                 </div>
                 <div class="mb-3">
+                    @if (Route::currentRouteName() == 'dashboard.reject')
+                    <input type="hidden" name="value" value="">
+                    @else
                     <label for="value" class="form-label">القيمة</label>
                     <input type="text" class="form-control" name="value">
+                    @endif
                 </div>
             </form>
         </div>
@@ -43,13 +47,18 @@
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id" id="id" value="">
+                <input type="hidden" name="oldname" id="oldname" value="">
                 <div class="mb-3">
                     <label for="name" class="form-label">الاسم</label>
                     <input type="text" class="form-control" name="name" id="name">
                 </div>
                 <div class="mb-3">
+                  @if (Route::currentRouteName() == 'dashboard.reject')
+                    <input type="hidden" id="value" name="value" value="">
+                    @else
                     <label for="value" class="form-label">القيمة</label>
                     <input type="text" class="form-control" name="value" id="value">
+                    @endif
                 </div>
             </form>
         </div>
@@ -68,6 +77,7 @@
     function change(data, name, value){
         $('#id').val(data);
         $('#name').val(name);
+        $('#oldname').val(name);
         $('#value').val(value);
     }
   </script>

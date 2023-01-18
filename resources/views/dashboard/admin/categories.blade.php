@@ -58,7 +58,7 @@
                             @csrf
                             @method('DELETE')
                             <button type="button" data-target="#updateModal" data-toggle="modal"
-                             class="btn btn-primary" onclick="choose('{{ $c->id }}', '{{ $c->title }}', '{{ $c->description }}')">تعديل</button>
+                             class="btn btn-primary" onclick="choose('{{ $c->id }}', '{{ $c->title }}', '{{ $c->description }}', '{{ $c->num_of_posts }}')">تعديل</button>
                             <button type="submit" class="btn btn-primary">حذف</button>
                           </form>
                         </td>
@@ -115,6 +115,10 @@
                     <input type="text" class="form-control" name="title">
                 </div>
                 <div class="mb-3">
+                  <label for="num_of_posts" class="form-label">عدد المنشورات</label>
+                  <input type="text" class="form-control" name="num_of_posts">
+                </div>
+                <div class="mb-3">
                     <label for="description" class="form-label">الوصف (اختياري)</label>
                     <textarea class="form-control" name="description" cols="30" rows="10" style="resize: none !important;"></textarea>
                 </div>
@@ -153,6 +157,10 @@
                     <input type="text" class="form-control" name="title" id="title">
                 </div>
                 <div class="mb-3">
+                  <label for="num_of_posts" class="form-label">عدد المنشورات</label>
+                  <input type="text" class="form-control" name="num_of_posts" id="num_of_posts">
+                </div>
+                <div class="mb-3">
                     <label for="description" class="form-label">الوصف (اختياري)</label>
                     <textarea class="form-control" name="description" cols="30" rows="10" style="resize: none !important;" id="description"></textarea>
                 </div>
@@ -180,9 +188,10 @@
         <script src="{{ url('/js/demo/datatables-demo.js') }}"></script>
 
         <script>
-          function choose(id, title, description){
+          function choose(id, title, description, num_of_posts){
             $('#id').val(id);
             $('#title').val(title);
+            $('#num_of_posts').val(num_of_posts);
             $('#description').html(description);
           }
         </script>

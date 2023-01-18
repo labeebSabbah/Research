@@ -90,7 +90,11 @@
                       <div class="mb-3">
                         <label for="file" class="form-label">ملف المنشور</label>
                         <input type="file" name="file" class="form-control">
-                      </div>                     
+                      </div> 
+                      <div class="mb-3" style="font-size: large">
+                        <input type="checkbox" id="share" name="share" class="form-check-input" checked>
+                        <label for="share" class="form-check-label mr-3"> اوافق على </label> <a href="#">سياسة النشر</a>
+                      </div>                    
                     </div>
                   </form>
               </div>
@@ -127,6 +131,19 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-    <x-slot:script></x-slot>
+    <x-slot:script>
+      <script>
+
+          $('#update').submit( (e) => {
+
+              if (!$('input[name="share"]').is(':checked'))
+              {
+                e.preventDefault();
+              }
+              
+            } );
+      
+      </script>
+    </x-slot>
 
 </x-layout.app>

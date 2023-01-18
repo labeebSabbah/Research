@@ -56,6 +56,8 @@ Route::middleware('auth')->group(function () {
                 Route::get('/social', [SettingsController::class, 'social'])->name('social');
                 Route::get('/contact', [SettingsController::class, 'contact'])->name('contact');
                 Route::get('/about', [SettingsController::class, 'about'])->name('about');
+                Route::get('/share', [SettingsController::class, 'share'])->name('share');
+                Route::get('/reject', [SettingsController::class, 'reject'])->name('reject');
 
                 Route::post('/add', [SettingsController::class, 'add'])->name('settings.add');
                 Route::put('/update', [SettingsController::class, 'update'])->name('settings.update');

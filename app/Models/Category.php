@@ -12,7 +12,8 @@ class Category extends Model
     protected $fillable = [
         'title',
         'description',
-        'image'
+        'image',
+        'num_of_posts'
     ];
 
     public $timestamps = false;

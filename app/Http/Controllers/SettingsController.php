@@ -25,6 +25,18 @@ class SettingsController extends Controller
         return view('dashboard.admin.settings.about', compact('about'));
     }
 
+    public function reject()
+    {
+        $reject = Settings::where('page', 4)->get();
+        return view('dashboard.admin.settings.reject', compact('reject'));
+    }
+
+    public function share()
+    {
+        $share = Settings::where('page', 5)->first();
+        return view('dashboard.admin.settings.share', compact('share'));
+    }
+
     public function add(Request $r)
     {
         $data = $r->all();
@@ -34,7 +46,7 @@ class SettingsController extends Controller
         Settings::firstOrCreate(
             ['name' => $data['name']],
             [
-                'value' => $data['value'],
+                'value' => $data['value'] ?? '',
                 'page' => $data['page']
             ]
         );
@@ -44,7 +56,7 @@ class SettingsController extends Controller
     public function update(Request $r)
     {
         $data = $r->all();
-        $s = Settings::where('name', $data['name'])->first();
+        $s = Settings::where('name', $data['oldname'])->first();
         $s->update($data);
         return redirect()->back();
     }
