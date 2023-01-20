@@ -37,17 +37,18 @@
                     <h6 class="m-0 font-weight-bold text-primary text-right">تعديل</h6>
                   </div>
                   <div class="card-body">
-                    <form class="form text-right" id="update" action="" method="POST">
+                    <form class="form text-right" id="update" action="{{ route('dashboard.settings.update') }}" method="POST">
                       @csrf
                       @method('PUT')
+                      <input type="hidden" name="page" value="3">
                       <div>
                         <div class="mb-3">
                           <label for="title" class="form-label">العنوان</label>
-                          <input type="text" name="title" class="form-control">
+                          <input type="text" name="title" class="form-control" value="{{ $about[0]->value ?? '' }}">
                         </div>
                         <div class="mb-3">
                           <label for="description" class="form-label">الوصف</label>
-                          <textarea class="form-control" name="description" cols="30" rows="10"></textarea>
+                          <textarea class="form-control" name="description" cols="30" rows="10" style="resize: none;">{{ $about[1]->value ?? '' }}</textarea>
                         </div>
                       </div>
                     </form>

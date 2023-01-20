@@ -50,7 +50,21 @@ class SettingsController extends Controller
     public function update(Request $r)
     {
         $data = $r->all();
-        $s = Settings::where('name', $data['oldname'])->first();
+        if ($data['page'] == 4) {
+
+            $s = Settings::firstOrCreate(['name' => $r->name], ['value' => $r->value ?? '', 'page' => 4]);
+
+        } else if ($data['page'] == 3) {
+
+            $s = Settings::firstOrCreate(['name' => 'اسم الموقع'], ['value' => $r->title ?? '', 'page' => 3]);
+            $d = Settings::firstOrCreate(['name' => 'وصف الموقع'], ['value' => $r->description ?? '', 'page' => 3]);
+
+            $s->update(['value' => $r->title ?? '']);
+            $d->update(['value' => $r->description ?? '']);
+
+        } else {
+            $s = Settings::where('name', $data['oldname'])->first();
+        }
         $s->update($data);
         return redirect()->back();
     }

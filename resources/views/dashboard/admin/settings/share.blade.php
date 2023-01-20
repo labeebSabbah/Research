@@ -38,15 +38,21 @@
                   </div>
                   <div class="card-body">
                     <div>
-                      <form class="form text-right">
+                      <form class="form text-right" id="update" action="{{ route('dashboard.settings.update') }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="id" value="{{ $share->id ?? '' }}">
+                        <input type="hidden" name="page" value="4">
+                        <input type="hidden" name="name" value="سياسة النشر">
                         <div class="mb-3">
-                          <label>{{ $share->name ?? '' }}</label>
-                          <textarea type="text" cols="10" rows="10" readonly class="form-control mb-2" style="resize: none;">{{ $share->value ?? ''}}</textarea>
-                          <button type="button" class="btn btn-primary" onclick="change({{ $share->id ?? '' }}, '{{ $share->name ?? '' }}', '{{ $share->value ?? '' }}')" data-toggle="modal" data-target="#updateModal">تعديل</button>
-                          <button type="submit" class="btn btn-primary">حذف</a>
+                          <label>سياسة النشر</label>
+                          <textarea type="text" name="value" cols="10" rows="10" class="form-control mb-2" style="resize: none;">{{ $share->value ?? ''}}</textarea>
                         </div>
                       </form>
                       </div>
+                </div>
+                <div class="card-footer">
+                  <button type="button" class="btn btn-primary" onclick="$('#update').submit()">تعديل</button>
                 </div>
               </div>
             </div>
@@ -77,9 +83,7 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-  
-    <x-addModal />
-  
+    
     <!-- Bootstrap core JavaScript-->
     <x-slot:script>
     </x-slot>
