@@ -126,6 +126,14 @@
                     <label for="image" class="form-label">الصورة (اختياري)</label>
                     <input type="file" class="form-control" name="image">
                 </div>
+                <div class="mb-3">
+                  <label for="cover_file" class="form-label">ملف الغلاف</label>
+                  <input type="file" class="form-control" name="cover_file">
+                </div>
+                <div class="mb-3">
+                  <label for="description_file" class="form-label">ملف الوصف</label>
+                  <input type="file" class="form-control" name="description_file">
+                </div>
                 </div>
             </form>
         </div>
@@ -167,6 +175,14 @@
                 <div class="mb-3">
                     <label for="image" class="form-label">الصورة (اختياري)</label>
                     <input type="file" class="form-control" name="image">
+                </div>
+                <div class="mb-3">
+                  <label for="cover_file" class="form-label">ملف الغلاف</label>
+                  <input type="file" class="form-control" name="cover_file">
+                </div>
+                <div class="mb-3">
+                  <label for="description_file" class="form-label">ملف الوصف</label>
+                  <input type="file" class="form-control" name="description_file">
                 </div>
                 </div>
             </form>

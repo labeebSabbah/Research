@@ -31,7 +31,7 @@ class VersionController extends Controller
 
             $v = Version::create([
                 'title' => 1,
-                'file' => VersionController::merge([$f], 1, $category->name),
+                'file' => VersionController::merge([$category->description_file, $f], 1, $category),
                 'category_id' => $c
             ]);
 
@@ -41,13 +41,13 @@ class VersionController extends Controller
             {
                 $v = Version::create([
                     'title' => ($v->title + 1),
-                    'file' => VersionController::merge([$f], $v->title + 1, $category->name),
+                    'file' => VersionController::merge([$category->description_file, $f], $v->title + 1, $category),
                     'category_id' => $c
                 ]);
 
             } else {
 
-                $files = [];
+                $files = [$category->description_file];
 
                 foreach($v->posts as $p)
                 {
@@ -58,7 +58,7 @@ class VersionController extends Controller
 
                 unlink(public_path() . '/' . $v->file);
 
-                $v->update([ 'file' => VersionController::merge($files, $v->title, $category->name)]);
+                $v->update([ 'file' => VersionController::merge($files, $v->title, $category)]);
 
             }
         }
@@ -67,13 +67,13 @@ class VersionController extends Controller
         return $v->title;
     }
 
-    public static function merge($files, $number, $category)
+    public static function merge($files, $number, Category $category)
     {
         $pdf = PDFMerger::init();
 
         $filename = 'uploads/versions/' . time() . '.pdf';
 
-        $pdf->addPDF(VersionController::fill($number, $category, $filename));
+        $pdf->addPDF(VersionController::fill($category->cover_file, $number, $category->title, $filename));
 
         foreach ($files as $file)
         {
@@ -86,7 +86,7 @@ class VersionController extends Controller
         return $filename;
     }
 
-    public static function fill($no, $cat, $link)
+    public static function fill($cover, $no, $cat, $link)
     {
         $result = Builder::create()
         ->writer(new PngWriter())
@@ -105,6 +105,8 @@ class VersionController extends Controller
         $output = Storage::disk('local')->path('output.pdf');
 
         $pdf->AddPage();
+        $pdf->setSourceFile($cover);
+        $pdf->useTemplate($pdf->importPage(1));
         $pdf->setFont("helvetica", "", 20);
         $pdf->Text(30, 20, "No. " . $no);
         $pdf->Text(100, 120, $cat . " Category");
