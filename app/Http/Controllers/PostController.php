@@ -7,6 +7,16 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Settings;
+use App\Models\RejectReason;
+
+use setasign\Fpdi\Fpdi;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
+use Endroid\QrCode\Label\Alignment\LabelAlignmentCenter;
+use Endroid\QrCode\Label\Font\NotoSans;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
 
 class PostController extends Controller
 {  
@@ -68,7 +78,7 @@ class PostController extends Controller
     public function show()
     {
         $posts = Post::where('paid', 1)->where('status', 1)->get();
-        $reasons = Settings::where('page', 4)->get();
+        $reasons = RejectReason::all();
         return view('dashboard.admin.posts', compact(['posts', 'reasons']));
     }
 
@@ -137,6 +147,30 @@ class PostController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function certificate(Post $p)
+    {
+        $result = Builder::create()
+        ->writer(new PngWriter())
+        ->writerOptions([])
+        ->data(url($p->file))
+        ->encoding(new Encoding('UTF-8'))
+        ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
+        ->size(300)
+        ->margin(10)
+        ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
+        ->validateResult(false)
+        ->build();
+
+        $pdf = new FPDI;
+
+        $pdf->AddPage();
+        $pdf->setFont("helvetica", "", 20);
+        $pdf->Text(30, 20, "Congrats " . auth()->user()->name);
+        $pdf->Text(100, 120, $p->category->title . " Category");
+        $pdf->Image($result->getDataUri(), 30, 250, 30, 30, 'png');
+        $pdf->Output('D', 'certificate.pdf');
     }
     
     public function destroy(Post $p)

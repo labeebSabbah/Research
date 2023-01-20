@@ -36,30 +36,29 @@
                   <thead>
                     <tr>
                       <th>العنوان</th>
-                      <th>الوصف</th>
                       <th>تاريخ الانشاء</th>
                       <th>الحالة</th>
                       <th>تاريخ النشر</th>
                       <th>الدفع</th>
                       <th>تعديل</th>
+                      <th>الشهادة</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
                       <th>العنوان</th>
-                      <th>الوصف</th>
                       <th>تاريخ الانشاء</th>
                       <th>الحالة</th>
                       <th>تاريخ النشر</th>
                       <th>الدفع</th>
                       <th>تعديل</th>
+                      <th>الشهادة</th>
                     </tr>
                   </tfoot>
                   <tbody>
                     @foreach ($posts as $p)
                       <tr>
                         <td>{{ $p->title }}</td>
-                        <td>{{ $p->description }}</td>
                         <td>{!! date_format($p->created_at, 'Y-m-d') !!}</td>
                         <td>
                           @if ($p->status == 1)
@@ -88,6 +87,9 @@
                           @if ($p->status != 0)
                             <a role="button" class="btn btn-primary" href="{{ route('dashboard.posts.edit', ['post' => $p->id]) }}">تعديل</a>
                           @endif
+                        </td>
+                        <td>
+                          <a target="_blank" href="{{ route('certificate', ['p' => $p->id]) }}" class="btn btn-primary">اصدر</a>
                         </td>
                       </tr>
                     @endforeach

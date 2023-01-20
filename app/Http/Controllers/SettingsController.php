@@ -25,15 +25,9 @@ class SettingsController extends Controller
         return view('dashboard.admin.settings.about', compact('about'));
     }
 
-    public function reject()
-    {
-        $reject = Settings::where('page', 4)->get();
-        return view('dashboard.admin.settings.reject', compact('reject'));
-    }
-
     public function share()
     {
-        $share = Settings::where('page', 5)->first();
+        $share = Settings::where('page', 4)->first();
         return view('dashboard.admin.settings.share', compact('share'));
     }
 

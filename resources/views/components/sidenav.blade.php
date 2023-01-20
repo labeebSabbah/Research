@@ -30,20 +30,6 @@
     Interface
   </div>
 
-  <!-- Nav Item - Pages Collapse Menu -->
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-      <i class="fas fa-fw fa-cog"></i>
-      <span>Components</span>
-    </a>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Custom Components:</h6>
-        <a class="collapse-item" href="buttons.html">Buttons</a>
-        <a class="collapse-item" href="cards.html">Cards</a>
-      </div>
-    </div>
-  </li>
 
   <!-- Nav Item - Utilities Collapse Menu -->
   @if (auth()->user()->admin)
@@ -53,14 +39,14 @@
       <span>الاعدادات</span>
   
     </a>
-    <div id="collapseUtilities" class="collapse @if($route == 'dashboard.about' || $route == 'dashboard.contact' || $route == 'dashboard.social' || $route == 'dashboard.share' || $route == 'dashboard.reject') show @endif" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+    <div id="collapseUtilities" class="collapse @if($route == 'dashboard.about' || $route == 'dashboard.contact' || $route == 'dashboard.social' || $route == 'dashboard.share' || $route == 'dashboard.reasons.index') show @endif" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">الاعدادات</h6>
         <a class="collapse-item @if($route == 'dashboard.social') active @endif" href="{{ route('dashboard.social') }}" id="social">التواصل الاجتماعي</a>
         <a class="collapse-item @if($route == 'dashboard.contact') active @endif" href="{{ route('dashboard.contact') }}" id="contact">اتصل بنا</a>
         <a class="collapse-item @if($route == 'dashboard.about') active @endif" href="{{ route('dashboard.about') }}" id="about">نبذة عنا</a>
         <a class="collapse-item @if($route == 'dashboard.share') active @endif" href="{{ route('dashboard.share') }}" id="share">سياسة النشر</a>
-        <a class="collapse-item @if($route == 'dashboard.reject') active @endif" href="{{ route('dashboard.reject') }}" id="share">اسباب الرفض</a>
+        <a class="collapse-item @if($route == 'dashboard.reasons.index') active @endif" href="{{ route('dashboard.reasons.index') }}" id="share">اسباب الرفض</a>
       </div>
     </div>
   </li>
@@ -74,22 +60,6 @@
     Addons
   </div>
 
-  <!-- Nav Item - Pages Collapse Menu -->
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-      <i class="fas fa-fw fa-folder"></i>
-      <span>Pages</span>
-    </a>
-    <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-      <div class="bg-white py-2 collapse-inner rounded">
-        <h6 class="collapse-header">Login Screens:</h6>
-        <div class="collapse-divider"></div>
-        <h6 class="collapse-header">Other Pages:</h6>
-        <a class="collapse-item" href="404.html">404 Page</a>
-        <a class="collapse-item" href="blank.html">Blank Page</a>
-      </div>
-    </div>
-  </li>
 
   <!-- Nav Item - Charts -->
   @if (auth()->user()->admin)

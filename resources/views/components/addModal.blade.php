@@ -8,7 +8,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{ route('dashboard.settings.add') }}" method="POST" id="add" class="form text-right">
+            <form @if (Route::currentRouteName() != 'dashboard.reasons.index') action="{{ route('dashboard.settings.add') }}" @else action="{{ route('dashboard.reasons.store') }}" @endif method="POST" id="add" class="form text-right">
                 @csrf
                 <input type="hidden" name="page" id="page" value="">
                 <div class="mb-3">
@@ -16,8 +16,9 @@
                     <input type="text" class="form-control" name="name">
                 </div>
                 <div class="mb-3">
-                    @if (Route::currentRouteName() == 'dashboard.reject')
-                    <input type="hidden" name="value" value="">
+                    @if (Route::currentRouteName() == 'dashboard.reasons.index')
+                    <label class="form-label">الوصف (اختياري)</label>
+                    <textarea name="description" cols="30" rows="10" style="resize: none;" class="form-control"></textarea>
                     @else
                     <label for="value" class="form-label">القيمة</label>
                     <input type="text" class="form-control" name="value">
@@ -43,7 +44,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{ route('dashboard.settings.update') }}" method="POST" id="updateData" class="form text-right">
+            <form @if (Route::currentRouteName() != 'dashboard.reasons.index') action="{{ route('dashboard.settings.update') }}" @else action="{{ route('dashboard.reasons.update') }}" @endif method="POST" id="updateData" class="form text-right">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id" id="id" value="">
@@ -53,9 +54,10 @@
                     <input type="text" class="form-control" name="name" id="name">
                 </div>
                 <div class="mb-3">
-                  @if (Route::currentRouteName() == 'dashboard.reject')
-                    <input type="hidden" id="value" name="value" value="">
-                    @else
+                  @if (Route::currentRouteName() == 'dashboard.reasons.index')
+                  <label class="form-label">الوصف (اختياري)</label>
+                  <textarea name="description" id="description" cols="30" rows="10" style="resize: none;" class="form-control"></textarea>
+                  @else
                     <label for="value" class="form-label">القيمة</label>
                     <input type="text" class="form-control" name="value" id="value">
                     @endif
@@ -78,6 +80,10 @@
         $('#id').val(data);
         $('#name').val(name);
         $('#oldname').val(name);
+        @if (Route::currentRouteName() != 'dashboard.reasons.index')
         $('#value').val(value);
+        @else
+        $('#description').html(value);
+        @endif
     }
   </script>

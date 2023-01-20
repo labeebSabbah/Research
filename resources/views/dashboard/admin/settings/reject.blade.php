@@ -40,12 +40,12 @@
                   <div class="card-body">
                     <div>
                       @foreach ($reject as $r)
-                      <form class="form text-right" action="{{ route('dashboard.settings.destroy', ['s' => $r->id]) }}" method="POST">
+                      <form class="form text-right" action="{{ route('dashboard.reasons.destroy', ['reason' => $r->id]) }}" method="POST">
                         @csrf
                         @method('delete')
                         <div class="mb-3">
                           <input type="text" readonly value="{{ $r->name }}" class="form-control mb-2">
-                          <button type="button" class="btn btn-primary" onclick="change({{ $r->id }}, '{{ $r->name }}', '{{ $r->value ?? '' }}')" data-toggle="modal" data-target="#updateModal">تعديل</button>
+                          <button type="button" class="btn btn-primary" onclick="change({{ $r->id }}, '{{ $r->name }}', '{{ $r->description ?? '' }}')" data-toggle="modal" data-target="#updateModal">تعديل</button>
                           <button type="submit" class="btn btn-primary">حذف</a>
                         </div>
                       </form>

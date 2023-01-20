@@ -38,6 +38,11 @@ class Post extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function versions()
     {
         return $this->belongsToMany(Version::class, 'posts_versions', 'post_id', 'version_id');

@@ -7,6 +7,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VersionController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\RejectReasonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,8 +58,11 @@ Route::middleware('auth')->group(function () {
                 Route::get('/contact', [SettingsController::class, 'contact'])->name('contact');
                 Route::get('/about', [SettingsController::class, 'about'])->name('about');
                 Route::get('/share', [SettingsController::class, 'share'])->name('share');
-                Route::get('/reject', [SettingsController::class, 'reject'])->name('reject');
+                Route::resource('reasons', RejectReasonController::class)->only([
+                    'index', 'store','destroy'
+                ]);
 
+                Route::put('/reason', [RejectReasonController::class, 'update'])->name('reasons.update');
                 Route::post('/add', [SettingsController::class, 'add'])->name('settings.add');
                 Route::put('/update', [SettingsController::class, 'update'])->name('settings.update');
                 Route::delete('/destroy/{s}', [SettingsController::class, 'destroy'])->name('settings.destroy');
@@ -86,6 +90,8 @@ Route::middleware('auth')->group(function () {
         });
 
     });
+
+    Route::get('/certificate/{p}', [PostController::class, 'certificate'])->name('certificate');
 
     Route::put('/notifications/seen', [NotificationController::class, 'seen'])->name('notifications.seen');
     Route::put('/notifications/read', [NotificationController::class, 'read'])->name('notifications.read');
