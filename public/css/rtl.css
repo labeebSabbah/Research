@@ -1,0 +1,19 @@
+.sidebar .nav-item .nav-link,.dataTables_wrapper{
+    direction: rtl;
+    text-align: right;
+}
+
+
+.sidebar .nav-item .nav-link[data-toggle="collapse"]::after{
+    float: left !important;
+}
+
+.sidebar .nav-item,.sidebar .sidebar-heading{
+    text-align: right;
+}
+div.dataTables_wrapper div.dataTables_filter{
+    text-align: left;
+}
+.modal-footer{
+    justify-content: start;
+}

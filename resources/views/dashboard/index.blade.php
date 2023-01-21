@@ -1,3 +1,10 @@
+@php
+  use App\Models\User;
+  use App\Models\Post;
+  $users = count(User::where('admin', 0)->get());
+  $posts = count(Post::where('published_on', '!=', NULL)->get());
+  $request = count(Post::where('status', 1)->get())
+@endphp
 <x-layout.app>
 
   <x-slot:title>لوحة التحكم</x-slot>
@@ -23,9 +30,11 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+            <h1 class="h3 mb-0 text-gray-800">لوحة التحكم</h1>
+            {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> --}}
           </div>
+
+          @if (auth()->user()->admin)
 
           <!-- Content Row -->
           <div class="row">
@@ -35,12 +44,12 @@
               <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                    </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <i class="fas fa-users fa-2x text-gray-300"></i>
+                    </div>
+                    <div class="col mr-2">
+                      <div class="text-s font-weight-bold text-primary text-uppercase mb-1">عدد المستخدمين</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users }}</div>
                     </div>
                   </div>
                 </div>
@@ -52,12 +61,12 @@
               <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
+                    <div class="col-auto">
+                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
@@ -69,21 +78,12 @@
               <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
-                      <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                        </div>
-                        <div class="col">
-                          <div class="progress progress-sm mr-2">
-                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                     <div class="col-auto">
                       <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    </div>
+                    <div class="col mr-2">
+                      <div class="text-s font-weight-bold text-success text-uppercase mb-1">عدد المنشورات</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $posts }}</div>
                     </div>
                   </div>
                 </div>
@@ -95,20 +95,22 @@
               <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                    </div>
                     <div class="col-auto">
                       <i class="fas fa-comments fa-2x text-gray-300"></i>
+                    </div>
+                    <div class="col mr-2">
+                      <div class="text-s font-weight-bold text-warning text-uppercase mb-1">طلبات النشر</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $request }}</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </div> 
 
-          <!-- Content Row -->
+          @endif
+
+          {{-- <!-- Content Row -->
 
           <div class="row">
 
@@ -178,9 +180,9 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> --}}
 
-          <!-- Content Row -->
+          {{-- <!-- Content Row -->
           <div class="row">
 
             <!-- Content Column -->
@@ -303,7 +305,7 @@
         <!-- /.container-fluid -->
 
       </div>
-      <!-- End of Main Content -->
+      <!-- End of Main Content --> --}}
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
@@ -345,15 +347,8 @@
     </div>
   </div>
 
-  <!-- Bootstrap core JavaScript-->
-  <x-slot:script>
-
-  <!-- Page level plugins -->
-  <script src="{{ url('/vendor/chart.js/Chart.min.js') }}"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="{{ url('/js/demo/chart-area-demo.js') }}"></script>
-  <script src="{{ url('/js/demo/chart-pie-demo.js') }}"></script>
+    <!-- Bootstrap core JavaScript-->
+    <x-slot:script>
 
 </x-slot>
 

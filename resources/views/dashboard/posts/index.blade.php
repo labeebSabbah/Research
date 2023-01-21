@@ -89,7 +89,9 @@
                           @endif
                         </td>
                         <td>
+                          @if ($p->status === 2)
                           <a target="_blank" href="{{ route('certificate', ['p' => $p->id]) }}" class="btn btn-primary">اصدر</a>
+                          @endif
                         </td>
                       </tr>
                     @endforeach
@@ -133,6 +135,15 @@
 
         <!-- Page level custom scripts -->
         <script src="{{ url('/js/demo/datatables-demo.js') }}"></script>
+
+        <script>
+          $(document).ready(function() {
+		 *      var oTable = $('#example').dataTable();
+		 *
+		 *      // Sort immediately with columns 0 and 1
+		 *      oTable.fnSort( [ [0,'asc'], [1,'asc'] ] );
+		 *    } );
+        </script>
     </x-slot>
     
 </x-layout.app>

@@ -9,7 +9,7 @@
     <div class="sidebar-brand-icon rotate-n-15">
       <i class="fas fa-laugh-wink"></i>
     </div>
-    <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+    <div class="sidebar-brand-text mx-3">Admin <sup>2</sup></div>
   </a>
 
   <!-- Divider -->
@@ -19,7 +19,7 @@
   <li class="nav-item active" dir="rtl">
     <a class="nav-link" href="{{ route('dashboard.index') }}">
       <i class="fas fa-fw fa-tachometer-alt"></i>
-      <span>Dashboard</span></a>
+      <span>لوحة التحكم</span></a>
   </li>
 
   <!-- Divider -->
@@ -27,7 +27,7 @@
 
   <!-- Heading -->
   <div class="sidebar-heading">
-    Interface
+    الواجهات
   </div>
 
 
@@ -55,10 +55,8 @@
   <!-- Divider -->
   <hr class="sidebar-divider">
 
-  <!-- Heading -->
-  <div class="sidebar-heading">
-    Addons
-  </div>
+ 
+
 
 
   <!-- Nav Item - Charts -->

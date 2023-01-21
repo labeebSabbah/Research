@@ -22,7 +22,7 @@ class PostController extends Controller
 {  
     public function index()
     {
-        $posts = Post::where('author_id', auth()->user()->id)->get();
+        $posts = Post::orderBy('id', 'desc')->where('author_id', auth()->user()->id)->get();
         return view('dashboard.posts.index', compact('posts'));
     }
 
@@ -151,6 +151,11 @@ class PostController extends Controller
 
     public function certificate(Post $p)
     {
+        if ($p->status !== 2)
+        {
+            return redirect()->back();
+        }
+
         $result = Builder::create()
         ->writer(new PngWriter())
         ->writerOptions([])

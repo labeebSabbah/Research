@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     {{ $style }}
     <link href="{{ url('/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <link href="{{ url('/css/rtl.css') }}" rel="stylesheet">
 </head>
 <body lang="ar" dir="rtl" class="rtl page-top">
     
