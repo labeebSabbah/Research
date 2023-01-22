@@ -96,6 +96,11 @@ class UserController extends Controller
         if ($r->hasFile('image')) {
             try 
             {
+
+                if (file_exists($u->image)){
+                    unlink($u->image);
+                }
+
                 $target = "uploads/pfp/";
                 $filename = $data['name'] . '_' . $data['image']->getClientOriginalName(); 
                 $data['image']->move($target, $filename);
@@ -113,7 +118,7 @@ class UserController extends Controller
             return redirect()->route('dashboard.users');
         }
 
-        return redirect()->route('dashboard.index');
+        return redirect()->back();
     }
 
     public function users()

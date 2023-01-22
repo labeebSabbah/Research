@@ -85,14 +85,14 @@
       </span>
     </a>
   </li>
-  {{-- <li class="nav-item @if($route == 'dashboard.versions.index') active @endif">
+  <li class="nav-item @if($route == 'dashboard.versions.index') active @endif">
     <a href="{{ route('dashboard.versions.index') }}" class="nav-link">
       <i class="fa fa-tags"></i>
       <span>
         الاصدارات
       </span>
     </a>
-  </li> --}}
+  </li>
   @else
   <li class="nav-item">
     <a href="{{ route('dashboard.posts.index') }}" class="nav-link">

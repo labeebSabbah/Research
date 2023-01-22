@@ -56,7 +56,9 @@ class VersionController extends Controller
 
                 $files[] = $f;
 
-                unlink(public_path() . '/' . $v->file);
+                if (file_exists($v->file)) {
+                    unlink($v->file);
+                }
 
                 $v->update([ 'file' => VersionController::merge($files, $v->title, $category)]);
 
@@ -115,11 +117,11 @@ class VersionController extends Controller
         return $output;
     }
 
-    // public function index()
-    // {
-    //     $versions = Version::all();
-    //     return view('dashboard.versions.index', compact('versions'));
-    // }
+    public function index()
+    {
+        $versions = Version::with('category')->get();
+        return view('dashboard.versions.index', compact('versions'));
+    }
 
     // public function store(Request $r)
     // {

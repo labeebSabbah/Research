@@ -75,6 +75,8 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/version/{c}', [VersionController::class, 'store'])->name('version');
 
+            Route::get('/versions', [VersionController::class, 'index'])->name('versions.index');
+
             // Route::resource('versions', VersionController::class)->only([
             //     'index', 'store', 'show', 'update', 'destroy'
             // ]);

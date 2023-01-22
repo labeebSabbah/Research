@@ -22,4 +22,9 @@ class Version extends Model
     {
         return $this->belongsToMany(Post::class, 'posts_versions', 'version_id', 'post_id');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

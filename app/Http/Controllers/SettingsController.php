@@ -50,11 +50,11 @@ class SettingsController extends Controller
     public function update(Request $r)
     {
         $data = $r->all();
-        if ($data['page'] == 4) {
+        if (isset($data['page']) && $data['page'] == 4) {
 
             $s = Settings::firstOrCreate(['name' => $r->name], ['value' => $r->value ?? '', 'page' => 4]);
 
-        } else if ($data['page'] == 3) {
+        } else if (isset($data['page']) && $data['page'] == 3) {
 
             $s = Settings::firstOrCreate(['name' => 'اسم الموقع'], ['value' => $r->title ?? '', 'page' => 3]);
             $d = Settings::firstOrCreate(['name' => 'وصف الموقع'], ['value' => $r->description ?? '', 'page' => 3]);

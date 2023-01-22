@@ -109,7 +109,9 @@ class PostController extends Controller
 
         if ($r->hasFile('file'))
         {
-            unlink($post->file);
+            if (file_exists($post->file)) {
+                unlink($post->file);
+            }
 
             if ($data['file']->getClientOriginalExtension() != 'pdf') {
                 return back()->withErrors('');

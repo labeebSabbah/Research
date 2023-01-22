@@ -17,7 +17,9 @@ class CategoryController extends Controller
     {  
         $r->validate([
             'title' => 'required',
-            'num_of_posts' => 'required|numeric'
+            'num_of_posts' => 'required|numeric',
+            'cover_file' => 'required|file',
+            'description_file' => 'required|file'
         ]);
 
         $data = $r->all();
@@ -26,8 +28,6 @@ class CategoryController extends Controller
 
             $r->validate([
                 'image' => 'image',
-                'cover_file' => 'file',
-                'description_file' => 'file'
             ]);
 
             if ($data['cover_file']->getClientOriginalExtension() != 'pdf' || $data['description_file']->getClientOriginalExtension() != 'pdf') {
@@ -82,7 +82,9 @@ class CategoryController extends Controller
             ]);
 
             try {
-                unlink($c->image);
+                if (file_exists($c->image)) {
+                    unlink($c->image);
+                }
             } catch (\Throwable $th) {
                 
             }
@@ -108,7 +110,9 @@ class CategoryController extends Controller
             ]);
 
             try {
-                unlink($c->cover_file);
+                if (file_exists($c->cover_file)) {
+                    unlink($c->cover_file);
+                }
             } catch (\Throwable $th) {
             }
 
@@ -129,7 +133,10 @@ class CategoryController extends Controller
             ]);
 
             try {
-                unlink($c->description_file);
+                if (file_exists($c->description_file))
+                {
+                    unlink($c->description_file);
+                }
             } catch (\Throwable $th) {
                 //throw $th;
             }  try {
