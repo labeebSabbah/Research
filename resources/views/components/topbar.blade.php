@@ -1,6 +1,7 @@
 @php
   use App\Models\Notification;
   $count = count( Notification::where('seen', 0)->where('reciever_id', auth()->user()->id)->get() );
+  $n = Notification::orderBy('id', 'desc')->where('reciever_id', auth()->user()->id)->get();
 @endphp
 <style>
   .not {
@@ -75,15 +76,18 @@
                     <span class="font-weight-bold">A new monthly report is ready to download!</span>
                   </div>
                 </a> --}}
-                @foreach (auth()->user()->notifications as $n)
-                <a class="dropdown-item d-flex align-items-center @if(!$n->read) not @endif" href="#" onclick="read({{ $n->id }})" id="{{ $n->id }}">
+                @for ($i = 0; $i < 6; $i++)
+                @php
+                  if (!isset($n[$i])) {continue;}
+                @endphp
+                <a class="dropdown-item d-flex align-items-center @if(!$n[$i]->read) not @endif" href="#" onclick="read({{ $n[$i]->id }})" id="{{ $n[$i]->id }}">
                   <div>
-                    <div class="small text-gray-700">{{ date_format($n->created_at, 'Y-m-d') }}</div>
-                    <span class="font-weight-bold" style="font-size: medium">{{ $n->sender->name }}</span> {{ $n->message }}
+                    <div class="small text-gray-700">{{ date_format($n[$i]->created_at, 'Y-m-d') }}</div>
+                    <span class="font-weight-bold" style="font-size: medium">{{ $n[$i]->sender->name }}</span> {{ $n[$i]->message }}
                   </div>
                 </a>
-                @endforeach
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                @endfor
+                <a class="dropdown-item text-center small text-gray-500" href="{{ route('notifications.index') }}">اظهر الكل</a>
               </div>
             </li>
 

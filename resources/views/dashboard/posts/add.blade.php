@@ -93,7 +93,7 @@
                       </div> 
                       <div class="mb-3" style="font-size: large">
                         <input type="checkbox" id="share" name="share" class="form-check-input" checked>
-                        <label for="share" class="form-check-label mr-3"> اوافق على </label> <a href="#">سياسة النشر</a>
+                        <label for="share" class="form-check-label mr-3"> اوافق على </label> <a href="{{ route('dashboard.policy') }}" target="_blank">سياسة النشر</a>
                       </div>                    
                     </div>
                   </form>

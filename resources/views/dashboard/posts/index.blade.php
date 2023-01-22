@@ -136,14 +136,6 @@
         <!-- Page level custom scripts -->
         <script src="{{ url('/js/demo/datatables-demo.js') }}"></script>
 
-        <script>
-          $(document).ready(function() {
-		 *      var oTable = $('#example').dataTable();
-		 *
-		 *      // Sort immediately with columns 0 and 1
-		 *      oTable.fnSort( [ [0,'asc'], [1,'asc'] ] );
-		 *    } );
-        </script>
     </x-slot>
     
 </x-layout.app>

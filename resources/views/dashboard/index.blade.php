@@ -3,7 +3,8 @@
   use App\Models\Post;
   $users = count(User::where('admin', 0)->get());
   $posts = count(Post::where('published_on', '!=', NULL)->get());
-  $request = count(Post::where('status', 1)->get())
+  $request = count(Post::where('status', 1)->get());
+  $paid = count(User::where('paid', 1)->get());
 @endphp
 <x-layout.app>
 
@@ -65,8 +66,8 @@
                       <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                     </div>
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                      <div class="text-s font-weight-bold text-success text-uppercase mb-1">الدافعين</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $paid }}</div>
                     </div>
                   </div>
                 </div>

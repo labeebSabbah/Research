@@ -15,7 +15,8 @@ class Notification extends Model
             'message',
             'seen',
             'read',
-            'created_at'
+            'created_at',
+            'details'
     ];
 
     public function sender()

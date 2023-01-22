@@ -138,15 +138,21 @@ class PostController extends Controller
                 'status' => 2,
                 'published_on' => $date
             ]);
-            NotificationController::new($p->author_id, "Accepted and shared in research NO. " . $v);
+            NotificationController::new($p->author_id, "Accepted post with title " . $p->title . " and shared in research NO. " . $v);
         } else {
             $p->update([
                 'status' => 0
             ]);
-            NotificationController::new($p->author_id, "Rejected for " . $data['reason']);
+            NotificationController::new($p->author_id, "Rejected post with title " . $p->title . " for " . $data['reason'], $data['desc']);
         }
 
         return redirect()->back();
+    }
+
+    public function policy()
+    {
+        $share = Settings::where('page', 4)->first();
+        return view('dashboard.posts.share', compact('share'));
     }
 
     public function certificate(Post $p)

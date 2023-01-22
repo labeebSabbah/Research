@@ -7,12 +7,20 @@ use App\Models\Notification;
 
 class NotificationController extends Controller
 {
-    public static function new($reciever, $message)
+
+    public function index()
+    {
+        $notifications = Notification::orderBy('id', 'desc')->where('reciever_id', auth()->user()->id)->with('sender')->get();
+        return view('dashboard.notifications', compact('notifications'));
+    }
+
+    public static function new($reciever, $message, $details = NULL)
     {
         Notification::create([
             'sender_id' => auth()->user()->id,
             'reciever_id' => $reciever,
             'message' => $message,
+            'details' => $details
         ]);
     }
 

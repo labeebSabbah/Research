@@ -87,11 +87,15 @@ Route::middleware('auth')->group(function () {
 
             Route::resource('posts', PostController::class)->except(['show']);
 
+            Route::get('/policy', [PostController::class, 'policy'])->name('policy');
+
         });
 
     });
 
     Route::get('/certificate/{p}', [PostController::class, 'certificate'])->name('certificate');
+
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
 
     Route::put('/notifications/seen', [NotificationController::class, 'seen'])->name('notifications.seen');
     Route::put('/notifications/read', [NotificationController::class, 'read'])->name('notifications.read');
