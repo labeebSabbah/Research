@@ -11,8 +11,10 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
+        "mpdf/mpdf": "*",
         "setasign/fpdf": "^1.8",
         "setasign/fpdi": "^2.3",
+        "setasign/tfpdf": "^1.33",
         "webklex/laravel-pdfmerger": "^1.3"
     },
     "require-dev": {

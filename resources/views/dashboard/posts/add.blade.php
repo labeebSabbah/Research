@@ -89,7 +89,7 @@
                       </div>
                       <div class="mb-3">
                         <label for="file" class="form-label">ملف المنشور</label>
-                        <input type="file" name="file" class="form-control">
+                        <input type="file" name="file" class="form-control" accept=".pdf">
                       </div> 
                       <div class="mb-3" style="font-size: large">
                         <input type="checkbox" id="share" name="share" class="form-check-input" checked>

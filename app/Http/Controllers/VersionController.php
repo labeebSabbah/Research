@@ -86,6 +86,8 @@ class VersionController extends Controller
         $pdf->save($filename);
 
         return $filename;
+
+        VersionController::fill($category->cover_file, $number, $category->title, $filename);
     }
 
     public static function fill($cover, $no, $cat, $link)
@@ -102,16 +104,18 @@ class VersionController extends Controller
         ->validateResult(false)
         ->build();
 
-        $pdf = new FPDI;
+        $pdf = new \Mpdf\Mpdf();
 
         $output = Storage::disk('local')->path('output.pdf');
 
         $pdf->AddPage();
+        $pdf->autoScriptToLang = true;
+        $pdf->autoLangToFont = true;
         $pdf->setSourceFile($cover);
         $pdf->useTemplate($pdf->importPage(1));
-        $pdf->setFont("helvetica", "", 20);
-        $pdf->Text(30, 20, "No. " . $no);
-        $pdf->Text(100, 120, $cat . " Category");
+        $pdf->setFont("DejaVuSans", "", 20);
+        $pdf->WriteText(30, 20, "No. " . $no);
+        $pdf->WriteText(100, 120, $cat . " Category");
         $pdf->Image($result->getDataUri(), 30, 250, 30, 30, 'png');
         $pdf->Output($output, 'F');
         return $output;

@@ -91,7 +91,7 @@
                       <div class="mb-3">
                         <label for="file" class="form-label">ملف المنشور</label>
                         <a href="{{ url($post->file) }}" target="_blank" class="btn btn-primary">الملف</a>
-                        <input type="file" name="file" class="form-control">
+                        <input type="file" name="file" class="form-control" accept=".pdf">
                       </div>                     
                     </div>
                   </form>

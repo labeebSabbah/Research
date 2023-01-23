@@ -80,11 +80,11 @@
                           @if ($p->paid)
                             <span class="btn-circle btn-sm btn-success mx-2"><i class="fas fa-check"></i></span>تم الدفع
                           @else
-                            <button class="btn btn-primary">ادفع</button>
+                            <a class="btn btn-primary" href="{{ route('dashboard.pay', ['post' => $p->id]) }}">ادفع</a>
                           @endif
                         </td>
                         <td>
-                          @if ($p->status != 0)
+                          @if ($p->status != 2)
                             <a role="button" class="btn btn-primary" href="{{ route('dashboard.posts.edit', ['post' => $p->id]) }}">تعديل</a>
                           @endif
                         </td>

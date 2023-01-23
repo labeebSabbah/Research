@@ -33,26 +33,36 @@
                 <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
+                      <th>ID</th>
                       <th>الصورة</th>
                       <th>الاسم</th>
                       <th>الوصف</th>
-                      <th></th>
+                      <th>المفرقات</th>
+                      <th>الاعدادات</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
+                      <td>ID</td>
                       <th>الصورة</th>
                       <th>الاسم</th>
                       <th>الوصف</th>
-                      <th></th>
+                      <th>المفرقات</th>
+                      <th>الاعدادات</th>
                     </tr>
                   </tfoot>
                   <tbody>
                     @foreach ($categories as $c)
                       <tr>
-                        <td><img src="{{ url($c->image ?? '') }}" alt="#" width="20px" height="20px"></td>
+                        <td>{{ $c->id }}</td>
+                        <td><img src="{{ url($c->image ?? '') }}" alt="#" width="150"></td>
                         <td>{{ $c->title }}</td>
                         <td>{{ $c->description }}</td>
+                        <td>
+                          <a href="../{{ $c->cover_file }}" target="_blank" class="btn btn-primary">ملف الغلاف</a>
+                          <a href="../{{ $c->description_file }}" target="_blank" class="btn btn-primary">ملف الوصف</a>
+                          <a href="../{{ $c->certification_file }}" target="_blank" class="btn btn-primary">ملف الشهادة</a>
+                        </td>
                         <td>
                           <form action="{{ route('dashboard.categories.destroy', ['c' => $c->id]) }}" method="POST" class="form text-center">
                             @csrf
@@ -98,7 +108,7 @@
   </a>
 
   <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header d-sm-flex align-items-center justify-content-between">
           <h5 class="modal-title" id="exampleModalLabel">اضافة</h5>
@@ -122,17 +132,25 @@
                     <label for="description" class="form-label">الوصف (اختياري)</label>
                     <textarea class="form-control" name="description" cols="30" rows="10" style="resize: none !important;"></textarea>
                 </div>
-                <div class="mb-3">
+                <div class="row">
+                  <div class="mb-3 col-lg-6">
                     <label for="image" class="form-label">الصورة (اختياري)</label>
-                    <input type="file" class="form-control" name="image">
-                </div>
-                <div class="mb-3">
+                    <input type="file" class="form-control" name="image" accept="image/*">
+                  </div>
+                  <div class="mb-3 col-lg-6">
                   <label for="cover_file" class="form-label">ملف الغلاف</label>
-                  <input type="file" class="form-control" name="cover_file">
+                  <input type="file" class="form-control" name="cover_file" accept=".pdf">
+                  </div>
                 </div>
-                <div class="mb-3">
-                  <label for="description_file" class="form-label">ملف الوصف</label>
-                  <input type="file" class="form-control" name="description_file">
+                <div class="row">
+                  <div class="mb-3 col-lg-6">
+                    <label for="description_file" class="form-label">ملف الوصف</label>
+                    <input type="file" class="form-control" name="description_file" accept=".pdf">
+                  </div>
+                  <div class="mb-3 col-lg-6">
+                    <label for="certification_file" class="form-label">ملف الشهادة</label>
+                    <input type="file" class="form-control" name="certification_file" accept=".pdf">
+                  </div>
                 </div>
                 </div>
             </form>
@@ -146,7 +164,7 @@
   </div>
 
   <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header d-sm-flex align-items-center justify-content-between">
           <h5 class="modal-title" id="exampleModalLabel">تعديل</h5>
@@ -172,17 +190,25 @@
                     <label for="description" class="form-label">الوصف (اختياري)</label>
                     <textarea class="form-control" name="description" cols="30" rows="10" style="resize: none !important;" id="description"></textarea>
                 </div>
-                <div class="mb-3">
+                <div class="row">
+                  <div class="mb-3 col-lg-6">
                     <label for="image" class="form-label">الصورة (اختياري)</label>
-                    <input type="file" class="form-control" name="image">
+                    <input type="file" class="form-control" name="image" accept="image/*">
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 col-lg-6">
                   <label for="cover_file" class="form-label">ملف الغلاف</label>
-                  <input type="file" class="form-control" name="cover_file">
+                  <input type="file" class="form-control" name="cover_file" accept=".pdf">
                 </div>
-                <div class="mb-3">
-                  <label for="description_file" class="form-label">ملف الوصف</label>
-                  <input type="file" class="form-control" name="description_file">
+                </div>
+                <div class="row">
+                  <div class="mb-3 col-lg-6">
+                    <label for="description_file" class="form-label">ملف الوصف</label>
+                    <input type="file" class="form-control" name="description_file" accept=".pdf">
+                  </div>
+                  <div class="mb-3 col-lg-6">
+                    <label for="certification_file" class="form-label">ملف الشهادة</label>
+                    <input type="file" class="form-control" name="certification_file" accept=".pdf">
+                  </div>
                 </div>
                 </div>
             </form>

@@ -80,7 +80,7 @@
                 @php
                   if (!isset($n[$i])) {continue;}
                 @endphp
-                <a class="dropdown-item d-flex align-items-center @if(!$n[$i]->read) not @endif" href="#" onclick="read({{ $n[$i]->id }})" id="{{ $n[$i]->id }}">
+                <a class="dropdown-item d-flex align-items-center @if(!$n[$i]->read) not @endif" href="{{ route('notifications.index') }}" onclick="read({{ $n[$i]->id }})" id="{{ $n[$i]->id }}">
                   <div>
                     <div class="small text-gray-700">{{ date_format($n[$i]->created_at, 'Y-m-d') }}</div>
                     <span class="font-weight-bold" style="font-size: medium">{{ $n[$i]->sender->name }}</span> {{ $n[$i]->message }}

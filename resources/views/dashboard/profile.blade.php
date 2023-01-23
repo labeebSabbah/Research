@@ -69,7 +69,7 @@
                       </div>
                       <div class="mb-3">
                         <label for="image" class="form-label">صورة</label>
-                        <input type="file" class="form-control" name="image">
+                        <input type="file" class="form-control" name="image" accept="image/*">
                       </div>
                     </div>
                   </form>

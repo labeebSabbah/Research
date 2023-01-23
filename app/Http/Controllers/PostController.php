@@ -62,10 +62,6 @@ class PostController extends Controller
 
           Post::create($data);
 
-          $message = 'added a new post.';
-          $reciever = User::where('admin', 1)->first()->id;
-
-          NotificationController::new($reciever, $message);
         } 
         catch (Exception $e)
         {
@@ -73,6 +69,17 @@ class PostController extends Controller
         }
 
         return redirect()->route('dashboard.posts.index');
+    }
+
+    public function pay(Request $r, Post $post)
+    {
+        $message = 'added a new post.';
+        $reciever = User::where('admin', 1)->first()->id;
+        $post->update(['paid' => 1]);
+        $user = User::find($post->author_id);
+        $user->update(['paid' => 1]);
+        NotificationController::new($reciever, $message);
+        return redirect()->back();
     }
 
     public function show()
@@ -84,7 +91,7 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        if ($post->status == 0 || auth()->user()->id != $post->author_id) {return redirect()->route('dashboard.posts.index');}
+        if ($post->status == 2 || auth()->user()->id != $post->author_id) {return redirect()->route('dashboard.posts.index');}
 
         $categories = Category::all();
         return view('dashboard.posts.edit', compact(['post', 'categories']));
@@ -176,14 +183,18 @@ class PostController extends Controller
         ->validateResult(false)
         ->build();
 
-        $pdf = new FPDI;
+        $pdf = new \Mpdf\Mpdf();
 
         $pdf->AddPage();
-        $pdf->setFont("helvetica", "", 20);
-        $pdf->Text(30, 20, "Congrats " . auth()->user()->name);
-        $pdf->Text(100, 120, $p->category->title . " Category");
+        $pdf->autoScriptToLang = true;
+        $pdf->autoLangToFont = true;
+        $pdf->setSourceFile($p->category->certification_file);
+        $pdf->useTemplate($pdf->importPage(1));
+        $pdf->setFont("DejaVuSans", "", 20);
+        $pdf->WriteText(30, 20, "Congrats " . auth()->user()->name);
+        $pdf->WriteText(100, 120, $p->category->title . " Category");
         $pdf->Image($result->getDataUri(), 30, 250, 30, 30, 'png');
-        $pdf->Output('D', 'certificate.pdf');
+        $pdf->Output('certificate.pdf', 'D');
     }
     
     public function destroy(Post $p)
