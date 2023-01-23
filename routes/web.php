@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SettingsController;
@@ -20,9 +21,7 @@ use App\Http\Controllers\RejectReasonController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [MainController::class, 'index'])->name('home');
 
 Route::middleware('guest')->group(function () {
     
