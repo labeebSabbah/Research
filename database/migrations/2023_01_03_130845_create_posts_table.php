@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('university');
             $table->string('specialty');
             $table->timestamps();
-            $table->timestamp('published_on')->nullable()->default(NULL);
+            $table->timestamp('published_on')->nullable();
             $table->integer('status')->default(1);
             $table->text('file');
         });

@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string("name")->nullable()->default("");
-            $table->text("value")->nullable()->default("");
+            $table->string("name")->default("");
+            $table->text("value")->default("");
             $table->integer('page')->nullable();
         });
     }
