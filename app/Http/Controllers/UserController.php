@@ -102,7 +102,7 @@ class UserController extends Controller
                 }
 
                 $target = "uploads/pfp/";
-                $filename = $data['name'] . '_' . $data['image']->getClientOriginalName(); 
+                $filename = time() . $data['image']->getClientOriginalName(); 
                 $data['image']->move($target, $filename);
                 $data['image'] = $target . $filename;
             } 

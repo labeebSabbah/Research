@@ -25,7 +25,7 @@ class CategoryController extends Controller
 
         $data = $r->all();
 
-        if ($r->hasFile('image') && $r->hasFile('cover_file') && $r->hasFile('descirption_file') && $r->hasFile('certification_file')) {
+        if ($r->hasFile('image') && $r->hasFile('cover_file') && $r->hasFile('description_file') && $r->hasFile('certification_file')) {
 
             $r->validate([
                 'image' => 'image',
@@ -35,26 +35,22 @@ class CategoryController extends Controller
                 return back()->withErrors('');
             }
 
-            try 
-            {
                 $target = 'uploads/categories/';
-                $filename = $data['title'] . '.' . $data['image']->getClientOriginalExtension();
+                $filename = time() . '.' . $data['image']->getClientOriginalExtension();
                 $data['image']->move($target, $filename);
                 $data['image'] = $target . $filename;
-                $filename = $data['title'] . '_cover' . '.pdf';
+
+                $filename = time() . '_cover' . '.pdf';
                 $data['cover_file']->move($target, $filename);
                 $data['cover_file'] = $target . $filename;
-                $filename = $data['title'] . '_description' . '.pdf';
+
+                $filename = time() . '_description' . '.pdf';
                 $data['description_file']->move($target, $filename);
                 $data['description_file'] = $target . $filename;
-                $filename = $data['title'] . '_certification' . '.pdf';
+
+                $filename = time() . '_certification' . '.pdf';
                 $data['certification_file']->move($target, $filename);
                 $data['certification_file'] = $target . $filename;
-            } 
-            catch (Exception $e) 
-            {
-                return back()->withErrors('');
-            }
 
         }
 
@@ -96,7 +92,7 @@ class CategoryController extends Controller
             try 
             {
                 $target = 'uploads/categories/';
-                $filename = $data['title'] . '.' . $data['image']->getClientOriginalExtension();
+                $filename = time() . '.' . $data['image']->getClientOriginalExtension();
                 $data['image']->move($target, $filename);
                 $data['image'] = $target . $filename;
             } 
@@ -122,7 +118,7 @@ class CategoryController extends Controller
 
             try {
                 $target = 'uploads/categories/';
-                $filename = $data['title'] . '_cover' . '.pdf';
+                $filename = time() . '_cover' . '.pdf';
                 $data['cover_file']->move($target, $filename);
                 $data['cover_file'] = $target . $filename;
             } catch (\Throwable $th) {
@@ -145,7 +141,7 @@ class CategoryController extends Controller
                 //throw $th;
             }  try {
                 $target = 'uploads/categories/';
-                $filename = $data['title'] . '_description' . '.pdf';
+                $filename = time() . '_description' . '.pdf';
                 $data['description_file']->move($target, $filename);
                 $data['description_file'] = $target . $filename;
             } catch (\Throwable $th) {
@@ -168,7 +164,7 @@ class CategoryController extends Controller
                 //throw $th;
             }  try {
                 $target = 'uploads/categories/';
-                $filename = $data['title'] . '_certification' . '.pdf';
+                $filename = time() . '_certification' . '.pdf';
                 $data['certification_file']->move($target, $filename);
                 $data['certification_file'] = $target . $filename;
             } catch (\Throwable $th) {

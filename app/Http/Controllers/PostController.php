@@ -56,7 +56,7 @@ class PostController extends Controller
         try 
         {
           $target = "uploads/files/";
-          $filename = $data['name'] . '_' . $data['title'] . ".pdf";  
+          $filename = time() . ".pdf";  
           $data['file']->move($target, $filename);
           $data['file'] = $target . $filename;
 
@@ -125,7 +125,7 @@ class PostController extends Controller
             }
 
             $target = "uploads/files/";
-            $filename = $data['name'] . '_' . $data['title'] . ".pdf";  
+            $filename = time() . ".pdf";  
             $data['file']->move($target, $filename);
             $data['file'] = $target . $filename;
         }
@@ -148,6 +148,7 @@ class PostController extends Controller
                 'published_on' => $date
             ]);
             NotificationController::new($p->author_id, "Accepted post with title " . $p->title . " and shared in research NO. " . $v);
+            return redirect()->route('dashboard.versions.index');
         } else {
             $p->update([
                 'status' => 0
