@@ -3,6 +3,7 @@
     <x-slot:title>لوحة التحكم</x-slot>
     
     <x-slot:style>
+      <script src="{{ url('js/ckeditor/ckeditor.js') }}"></script>
     </x-slot>
   
     <!-- Page Wrapper -->
@@ -48,7 +49,7 @@
                         </div>
                         <div class="mb-3">
                           <label for="description" class="form-label">الوصف</label>
-                          <textarea class="form-control" name="description" cols="30" rows="10" style="resize: none;">{{ $about[1]->value ?? '' }}</textarea>
+                          <textarea class="form-control" id="editor" name="description" cols="30" rows="10" style="resize: none;">{!! $about[1]->value ?? '' !!}</textarea>
                         </div>
                       </div>
                     </form>
@@ -89,6 +90,9 @@
     
     <!-- Bootstrap core JavaScript-->
     <x-slot:script>
+      <script>
+        CKEDITOR.replace( 'editor' );
+      </script>
     </x-slot>
   
   </x-layout.app>

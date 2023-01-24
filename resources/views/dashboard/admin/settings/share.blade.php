@@ -3,6 +3,7 @@
     <x-slot:title>لوحة التحكم</x-slot>
   
     <x-slot:style>
+      <script src="{{ url('js/ckeditor/ckeditor.js') }}"></script>
     </x-slot>
   
     <!-- Page Wrapper -->
@@ -46,7 +47,7 @@
                         <input type="hidden" name="name" value="سياسة النشر">
                         <div class="mb-3">
                           <label>سياسة النشر</label>
-                          <textarea type="text" name="value" cols="10" rows="10" class="form-control mb-2" style="resize: none;">{{ $share->value ?? ''}}</textarea>
+                          <textarea type="text" name="value" id="editor" cols="10" rows="10" class="form-control mb-2" style="resize: none;">{!! $share->value ?? ''!!}</textarea>
                         </div>
                       </form>
                       </div>
@@ -86,6 +87,9 @@
     
     <!-- Bootstrap core JavaScript-->
     <x-slot:script>
+      <script>
+        CKEDITOR.replace( 'editor' ); 
+      </script>
     </x-slot>
   
   </x-layout.app>
