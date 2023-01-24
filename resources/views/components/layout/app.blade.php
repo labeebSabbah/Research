@@ -14,7 +14,18 @@
     <link href="{{ url('/css/rtl.css') }}" rel="stylesheet">
 </head>
 <body lang="ar" dir="rtl" class="rtl page-top">
-    
+    @if ($errors->any())
+    <div style="position: fixed; top:0; z-index: 100;">
+    @foreach ($errors->all() as $error)
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ $error }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endforeach
+    </div>
+    @endif
     {{ $slot }}
     <script src="{{ url('/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url('/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
