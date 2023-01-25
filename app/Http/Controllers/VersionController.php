@@ -21,7 +21,7 @@ use Endroid\QrCode\Writer\PngWriter;
 class VersionController extends Controller
 {
 
-    public static function store($c, $f, $id)
+    public static function store($c, Post $f, $id)
     {
 
         $category = Category::find($c);
@@ -31,7 +31,7 @@ class VersionController extends Controller
 
             $v = Version::create([
                 'title' => 1,
-                'file' => VersionController::merge([$category->description_file, $f], 1, $category),
+                'file' => VersionController::merge([$f], 1, $category, $f),
                 'category_id' => $c
             ]);
 
@@ -41,17 +41,15 @@ class VersionController extends Controller
             {
                 $v = Version::create([
                     'title' => ($v->title + 1),
-                    'file' => VersionController::merge([$category->description_file, $f], $v->title + 1, $category),
+                    'file' => VersionController::merge([$f], $v->title + 1, $category, $f),
                     'category_id' => $c
                 ]);
 
             } else {
 
-                $files = [$category->description_file];
-
                 foreach($v->posts as $p)
                 {
-                    $files[] = $p->file;
+                    $files[] = $p;
                 }
 
                 $files[] = $f;
@@ -60,7 +58,7 @@ class VersionController extends Controller
                     unlink($v->file);
                 }
 
-                $v->update([ 'file' => VersionController::merge($files, $v->title, $category)]);
+                $v->update([ 'file' => VersionController::merge($files, $v->title, $category, $f)]);
 
             }
         }
@@ -69,7 +67,7 @@ class VersionController extends Controller
         return $v->title;
     }
 
-    public static function merge($files, $number, Category $category)
+    public static function merge($files, $number, Category $category, Post $f)
     {
         $pdf = PDFMerger::init();
 
@@ -77,22 +75,90 @@ class VersionController extends Controller
 
         $pdf->addPDF(VersionController::fill($category->cover_file, $number, $category->title, $filename));
 
+        $pdf->addPDF($category->description_file, 'all');
+
+        $pdf->addPDF(VersionController::indexing($files), 'all');
+
         foreach ($files as $file)
         {
-            $pdf->addPDF($file, 'all');
+            $pdf->addPDF($file->file, 'all');
         }
 
         $pdf->merge();
         $pdf->save($filename);
 
         return $filename;
-
-        VersionController::fill($category->cover_file, $number, $category->title, $filename);
     }
 
     public static function fill($cover, $no, $cat, $link)
     {
-        $result = Builder::create()
+        $qr = VersionController::qr($link);
+
+        $pdf = new \Mpdf\Mpdf();
+
+        $output = Storage::disk('local')->path('cover.pdf');
+
+        $pdf->AddPage();
+        $pdf->autoScriptToLang = true;
+        $pdf->autoLangToFont = true;
+        $pdf->setSourceFile($cover);
+        $pdf->useTemplate($pdf->importPage(1));
+        $pdf->setFont("DejaVuSans", "", 20);
+        $pdf->WriteText(30, 20, "No. " . $no);
+        $pdf->WriteText(100, 120, $cat . " Category");
+        $pdf->Image($qr->getDataUri(), 30, 250, 30, 30, 'png');
+        $pdf->Output($output, 'F');
+        return $output;
+    }
+
+    public static function indexing($files)
+    {
+        $pdf = new \Mpdf\Mpdf();
+
+        $output = Storage::disk('local')->path('index.pdf');
+
+        $data = "";
+
+        $id = 1;
+
+        $pdf->AddPage();
+        $pdf->autoScriptToLang = true;
+        $pdf->autoLangToFont = true;
+        $pdf->setFont("DejaVuSans", "", 20);
+        $pdf->WriteText(105, 10, "المحتويات");
+        foreach ($files as $f)
+        {
+            $qr = VersionController::qr(url($f->file));
+            $image = "<img src='{$qr->getDataUri()}'>";
+            // dd($image);
+            $data .= '<tr>'
+            . '<td>' . $id . '</td>'
+            . '<td>' . $f->title . '</td>'
+            . "<td>{$image}</td>"
+            . '</tr>';
+            $id = $id + 1;
+        }
+        $html = '<table autosize="1" style="text-align: center; font-size: 50px;">
+		<tr>
+		<th style="width: 10%"><strong>رقم البحث</strong></th>
+		<th style="width: 70%"><strong>اسم البحث</strong></th>
+		<th style="width: 20%"><strong>QR</strong></th>
+		</tr>
+		'.$data.'
+		</table>';
+        $css = "table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+          }";
+        $pdf->WriteHTML($css, \Mpdf\HTMLParserMode::HEADER_CSS);
+        $pdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
+        $pdf->Output($output, 'F');
+        return $output;
+    }
+
+    public static function qr($link)
+    {
+        $qr = Builder::create()
         ->writer(new PngWriter())
         ->writerOptions([])
         ->data($link)
@@ -104,21 +170,7 @@ class VersionController extends Controller
         ->validateResult(false)
         ->build();
 
-        $pdf = new \Mpdf\Mpdf();
-
-        $output = Storage::disk('local')->path('output.pdf');
-
-        $pdf->AddPage();
-        $pdf->autoScriptToLang = true;
-        $pdf->autoLangToFont = true;
-        $pdf->setSourceFile($cover);
-        $pdf->useTemplate($pdf->importPage(1));
-        $pdf->setFont("DejaVuSans", "", 20);
-        $pdf->WriteText(30, 20, "No. " . $no);
-        $pdf->WriteText(100, 120, $cat . " Category");
-        $pdf->Image($result->getDataUri(), 30, 250, 30, 30, 'png');
-        $pdf->Output($output, 'F');
-        return $output;
+        return $qr;
     }
 
     public function index()
@@ -127,110 +179,4 @@ class VersionController extends Controller
         return view('dashboard.versions.index', compact('versions'));
     }
 
-    // public function store(Request $r)
-    // {
-    //     $r->validate([
-    //         'title' => 'required',
-    //     ]);
-
-    //     $data = $r->all();
-
-    //     if ($r->hasFile('image')) {
-
-    //         $r->validate([
-    //             'image' => 'image'
-    //         ]);
-
-    //         try 
-    //         {
-    //             $target = 'uploads/versions/';
-    //             $filename = $data['title'] . '.' . $data['image']->getClientOriginalExtension();
-    //             $data['image']->move($target, $filename);
-    //             $data['image'] = $target . $filename;
-    //         } 
-    //         catch (Exception $e) 
-    //         {
-    //             return back()->withErrors('');
-    //         }
-
-    //     }
-
-
-    //     Version::firstOrCreate(
-    //         ['title' => $data['title']],
-    //         $data
-    //     );
-
-    //     return redirect()->back();
-    // }
-
-    // public function show(Version $version)
-    // {
-    //     $selected = [];
-    //     $posts = Post::where('published_on', '!=', NULL)->get();
-    //     foreach($version->posts as $p) {
-    //         $selected[] = $p->id;
-    //     }
-    //     return view('dashboard.versions.posts', compact(['posts', 'selected', 'version']));
-    // }
-
-    // public function update(Request $r, Version $version)
-    // {
-    //     $detach = [];
-    //     $attach = $r->posts;
-    //     foreach ($version->posts as $p){
-
-    //         if (array_search($p->id, $attach)) {
-    //             $attach = array_diff($attach, [$p->id]);
-    //         } else {
-    //             $detach[] = $p->id;
-    //         }
-
-    //     }
-    //     $version->posts()->detach($detach);
-    //     $version->posts()->attach($attach);
-    //     return redirect()->route('dashboard.versions.index');
-    // }
-
-    // public function updateData(Request $r)
-    // {
-    //     $r->validate([
-    //         'id' => 'required',
-    //         'title' => 'required'
-    //     ]);
-
-    //     $data = $r->all();
-
-    //     if ($r->hasFile('image')) {
-
-    //         $r->validate([
-    //             'image' => 'image'
-    //         ]);
-
-    //         try 
-    //         {
-    //             $target = 'uploads/versions/';
-    //             $filename = $data['title'] . '.' . $data['image']->getClientOriginalExtension();
-    //             $data['image']->move($target, $filename);
-    //             $data['image'] = $target . $filename;
-    //         } 
-    //         catch (Exception $e) 
-    //         {
-    //             return back()->withErrors('');
-    //         }
-
-    //     }
-
-    //     $c = Version::find($data['id']);
-
-    //     $c->update($data);
-
-    //     return redirect()->back();
-    // }
-
-    // public function destroy(Version $version)
-    // {
-    //     $version->delete();
-    //     return redirect()->back();
-    // }
 }

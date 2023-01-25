@@ -141,7 +141,7 @@ class PostController extends Controller
         $p = Post::find($data['id']);
         
         if ($data['accepted']) {
-            $v = VersionController::store($p->category_id, $p->file, $p->id);
+            $v = VersionController::store($p->category_id, $p, $p->id);
             $date = date('Y-m-d');
             $p->update([
                 'status' => 2,
