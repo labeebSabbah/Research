@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VersionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RejectReasonController;
+use App\Http\Controllers\MailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,10 @@ use App\Http\Controllers\RejectReasonController;
 */
 
 Route::get('/', [MainController::class, 'index'])->name('home');
+
+Route::get('/contact', [MainController::class, 'contact'])->name('contact');
+
+Route::post('/contact', [MailController::class, 'contact'])->name('contact');
 
 Route::middleware('guest')->group(function () {
     

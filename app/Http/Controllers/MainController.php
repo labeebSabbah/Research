@@ -11,9 +11,12 @@ class MainController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
-        $versions = Version::with('category')->get();
-        return view('welcome', compact(['categories', 'versions']));
+        return view('welcome');
+    }
+
+    public function contact()
+    {
+        return view('contact');
     }
 
     public function search()

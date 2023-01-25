@@ -313,7 +313,7 @@
                                                 <li><a href="blog-details.html">Blog Details</a></li>
                                             </ul>
                                         </li>  
-                                        <li><a href="contact.html">Contact</a></li>   
+                                        <li><a href="{{ route('contact') }}">Contact</a></li>   
                                     </ul>
                                 </div>
                             </nav>
