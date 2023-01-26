@@ -92,7 +92,7 @@ class VersionController extends Controller
 
     public static function fill($cover, $no, $cat, $link)
     {
-        $qr = VersionController::qr($link);
+        $qr = VersionController::qr(url($link));
 
         $pdf = new \Mpdf\Mpdf();
 

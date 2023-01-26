@@ -7,9 +7,9 @@
   <!-- Sidebar - Brand -->
   <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard.index') }}">
     <div class="sidebar-brand-icon rotate-n-15">
-      <i class="fas fa-laugh-wink"></i>
+      <i class="fas fa-tachometer-alt"></i>
     </div>
-    <div class="sidebar-brand-text mx-3">Admin <sup>2</sup></div>
+    <div class="sidebar-brand-text mx-3">Dashboard</div>
   </a>
 
   <!-- Divider -->
@@ -37,7 +37,7 @@
     <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
       <i class="fas fa-fw fa-wrench"></i>
       <span>الاعدادات</span>
-  
+
     </a>
     <div id="collapseUtilities" class="collapse @if($route == 'dashboard.about' || $route == 'dashboard.contact' || $route == 'dashboard.social' || $route == 'dashboard.share' || $route == 'dashboard.reasons.index') show @endif" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
@@ -47,6 +47,7 @@
         <a class="collapse-item @if($route == 'dashboard.about') active @endif" href="{{ route('dashboard.about') }}" id="about">نبذة عنا</a>
         <a class="collapse-item @if($route == 'dashboard.share') active @endif" href="{{ route('dashboard.share') }}" id="share">سياسة النشر</a>
         <a class="collapse-item @if($route == 'dashboard.reasons.index') active @endif" href="{{ route('dashboard.reasons.index') }}" id="share">اسباب الرفض</a>
+        <a class="collapse-item @if($route == 'dashboard.pages.index') active @endif" href="{{ route('dashboard.pages.index') }}" id="share">الصفحات</a>
       </div>
     </div>
   </li>
@@ -55,7 +56,7 @@
   <!-- Divider -->
   <hr class="sidebar-divider">
 
- 
+
 
 
 

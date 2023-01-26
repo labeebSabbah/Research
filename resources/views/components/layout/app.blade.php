@@ -32,5 +32,8 @@
     <script src="{{ url('/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <script src="{{ url('/js/sb-admin-2.min.js') }}"></script>
     {{ $script }}
+    <script>
+        $('.btn').addClass('m-1');
+    </script>
 </body>
 </html>

@@ -10,6 +10,7 @@ use App\Http\Controllers\VersionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RejectReasonController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,8 @@ use App\Http\Controllers\MailController;
 */
 
 Route::get('/', [MainController::class, 'index'])->name('home');
+
+Route::get('/page/{page}', [PageController::class, 'show'])->name('page');
 
 Route::get('/contact', [MainController::class, 'contact'])->name('contact');
 
@@ -65,6 +68,8 @@ Route::middleware('auth')->group(function () {
                 Route::resource('reasons', RejectReasonController::class)->only([
                     'index', 'store','destroy'
                 ]);
+
+                Route::resource('pages', PageController::class);
 
                 Route::put('/reason', [RejectReasonController::class, 'update'])->name('reasons.update');
                 Route::post('/add', [SettingsController::class, 'add'])->name('settings.add');

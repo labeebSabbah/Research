@@ -34,17 +34,17 @@
 <!-- page wrapper -->
 <body>
 
-    <div class="boxed_wrapper rtl">
+    <div class="boxed_wrapper">
 
 
         <!-- preloader -->
         <div class="loader-wrap">
             <div class="preloader">
-              {{--  <div class="preloader-close">Preloader Close</div>--}}
+                <div class="preloader-close">Preloader Close</div>
                 <div id="handle-preloader" class="handle-preloader">
                     <div class="animation-preloader">
                         <div class="spinner"></div>
-                        {{--<div class="txt-loading">
+                        <div class="txt-loading">
                             <span data-text-preloader="l" class="letters-loading">
                                 l
                             </span>
@@ -66,8 +66,8 @@
                             <span data-text-preloader="x" class="letters-loading">
                                 x
                             </span>
-                        </div>--}}
-                    </div>
+                        </div>
+                    </div>  
                 </div>
             </div>
         </div>
@@ -227,7 +227,7 @@
         <div class="mobile-menu">
             <div class="menu-backdrop"></div>
             <div class="close-btn"><i class="fas fa-times"></i></div>
-
+            
             <nav class="menu-box">
                 <div class="nav-logo"><a href="index.html"><img src="{{ url('landing/images/logo-2.png') }}" alt="" title=""></a></div>
                 <div class="menu-outer"><!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header--></div>
@@ -262,167 +262,15 @@
                         <h1>Contact Us</h1>
                     </div>
                     <ul class="bread-crumb clearfix">
-                        <li><a href="{{route('home')}}">الرئيسية</a></li>
-                        <li>تواصل معنا</li>
+                        <li><a href="index.html">Home</a></li>
+                        <li>Contact Us</li>
                     </ul>
                 </div>
             </div>
         </section>
         <!-- End Page Title -->
 
-
-
-
-
-        <!-- contact-style-two -->
-        <section class="contact-style-two sec-pad">
-            <div class="auto-container">
-                <div class="sec-title centred">
-                    <h6>Research Topic</h6>
-                    <h2>Have Any Questins Contact With Us</h2>
-                </div>
-                <div class="form-inner">
-                    <form method="post" action="{{ route('contact') }}" id="contact-form" class="default-form">
-                        @csrf
-                        <div class="row clearfix">
-                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                <input type="text" name="name" placeholder="Full Name" required="">
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                <input type="email" name="email" placeholder="Email Address" required="">
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                <input type="text" name="phone" required="" placeholder="Phone">
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                <input type="text" name="subject" required="" placeholder="Subject">
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                <textarea name="message" placeholder="Your Message"></textarea>
-                            </div>
-                            <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn centred">
-                                <button class="theme-btn-one" type="submit" name="submit-form">Send Message</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-        <!-- contact-style-two end -->
-
-
-        <!-- cta-style-two -->
-        <section class="cta-style-two bg-color-4">
-            <div class="pattern-layer">
-                <div class="pattern-1" style="background-image: url({{ url('landing/images/shape/shape-61') }}.png);"></div>
-                <div class="pattern-2" style="background-image: url({{ url('landing/images/shape/shape-62') }}.png);"></div>
-            </div>
-            <div class="auto-container">
-                <div class="inner-box clearfix">
-                    <div class="text pull-left">
-                        <h2>Accurate Product Testing <br />by Expert Scientists</h2>
-                    </div>
-                    <div class="btn-box pull-right">
-                        <a href="index-4.html" class="theme-btn-one">Book Free Sampling Here</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- cta-style-two end -->
-
-
-        <!-- main-footer -->
-        <footer class="main-footer bg-color-1">
-            <div class="footer-top">
-                <div class="shape">
-                    <div class="shape-1 rotate-me" style="background-image: url({{ url('landing/images/shape/shape-14') }}.png);"></div>
-                    <div class="shape-2 rotate-me" style="background-image: url({{ url('landing/images/shape/shape-14') }}.png);"></div>
-                    <div class="shape-3"></div>
-                    <div class="shape-4"></div>
-                </div>
-                <div class="auto-container">
-                    <div class="row clearfix">
-                        <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
-                            <div class="footer-widget logo-widget">
-                                <div class="footer-logo">
-                                    <figure class="logo"><a href="index.html"><img src="{{ url('landing/images/footer-logo.png') }}" alt=""></a></figure>
-                                </div>
-                                <div class="text">
-                                    <p>Nostrud exertation ullamco labor aliquip commodo duis.</p>
-                                    <ul class="info clearfix">
-                                        <li><i class="icon-26"></i>Flat 20, Reynolds Neck, <br />FV77 8WS</li>
-                                        <li><i class="icon-24"></i>Call Us: <a href="tel:3336660001">333-666-0001</a></li>
-                                        <li><i class="icon-25"></i><a href="mailto:info@example.com">info@example.com</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
-                            <div class="footer-widget post-widget ml-70">
-                                <div class="widget-title">
-                                    <h4>Latest Events</h4>
-                                </div>
-                                <div class="post-inner">
-                                    <div class="post">
-                                        <h5><a href="blog-details.html">A New World View Our Global Impact.</a></h5>
-                                        <span class="post-date">27 May, 2021</span>
-                                    </div>
-                                    <div class="post">
-                                        <h5><a href="blog-details.html">Proper Self-collection of Nasal Swabs.</a></h5>
-                                        <span class="post-date">26 May, 2021</span>
-                                    </div>
-                                    <div class="post">
-                                        <h5><a href="blog-details.html">Evidence Lacking for Widespread Vitamin.</a></h5>
-                                        <span class="post-date">25 May, 2021</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
-                            <div class="footer-widget links-widget ml-70">
-                                <div class="widget-title">
-                                    <h4>Usefull Link</h4>
-                                </div>
-                                <div class="widget-content">
-                                    <ul class="links-list clearfix">
-                                        <li><a href="index.html">About Company</a></li>
-                                        <li><a href="index.html">Services</a></li>
-                                        <li><a href="index.html">How It Works</a></li>
-                                        <li><a href="index.html">Our Blog</a></li>
-                                        <li><a href="index.html">Contact Us</a></li>
-                                        <li><a href="index.html">Policy</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
-                            <div class="footer-widget subscribe-widget">
-                                <div class="widget-title">
-                                    <h4>Subscribe</h4>
-                                </div>
-                                <div class="widget-content">
-                                    <p>Lorem ipsum dlor sit amet, conect adipisicing elit sed do eiusmod.</p>
-                                    <form action="https://azim.commonsupport.com/Laborex/contact.html" method="post" class="subscribe-form">
-                                        <div class="form-group">
-                                            <input type="email" name="email" placeholder="Your Email" required="">
-                                            <button type="submit"><i class="icon-27"></i></button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom centred">
-                <div class="auto-container">
-                    <div class="copyright">
-                        <p><a href="index.html">Laborex</a> &copy; 2022 All Right Reserved</p>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- main-footer end -->
+        {!! $page->content !!}
 
 
 

@@ -7,7 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-<title>Laborex - HTML 5 Template Preview</title>
+<title>Research</title>
 
 <!-- Fav Icon -->
 <link rel="icon" href="{{ url('landing/images/favicon.ico') }}" type="image/x-icon">
@@ -40,34 +40,11 @@
         <!-- preloader -->
         <div class="loader-wrap">
             <div class="preloader">
-                <div class="preloader-close">Preloader Close</div>
+                {{--<div class="preloader-close">Preloader Close</div>--}}
                 <div id="handle-preloader" class="handle-preloader">
                     <div class="animation-preloader">
                         <div class="spinner"></div>
-                        <div class="txt-loading">
-                            <span data-text-preloader="l" class="letters-loading">
-                                l
-                            </span>
-                            <span data-text-preloader="a" class="letters-loading">
-                                a
-                            </span>
-                            <span data-text-preloader="b" class="letters-loading">
-                                b
-                            </span>
-                            <span data-text-preloader="o" class="letters-loading">
-                                o
-                            </span>
-                            <span data-text-preloader="r" class="letters-loading">
-                                r
-                            </span>
-                            <span data-text-preloader="e" class="letters-loading">
-                                e
-                            </span>
-                            <span data-text-preloader="x" class="letters-loading">
-                                x
-                            </span>
-                        </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,15 +57,15 @@
             <div class="popup-inner">
                 <div class="overlay-layer"></div>
                 <div class="search-form">
-                    <form method="post" action="https://azim.commonsupport.com/Laborex/index.html">
+                    <form method="post" action="">
                         <div class="form-group">
                             <fieldset>
-                                <input type="search" class="form-control" name="search-input" value="" placeholder="Search Here" required >
-                                <input type="submit" value="Search Now!" class="theme-btn style-four">
+                                <input type="search" class="form-control" name="search-input" value="" placeholder="ابحث هنا" required >
+                                <input type="submit" value="ابحث الآن!" class="theme-btn style-four">
                             </fieldset>
                         </div>
                     </form>
-                    <h3>Recent Search Keywords</h3>
+                    <h3>الكلمات الدالة</h3>
                     <ul class="recent-searches">
                         <li><a href="index.html">Finance</a></li>
                         <li><a href="index.html">Idea</a></li>
@@ -163,7 +140,7 @@
                 <div class="auto-container">
                     <div class="top-inner clearfix">
                         <ul class="social-links pull-left clearfix">
-                            <li><h6>Share with on:</h6></li>
+                            <li><h6>تواصل معنا:</h6></li>
                             <li><a href="index.html"><i class="fab fa-facebook-f"></i></a></li>
                             <li><a href="index.html"><i class="fab fa-twitter"></i></a></li>
                             <li><a href="index.html"><i class="fab fa-instagram"></i></a></li>
@@ -185,150 +162,31 @@
                         <ul class="info-box pull-right clearfix">
                             <li>
                                 <i class="icon-28"></i>
-                                <h5>Call Us</h5>
+                                <h5>اتصل بنا</h5>
                                 <p><a href="tel:357984538">+357 984538</a></p>
                             </li>
                             <li>
                                 <i class="icon-29"></i>
-                                <h5>E-mail Us</h5>
+                                <h5>البريد الالكتروني</h5>
                                 <p><a href="mailto:info@example.com">info@example.com</a></p>
                             </li>
-                            <li class="btn-box"><a href="research.html" class="theme-btn-one">Request A Quote</a></li>
+
+                            @if(auth()->user())
+                                <li class="btn-box"><a href="{{route('dashboard.index')}}" class="theme-btn-one">لوحة التحكم</a></li>
+                            @else
+                                <li class="btn-box">
+                                    <a href="{{route('login')}}" class="theme-btn-one">تسجيل الدخول </a>
+                                    <a href="{{route('register')}}" class="theme-btn-one">انشاء حساب  </a>
+                                </li>
+
+                            @endif
+
+
                         </ul>
                     </div>
                 </div>
             </div>
-            <!-- header-lower -->
-            <div class="header-lower">
-                <div class="auto-container">
-                    <div class="outer-box clearfix">
-                        <div class="menu-area pull-left clearfix">
-                            <!--Mobile Navigation Toggler-->
-                            <div class="mobile-nav-toggler">
-                                <i class="icon-bar"></i>
-                                <i class="icon-bar"></i>
-                                <i class="icon-bar"></i>
-                            </div>
-                            <nav class="main-menu navbar-expand-md navbar-light">
-                                <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
-                                    <ul class="navigation clearfix">
-                                        <li class="current dropdown"><a href="index.html">Home</a>
-                                            <ul>
-                                                <li><a href="index.html">Home Page 01</a></li>
-                                                <li><a href="index-2.html">Home Page 02</a></li>
-                                                <li><a href="index-3.html">Home Page 03</a></li>
-                                                <li><a href="index-4.html">Home Page 04</a></li>
-                                                <li><a href="index-5.html">Home Page 05</a></li>
-                                                <li><a href="index-onepage.html">OnePage Home</a></li>
-                                                <li><a href="index-rtl.html">RTL Home</a></li>
-                                                <li class="dropdown"><a href="index.html">Header Style</a>
-                                                    <ul>
-                                                        <li><a href="index.html">Header Style 01</a></li>
-                                                        <li><a href="index-2.html">Header Style 02</a></li>
-                                                        <li><a href="index-4.html">Header Style 03</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown"><a href="index.html">Pages</a>
-                                            <ul>
-                                                <li><a href="about.html">About Us</a></li>
-                                                <li><a href="research.html">Research</a></li>
-                                                <li><a href="books.html">Our Books</a></li>
-                                                <li><a href="journal-article.html">Journal Article</a></li>
-                                                <li><a href="future-member.html">Future Member</a></li>
-                                                <li><a href="testimonial.html">Testimonials</a></li>
-                                                <li><a href="faq.html">Faq's</a></li>
-                                                <li><a href="error.html">404</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown"><a href="index.html">Team</a>
-                                            <ul>
-                                                <li><a href="team.html">Our Team</a></li>
-                                                <li><a href="team-details.html">Team Details</a></li>
-                                            </ul>
-                                        </li> 
-                                        <li class="dropdown"><a href="index.html">Events</a>
-                                            <ul>
-                                                <li><a href="events.html">Our Events</a></li>
-                                                <li><a href="event-details.html">Event Details</a></li>
-                                            </ul>
-                                        </li> 
-                                        <li class="dropdown"><a href="index.html">Elements</a>
-                                            <div class="megamenu">
-                                                <div class="row clearfix">
-                                                    <div class="col-xl-4 column">
-                                                        <ul>
-                                                            <li><h4>Elements 1</h4></li>
-                                                            <li><a href="about-element-1.html">About Block 01</a></li>
-                                                            <li><a href="about-element-2.html">About Block 02</a></li>
-                                                            <li><a href="about-element-3.html">About Block 03</a></li>
-                                                            <li><a href="about-element-4.html">About Block 04</a></li>
-                                                            <li><a href="about-element-5.html">About Block 05</a></li>
-                                                            <li><a href="service-element-1.html">Service Block 01</a></li>
-                                                            <li><a href="service-element-2.html">Service Block 02</a></li>
-                                                            <li><a href="service-element-3.html">Service Block 03</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-xl-4 column">
-                                                        <ul>
-                                                            <li><h4>Elements 2</h4></li>
-                                                            <li><a href="service-element-4.html">Service Block 04</a></li>
-                                                            <li><a href="team-element-1.html">Team Block 01</a></li>
-                                                            <li><a href="team-element-2.html">Team Block 02</a></li>
-                                                            <li><a href="team-element-3.html">Team Block 03</a></li>
-                                                            <li><a href="team-element-4.html">Team Block 04</a></li>
-                                                            <li><a href="event-element-1.html">Event Block 01</a></li>
-                                                            <li><a href="event-element-2.html">Event Block 02</a></li>
-                                                            <li><a href="news-element-1.html">News Block 01</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="col-xl-4 column">
-                                                        <ul>
-                                                            <li><h4>Elements 3</h4></li>
-                                                            <li><a href="news-element-2.html">News Block 02</a></li>
-                                                            <li><a href="news-element-3.html">News Block 03</a></li>
-                                                            <li><a href="news-element-4.html">News Block 04</a></li>
-                                                            <li><a href="funfact-element-1.html">Funfact Block 01</a></li>
-                                                            <li><a href="funfact-element-2.html">Funfact Block 02</a></li>
-                                                            <li><a href="chooseus-element.html">Chooseus Block</a></li>
-                                                            <li><a href="video-element.html">Video Block</a></li>
-                                                            <li><a href="cta-element.html">Cta Block</a></li>
-                                                        </ul>
-                                                    </div>                                   
-                                                </div>                                        
-                                            </div>
-                                        </li> 
-                                        <li class="dropdown"><a href="index.html">Gallery</a>
-                                            <ul>
-                                                <li><a href="gallery.html">Gallery 01</a></li>
-                                                <li><a href="gallery-2.html">Gallery 02</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="dropdown"><a href="index.html">Blog</a>
-                                            <ul>
-                                                <li><a href="blog.html">Blog 01</a></li>
-                                                <li><a href="blog-2.html">Blog 02</a></li>
-                                                <li><a href="blog-3.html">Blog 03</a></li>
-                                                <li><a href="blog-details.html">Blog Details</a></li>
-                                            </ul>
-                                        </li>  
-                                        <li><a href="{{ route('contact') }}">Contact</a></li>   
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
-                        <ul class="menu-right-content pull-right clearfix">
-                            <li class="search-btn">
-                                <button type="button" class="search-toggler"><i class="icon-1"></i></button>
-                            </li>
-                            <li class="nav-btn nav-toggler navSidebar-button clearfix">
-                                <button><i class="icon-30"></i></button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <x-navbar />
 
             <!--sticky Header-->
             <div class="sticky-header">
@@ -343,9 +201,9 @@
                             <li class="search-btn">
                                 <button type="button" class="search-toggler"><i class="icon-1"></i></button>
                             </li>
-                            <li class="nav-btn nav-toggler navSidebar-button clearfix">
+                            {{--<li class="nav-btn nav-toggler navSidebar-button clearfix">
                                 <button><i class="icon-30"></i></button>
-                            </li>
+                            </li>--}}
                         </ul>
                     </div>
                 </div>
@@ -357,7 +215,7 @@
         <div class="mobile-menu">
             <div class="menu-backdrop"></div>
             <div class="close-btn"><i class="fas fa-times"></i></div>
-            
+
             <nav class="menu-box">
                 <div class="nav-logo"><a href="index.html"><img src="{{ url('landing/images/logo-2.png') }}" alt="" title=""></a></div>
                 <div class="menu-outer"><!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header--></div>
@@ -756,7 +614,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 event-block">
                         <div class="event-block-one wow fadeInUp animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                             <div class="inner-box">
-                                <figure class="image-box"> 
+                                <figure class="image-box">
                                     <img src="{{ url('landing/images/event/event-1') }}.jpg" alt="">
                                     <a href="event-details.html"><i class="fas fa-link"></i></a>
                                 </figure>
@@ -786,7 +644,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 event-block">
                         <div class="event-block-one wow fadeInUp animated" data-wow-delay="200ms" data-wow-duration="1500ms">
                             <div class="inner-box">
-                                <figure class="image-box"> 
+                                <figure class="image-box">
                                     <img src="{{ url('landing/images/event/event-2') }}.jpg" alt="">
                                     <a href="event-details.html"><i class="fas fa-link"></i></a>
                                 </figure>
@@ -816,7 +674,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 event-block">
                         <div class="event-block-one wow fadeInUp animated" data-wow-delay="400ms" data-wow-duration="1500ms">
                             <div class="inner-box">
-                                <figure class="image-box"> 
+                                <figure class="image-box">
                                     <img src="{{ url('landing/images/event/event-3') }}.jpg" alt="">
                                     <a href="event-details.html"><i class="fas fa-link"></i></a>
                                 </figure>

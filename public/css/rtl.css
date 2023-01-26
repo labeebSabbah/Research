@@ -17,3 +17,33 @@ div.dataTables_wrapper div.dataTables_filter{
 .modal-footer{
     justify-content: start;
 }
+.modal-header .close{
+    margin: 0;
+}
+
+.page-item:first-child .page-link {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0.35rem;
+    border-bottom-right-radius: 0.35rem;
+}
+.page-item:last-child .page-link {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 0.35rem;
+    border-bottom-left-radius: 0.35rem;
+}
+
+@media (max-width: 767px) {
+    .sidebar .nav-item .collapse{
+    right: calc(6.5rem + 1.5rem / 2);
+    left: auto;
+
+    }
+    div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTables_filter, div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTables_paginate {
+        text-align: right;
+    }
+}
+
+
+
