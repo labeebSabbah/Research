@@ -81,6 +81,7 @@ class VersionController extends Controller
 
         foreach ($files as $file)
         {
+            $pdf->addPDF(VersionController::cover($file, $category->cover_file, $number), 'all');
             $pdf->addPDF($file->file, 'all');
         }
 
@@ -163,6 +164,35 @@ class VersionController extends Controller
           ";
         $pdf->WriteHTML($css, \Mpdf\HTMLParserMode::HEADER_CSS);
         $pdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
+        $pdf->Output($output, 'F');
+        return $output;
+    }
+
+    public static function cover($post, $cover, $no)
+    {
+        $qr = VersionController::qr(url($post->file));
+
+        $pdf = new \Mpdf\Mpdf();
+
+        $output = Storage::disk('local')->path('post.pdf');
+
+        if(file_exists($output))
+        {
+            unlink($output);
+        }
+
+        $pdf->AddPage();
+        $pdf->autoScriptToLang = true;
+        $pdf->autoLangToFont = true;
+        $pdf->setSourceFile($cover);
+        $pdf->useTemplate($pdf->importPage(1));
+        $pdf->setFont("DejaVuSans", "", 20);
+        $pdf->WriteText(30, 20, "No. " . $no);
+        $pdf->WriteText(100, 120, $post->category->title . " Category");
+        $pdf->WriteText(100, 150, $post->title);
+        $pdf->WriteText(100, 180, $post->user->name);
+        $pdf->WriteText(100, 220, "" . date_format($post->created_at, 'Y-m-d'));
+        $pdf->Image($qr->getDataUri(), 30, 250, 30, 30, 'png');
         $pdf->Output($output, 'F');
         return $output;
     }
