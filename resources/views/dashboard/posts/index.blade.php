@@ -28,6 +28,7 @@
               <h6 class="m-0 font-weight-bold text-primary text-right">منشوراتي</h6>
               <div>
                 <a href="{{ route('dashboard.posts.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">اضافة</a>
+                <a href="{{ route('dashboard.templates') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">تحميل النماذج</a>
               </div>
             </div>
             <div class="card-body">

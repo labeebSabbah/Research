@@ -98,6 +98,8 @@ Route::middleware('auth')->group(function () {
 
             Route::resource('posts', PostController::class)->except(['show']);
 
+            Route::get('/templates', [CategoryController::class, 'templates'])->name('templates');
+
             Route::get('/pay/{post}', [PostController::class, 'pay'])->name('pay');
 
             Route::get('/policy', [PostController::class, 'policy'])->name('policy');

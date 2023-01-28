@@ -16,7 +16,9 @@ class Category extends Model
         'num_of_posts',
         'cover_file',
         'description_file',
-        'certification_file'
+        'certification_file',
+        'index_file',
+        'template_file'
     ];
 
     public $timestamps = false;

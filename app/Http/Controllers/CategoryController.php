@@ -20,40 +20,65 @@ class CategoryController extends Controller
             'num_of_posts' => 'required|numeric',
             'cover_file' => 'required|file',
             'description_file' => 'required|file',
-            'certification_file' => 'required|file'
+            'certification_file' => 'required|file',
+            'template_file' => 'required|file',
+            'index_file' => 'required|file'
         ]);
 
         $data = $r->all();
 
-        if ($r->hasFile('image') && $r->hasFile('cover_file') && $r->hasFile('description_file') && $r->hasFile('certification_file')) {
-
+        if ($r->hasFile('image'))
+        {
             $r->validate([
                 'image' => 'image',
             ]);
 
-            if ($data['cover_file']->getClientOriginalExtension() != 'pdf' || $data['description_file']->getClientOriginalExtension() != 'pdf' || $data['certification_file']->getClientOriginalExtension() != 'pdf') {
-                return back()->withErrors('');
-            }
-
+            try {
                 $target = 'uploads/categories/';
                 $filename = time() . '.' . $data['image']->getClientOriginalExtension();
                 $data['image']->move($target, $filename);
                 $data['image'] = $target . $filename;
-
-                $filename = time() . '_cover' . '.pdf';
-                $data['cover_file']->move($target, $filename);
-                $data['cover_file'] = $target . $filename;
-
-                $filename = time() . '_description' . '.pdf';
-                $data['description_file']->move($target, $filename);
-                $data['description_file'] = $target . $filename;
-
-                $filename = time() . '_certification' . '.pdf';
-                $data['certification_file']->move($target, $filename);
-                $data['certification_file'] = $target . $filename;
-
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
         }
 
+        if ($r->hasFile('cover_file') && $r->hasFile('description_file') && $r->hasFile('certification_file') && $r->hasFile('template_file') && $r->hasFile('index_file')) {
+
+            
+
+            if ($data['cover_file']->getClientOriginalExtension() != 'pdf' || $data['description_file']->getClientOriginalExtension() != 'pdf' || $data['certification_file']->getClientOriginalExtension() != 'pdf' || $data['index_file']->getClientOriginalExtension() != 'pdf' || ($data['template_file']->getClientOriginalExtension() != 'doc' && $data['template_file']->getClientOriginalExtension() != 'docx')) {
+                return back()->withErrors('');
+            }
+
+                try {
+
+                    $target = 'uploads/categories/';
+
+                    $filename = time() . '_cover.pdf';
+                    $data['cover_file']->move($target, $filename);
+                    $data['cover_file'] = $target . $filename;
+
+                    $filename = time() . '_description.pdf';
+                    $data['description_file']->move($target, $filename);
+                    $data['description_file'] = $target . $filename;
+
+                    $filename = time() . '_certification.pdf';
+                    $data['certification_file']->move($target, $filename);
+                    $data['certification_file'] = $target . $filename;
+
+                    $filename = time() . '_index.pdf';
+                    $data['index_file']->move($target, $filename);
+                    $data['index_file'] = $target . $filename;
+
+                    $filename = time() . '_template.' . $data['template_file']->getClientOriginalExtension();
+                    $data['template_file']->move($target, $filename);
+                    $data['template_file'] = $target . $filename;
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+
+        }
 
         Category::firstOrCreate(
             ['title' => $data['title']],
@@ -175,6 +200,30 @@ class CategoryController extends Controller
         $c->update($data);
 
         return redirect()->back();
+    }
+
+    public function templates()
+    {
+        $file = 'templates.zip';
+
+        if (file_exists($file))
+        {
+            unlink($file);
+        }
+
+        $zip = new \ZipArchive();
+        $zip->open($file, \ZipArchive::CREATE);
+
+        $categories = Category::where('template_file', '!=', NULL)->get();
+
+        foreach ($categories as $c) {
+            $filename = $c->title . '.' . pathinfo($c->template_file, PATHINFO_EXTENSION);
+            $zip->addFile($c->template_file, $filename);
+        }
+
+        $zip->close();
+
+        return response()->download($file);
     }
 
     public function destroy(Category $c)

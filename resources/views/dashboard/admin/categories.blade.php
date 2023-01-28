@@ -62,6 +62,8 @@
                           <a href="../{{ $c->cover_file }}" target="_blank" class="btn btn-primary">ملف الغلاف</a>
                           <a href="../{{ $c->description_file }}" target="_blank" class="btn btn-primary">ملف الوصف</a>
                           <a href="../{{ $c->certification_file }}" target="_blank" class="btn btn-primary">ملف الشهادة</a>
+                          <a href="../{{ $c->index_file }}" target="_blank" class="btn btn-primary">ملف الفهرس</a>
+                          <a href="../{{ $c->template_file }}" target="_blank" class="btn btn-primary">ملف النموذج</a>
                         </td>
                         <td>
                           <form action="{{ route('dashboard.categories.destroy', ['c' => $c->id]) }}" method="POST" class="form text-center">
@@ -152,6 +154,16 @@
                     <input type="file" class="form-control" name="certification_file" accept=".pdf">
                   </div>
                 </div>
+                <div class="row">
+                  <div class="mb-3 col-lg-6">
+                    <label for="template_file">ملف النموذج</label>
+                    <input type="file" class="form-control" name="template_file" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                  </div>
+                  <div class="mb-3 col-lg-6">
+                    <label for="index_file">ملف الفهرس</label>
+                    <input type="file" class="form-control" name="index_file" accept=".pdf">
+                  </div>
+                </div>
                 </div>
             </form>
         </div>
@@ -208,6 +220,16 @@
                   <div class="mb-3 col-lg-6">
                     <label for="certification_file" class="form-label">ملف الشهادة</label>
                     <input type="file" class="form-control" name="certification_file" accept=".pdf">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="mb-3 col-lg-6">
+                    <label for="template_file">ملف النموذج</label>
+                    <input type="file" class="form-control" name="template_file" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                  </div>
+                  <div class="mb-3 col-lg-6">
+                    <label for="index_file">ملف الفهرس</label>
+                    <input type="file" class="form-control" name="index_file" accept=".pdf">
                   </div>
                 </div>
                 </div>

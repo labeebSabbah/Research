@@ -77,7 +77,7 @@ class VersionController extends Controller
 
         $pdf->addPDF($category->description_file, 'all');
 
-        $pdf->addPDF(VersionController::indexing($files), 'all');
+        $pdf->addPDF(VersionController::indexing($files, $category->index_file), 'all');
 
         foreach ($files as $file)
         {
@@ -98,6 +98,11 @@ class VersionController extends Controller
 
         $output = Storage::disk('local')->path('cover.pdf');
 
+        if(file_exists($output))
+        {
+            unlink($output);
+        }
+
         $pdf->AddPage();
         $pdf->autoScriptToLang = true;
         $pdf->autoLangToFont = true;
@@ -111,11 +116,16 @@ class VersionController extends Controller
         return $output;
     }
 
-    public static function indexing($files)
+    public static function indexing($files, $index)
     {
         $pdf = new \Mpdf\Mpdf();
 
         $output = Storage::disk('local')->path('index.pdf');
+
+        if(file_exists($output))
+        {
+            unlink($output);
+        }
 
         $data = "";
 
@@ -124,13 +134,13 @@ class VersionController extends Controller
         $pdf->AddPage();
         $pdf->autoScriptToLang = true;
         $pdf->autoLangToFont = true;
+        $pdf->setSourceFile($index);
+        $pdf->useTemplate($pdf->importPage(1));
         $pdf->setFont("DejaVuSans", "", 20);
-        $pdf->WriteText(105, 10, "المحتويات");
         foreach ($files as $f)
         {
             $qr = VersionController::qr(url($f->file));
             $image = "<img src='{$qr->getDataUri()}'>";
-            // dd($image);
             $data .= '<tr>'
             . '<td>' . $id . '</td>'
             . '<td>' . $f->title . '</td>'
@@ -138,7 +148,7 @@ class VersionController extends Controller
             . '</tr>';
             $id = $id + 1;
         }
-        $html = '<table autosize="1" style="text-align: center; font-size: 50px;">
+        $html = '<br><br><br><br><br><br><table autosize="1" style="text-align: center; font-size: 50px;">
 		<tr>
 		<th style="width: 10%"><strong>رقم البحث</strong></th>
 		<th style="width: 70%"><strong>اسم البحث</strong></th>
@@ -149,7 +159,8 @@ class VersionController extends Controller
         $css = "table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
-          }";
+          }
+          ";
         $pdf->WriteHTML($css, \Mpdf\HTMLParserMode::HEADER_CSS);
         $pdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
         $pdf->Output($output, 'F');
