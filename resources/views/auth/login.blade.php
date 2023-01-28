@@ -14,7 +14,7 @@
             <div class="d-flex justify-content-center align-items-center min-vh-100">
               <div class="card z-index-0 fadeIn3 fadeInBottom col-lg-5 col-md-8 col-sm-12">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                  <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                  <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1" style="background: #22b6af;">
                     <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">تسجيل الدخول</h4>
                   </div>
                 </div>
@@ -28,12 +28,16 @@
                       <input type="password" name="password" class="form-control" placeholder="كلمة السر">
                     </div>
                     <div class="text-center">
-                      <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2 text-white">تسجيل الدخول</button>
+                      <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2 text-white" style="background: #22b6af;">تسجيل الدخول</button>
                     </div>
                     <p class="mt-4 text-sm text-center">
                       ليس لديك حساب ؟
-                      <a href="{{ route('register') }}" class="text-primary text-gradient font-weight-bold">سجل</a>
+                      <a href="{{ route('register') }}" class="text-primary text-gradient font-weight-bold" >سجل</a>
                     </p>
+
+                      <p class="mt-4 text-sm text-center">
+                          <a href="{{ route('home') }}" class="text-primary text-gradient font-weight-bold" >الصفحة الرئيسة</a>
+                      </p>
                   </form>
                 </div>
               </div>

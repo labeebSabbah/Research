@@ -15,11 +15,11 @@
               <span class="mask bg-gradient-dark opacity-6"></span>
 
           <div class="container my-auto">
-              <div class="d-flex justify-content-center align-items-center min-vh-100">
-                  <div class="card z-index-0 fadeIn3 fadeInBottom col-lg-5 col-md-8 col-sm-12">
+              <div class="d-flex justify-content-center align-items-center min-vh-100" >
+                  <div class="card z-index-0 fadeIn3 fadeInBottom col-lg-5 col-md-8 col-sm-12" style="margin: 100px 0">
                       <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                          <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-                              <h4 class="text-white font-weight-bolder text-center mt-2 mb-0"> انشاء حساب</h4>
+                          <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1" style="background: #22b6af;">
+                              <h4 class="text-white font-weight-bolder text-center mt-2 mb-0" > انشاء حساب</h4>
                           </div>
                       </div>
                       <div class="col-lg-12 m-auto">
@@ -45,11 +45,14 @@
                                       <input type="password" name="confirm" class="form-control" placeholder="تأكيد كلمة السر">
                                   </div>
                                   <div class="text-center">
-                                      <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2 text-white">التسجيل</button>
+                                      <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2 text-white" style="background: #22b6af;">التسجيل</button>
                                   </div>
                                   <p class="mt-4 text-sm text-center">
                                       لديك حساب ؟
-                                      <a href="{{ route('login') }}" class="text-primary text-gradient font-weight-bold">سجل الدخول</a>
+                                      <a href="{{ route('login') }}" class="text-primary text-gradient font-weight-bold" >سجل الدخول</a>
+                                  </p>
+                                  <p class="mt-4 text-sm text-center">
+                                      <a href="{{ route('home') }}" class="text-primary text-gradient font-weight-bold" >الصفحة الرئيسة</a>
                                   </p>
                               </form>
                           </div>

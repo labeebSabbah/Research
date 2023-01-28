@@ -21,14 +21,14 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          
+
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
               <h6 class="m-0 font-weight-bold text-primary text-right">منشوراتي</h6>
               <div>
                 <a href="{{ route('dashboard.posts.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">اضافة</a>
-                <a href="{{ route('dashboard.templates') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">تحميل النماذج</a>
+                <a href="" data-toggle="modal" data-target="#downloadTemplateModal" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">تحميل النماذج</a>
               </div>
             </div>
             <div class="card-body">
@@ -108,6 +108,58 @@
       </div>
       <!-- End of Main Content -->
 
+
+        <!-- Modal template download -->
+        <div class="modal fade" id="downloadTemplateModal" tabindex="-1" role="dialog" aria-labelledby="downloadTemplateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="downloadTemplateModalLabel">النماذج</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <table class="table table-bordered text-right">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">التصنيف</th>
+                                <th scope="col">تحميل</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            @foreach ($categories as $c)
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>{{$c->title}}</td>
+                                    <td class="text-center">
+                                        <a href="../{{ $c->template_file }}" type="button" class="btn btn-primary">
+                                             تحميل / عربي <i class="fa fa-download" aria-hidden="true"></i>
+                                        </a>
+
+                                        <a href="../{{ $c->template_file_en }}" type="button" class="btn btn-primary">
+                                            تحميل / انجليزي <i class="fa fa-download" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
@@ -138,5 +190,5 @@
         <script src="{{ url('/js/demo/datatables-demo.js') }}"></script>
 
     </x-slot>
-    
+
 </x-layout.app>

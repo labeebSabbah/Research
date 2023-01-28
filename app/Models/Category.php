@@ -18,7 +18,8 @@ class Category extends Model
         'description_file',
         'certification_file',
         'index_file',
-        'template_file'
+        'template_file',
+        'template_file_en'
     ];
 
     public $timestamps = false;

@@ -12,11 +12,9 @@
                     <div class="auto-container">
                         <div class="content-box">
                             <div class="text">
-                                <h2>We'll Ensure You Always Get The Best Results.</h2>
+                                <h2>3-We'll Ensure You Always Get The Best Results.</h2>
                                 <p>Excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit.</p>
-                                <div class="btn-box">
-                                    <a href="research.html" class="banner-btn-two">Our Services</a>
-                                </div>
+
                             </div>
                             <div class="image-box">
                                 <figure class="image"><img src="{{ url('landing/images/banner/banner-img') }}-4.png" alt=""></figure>
@@ -24,9 +22,6 @@
                                     <div class="shape-1"></div>
                                     <div class="shape-2"></div>
                                 </div>
-                                <div class="support-box">
-                                    <a href="tel:03338855"><i class="icon-59"></i>Free Consultation</a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -35,11 +30,9 @@
                     <div class="auto-container">
                         <div class="content-box">
                             <div class="text">
-                                <h2>We'll Ensure You Always Get The Best Results.</h2>
+                                <h2>2-We'll Ensure You Always Get The Best Results.</h2>
                                 <p>Excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit.</p>
-                                <div class="btn-box">
-                                    <a href="research.html" class="banner-btn-two">Our Services</a>
-                                </div>
+
                             </div>
                             <div class="image-box">
                                 <figure class="image"><img src="{{ url('landing/images/banner/banner-img') }}-5.png" alt=""></figure>
@@ -47,9 +40,7 @@
                                     <div class="shape-1"></div>
                                     <div class="shape-2"></div>
                                 </div>
-                                <div class="support-box">
-                                    <a href="tel:03338855"><i class="icon-59"></i>Free Consultation</a>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -58,20 +49,15 @@
                     <div class="auto-container">
                         <div class="content-box">
                             <div class="text">
-                                <h2>We'll Ensure You Always Get The Best Results.</h2>
+                                <h2>1-We'll Ensure You Always Get The Best Results.</h2>
                                 <p>Excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit.</p>
-                                <div class="btn-box">
-                                    <a href="research.html" class="banner-btn-two">Our Services</a>
-                                </div>
+
                             </div>
                             <div class="image-box">
                                 <figure class="image"><img src="{{ url('landing/images/banner/banner-img') }}-6.png" alt=""></figure>
                                 <div class="shape">
                                     <div class="shape-1"></div>
                                     <div class="shape-2"></div>
-                                </div>
-                                <div class="support-box">
-                                    <a href="tel:03338855"><i class="icon-59"></i>Free Consultation</a>
                                 </div>
                             </div>
                         </div>
@@ -467,41 +453,5 @@
         <!-- events-style-two end -->
 
 
-        <!-- contact-section -->
-        <section class="contact-section">
-            <div class="map-inner">
-                <div class="map-container">
-                    <iframe src="https://snazzymaps.com/embed/69445" width="100%" height="730px"></iframe>
-                </div>
-            </div>
-            <div class="auto-container">
-                <div class="row clearfix">
-                    <div class="col-xl-6 col-lg-12 col-md-12 offset-xl-6">
-                        <div class="content_block_5">
-                            <div class="content-box">
-                                <h2>Contact with Us for The Better Result</h2>
-                                <form action="https://azim.commonsupport.com/Laborex/contact.html" method="post">
-                                    <div class="row clearfix">
-                                        <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                            <input type="email" name="email" placeholder="Email address" required="">
-                                        </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                            <input type="text" name="phone" placeholder="Phone" required="">
-                                        </div>
-                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                            <textarea name="message" placeholder="Message..."></textarea>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                            <button type="submit" class="theme-btn-one">Submit Now</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- contact-section end -->
 
 </x-layout.landing>

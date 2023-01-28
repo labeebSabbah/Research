@@ -19,11 +19,12 @@ use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use Endroid\QrCode\Writer\PngWriter;
 
 class PostController extends Controller
-{  
+{
     public function index()
     {
         $posts = Post::orderBy('id', 'desc')->where('author_id', auth()->user()->id)->get();
-        return view('dashboard.posts.index', compact('posts'));
+        $categories = Category::all();
+        return view('dashboard.posts.index', compact('posts','categories'));
     }
 
     public function create()
@@ -46,26 +47,26 @@ class PostController extends Controller
             'keywords' => 'required',
             'file' => 'required|file'
         ]);
-        
+
         $data = $r->all();
 
         if ($data['file']->getClientOriginalExtension() != 'pdf') {
             return back()->withErrors('');
         }
 
-        try 
+        try
         {
           $target = "uploads/files/";
-          $filename = time() . ".pdf";  
+          $filename = time() . ".pdf";
           $data['file']->move($target, $filename);
           $data['file'] = $target . $filename;
 
           Post::create($data);
 
-        } 
+        }
         catch (Exception $e)
         {
-           return back()->withErrors(''); 
+           return back()->withErrors('');
         }
 
         return redirect()->route('dashboard.posts.index');
@@ -125,7 +126,7 @@ class PostController extends Controller
             }
 
             $target = "uploads/files/";
-            $filename = time() . ".pdf";  
+            $filename = time() . ".pdf";
             $data['file']->move($target, $filename);
             $data['file'] = $target . $filename;
         }
@@ -139,7 +140,7 @@ class PostController extends Controller
     {
         $data = $r->all();
         $p = Post::find($data['id']);
-        
+
         if ($data['accepted']) {
             $v = VersionController::store($p->category_id, $p, $p->id);
             $date = date('Y-m-d');
@@ -197,7 +198,7 @@ class PostController extends Controller
         $pdf->Image($result->getDataUri(), 30, 250, 30, 30, 'png');
         $pdf->Output('certificate.pdf', 'D');
     }
-    
+
     public function destroy(Post $p)
     {
         //

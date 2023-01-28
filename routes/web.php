@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RejectReasonController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PageController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +34,7 @@ Route::get('/contact', [MainController::class, 'contact'])->name('contact');
 Route::post('/contact', [MailController::class, 'contact'])->name('contact');
 
 Route::middleware('guest')->group(function () {
-    
+
     Route::get('/login', [UserController::class, 'show'])->name('login');
     Route::post('/login', [UserController::class, 'login'])->name('login');
 
@@ -42,7 +44,7 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    
+
     Route::group(['prefix' => '/dashboard', 'as' => 'dashboard.'], function () {
 
         Route::get('/', function () {return view('dashboard.index');})->name('index');
@@ -60,7 +62,7 @@ Route::middleware('auth')->group(function () {
             Route::put('/acceptPosts', [PostController::class, 'accept'])->name('admin.post');
 
             Route::prefix('settings')->group(function () {
-                
+
                 Route::get('/social', [SettingsController::class, 'social'])->name('social');
                 Route::get('/contact', [SettingsController::class, 'contact'])->name('contact');
                 Route::get('/about', [SettingsController::class, 'about'])->name('about');
@@ -119,4 +121,28 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
+});
+
+
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return 'Application cache has been cleared';
+});
+
+//Clear route cache:
+/*Route::get('/route-cache', function() {
+    Artisan::call('route:cache');
+    return 'Routes cache has been cleared';
+});*/
+
+//Clear config cache:
+Route::get('/config-cache', function() {
+    Artisan::call('config:cache');
+    return 'Config cache has been cleared';
+});
+
+// Clear view cache:
+Route::get('/view-clear', function() {
+   Artisan::call('view:clear');
+    return 'View cache has been cleared';
 });

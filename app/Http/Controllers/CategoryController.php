@@ -14,7 +14,7 @@ class CategoryController extends Controller
     }
 
     public function store(Request $r)
-    {  
+    {
         $r->validate([
             'title' => 'required',
             'num_of_posts' => 'required|numeric',
@@ -22,6 +22,7 @@ class CategoryController extends Controller
             'description_file' => 'required|file',
             'certification_file' => 'required|file',
             'template_file' => 'required|file',
+            'template_file_en' => 'required|file',
             'index_file' => 'required|file'
         ]);
 
@@ -45,7 +46,7 @@ class CategoryController extends Controller
 
         if ($r->hasFile('cover_file') && $r->hasFile('description_file') && $r->hasFile('certification_file') && $r->hasFile('template_file') && $r->hasFile('index_file')) {
 
-            
+
 
             if ($data['cover_file']->getClientOriginalExtension() != 'pdf' || $data['description_file']->getClientOriginalExtension() != 'pdf' || $data['certification_file']->getClientOriginalExtension() != 'pdf' || $data['index_file']->getClientOriginalExtension() != 'pdf' || ($data['template_file']->getClientOriginalExtension() != 'doc' && $data['template_file']->getClientOriginalExtension() != 'docx')) {
                 return back()->withErrors('');
@@ -74,6 +75,11 @@ class CategoryController extends Controller
                     $filename = time() . '_template.' . $data['template_file']->getClientOriginalExtension();
                     $data['template_file']->move($target, $filename);
                     $data['template_file'] = $target . $filename;
+
+                    $filename = time() . '_template_en.' . $data['template_file_en']->getClientOriginalExtension();
+                    $data['template_file_en']->move($target, $filename);
+                    $data['template_file_en'] = $target . $filename;
+
                 } catch (\Throwable $th) {
                     //throw $th;
                 }
@@ -97,7 +103,7 @@ class CategoryController extends Controller
         ]);
 
         $data = $r->all();
-        
+
         $c = Category::find($data['id']);
 
         if ($r->hasFile('image')) {
@@ -111,17 +117,17 @@ class CategoryController extends Controller
                     unlink($c->image);
                 }
             } catch (\Throwable $th) {
-                
+
             }
 
-            try 
+            try
             {
                 $target = 'uploads/categories/';
                 $filename = time() . '.' . $data['image']->getClientOriginalExtension();
                 $data['image']->move($target, $filename);
                 $data['image'] = $target . $filename;
-            } 
-            catch (Exception $e) 
+            }
+            catch (Exception $e)
             {
                 return back()->withErrors('');
             }
@@ -195,6 +201,52 @@ class CategoryController extends Controller
             } catch (\Throwable $th) {
                 //throw $th;
             }
+        }
+
+        if ($r->hasFile('template_file'))
+        {
+            $r->validate([
+                'template_file' => 'file'
+            ]);
+
+            try {
+                if (file_exists($c->template_file))
+                {
+                    unlink($c->template_file);
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+            }  try {
+            $target = 'uploads/categories/';
+            $filename = time() . '_template_file' . $data['template_file']->getClientOriginalExtension();
+            $data['template_file']->move($target, $filename);
+            $data['template_file'] = $target . $filename;
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        }
+
+        if ($r->hasFile('template_file_en'))
+        {
+            $r->validate([
+                'template_file_en' => 'file'
+            ]);
+
+            try {
+                if (file_exists($c->template_file_en))
+                {
+                    unlink($c->template_file_en);
+                }
+            } catch (\Throwable $th) {
+                //throw $th;
+            }  try {
+            $target = 'uploads/categories/';
+            $filename = time() . 'template_file_en' . $data['template_file_en']->getClientOriginalExtension();
+            $data['template_file_en']->move($target, $filename);
+            $data['template_file_en'] = $target . $filename;
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
         }
 
         $c->update($data);

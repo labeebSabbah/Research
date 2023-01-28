@@ -22,11 +22,17 @@
       <span>لوحة التحكم</span></a>
   </li>
 
+    <li class="nav-item active" dir="rtl">
+        <a class="nav-link" href="{{ route('home') }}">
+            <i class="fas fa-fw fa-home"></i>
+            <span>الصفحة الرئيسية </span></a>
+    </li>
+
   <!-- Divider -->
   <hr class="sidebar-divider">
 
   <!-- Heading -->
-  <div class="sidebar-heading">
+  <div class="sidebar-heading mb-3">
     الواجهات
   </div>
 
