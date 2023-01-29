@@ -1,6 +1,6 @@
 <x-layout.app>
 
-    <x-slot:title>تسجيل الدخول</x-slot>
+    <x-slot:title>نسيت كلمة السر</x-slot>
 
     <x-slot:style>
     <style>
@@ -15,29 +15,21 @@
               <div class="card z-index-0 fadeIn3 fadeInBottom col-lg-5 col-md-8 col-sm-12">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                   <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1" style="background: #22b6af;">
-                    <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">تسجيل الدخول</h4>
+                    <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">نسيت كلمة السر</h4>
                   </div>
                 </div>
                 <div class="card-body">
-                  <form role="form" class="text-start" method="POST" action="{{ route('login') }}">
+                  <form role="form" class="text-start" method="POST" action="{{ route('password.email') }}">
                       @csrf
                     <div class="input-group input-group-outline my-3">
-                      <input type="text" name="info" class="form-control" placeholder="اسم المستخدم / البريد الالكتروني">
-                    </div>
-                    <div class="input-group input-group-outline mb-3">
-                      <input type="password" name="password" class="form-control" placeholder="كلمة السر">
+                      <input type="text" name="email" class="form-control" placeholder="البريد الالكتروني">
                     </div>
                     <div class="text-center">
-                      <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2 text-white" style="background: #22b6af;">تسجيل الدخول</button>
+                      <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2 text-white" style="background: #22b6af;">ارسال بريد الكتروني</button>
                     </div>
                     <p class="mt-4 text-sm text-center">
                       ليس لديك حساب ؟
                       <a href="{{ route('register') }}" class="text-primary text-gradient font-weight-bold" >سجل</a>
-                    </p>
-
-                    <p class="mt-4 text-sm text-center">
-                      نسيت كلمة السر ؟
-                      <a href="{{ route('password.request') }}" class="text-primary text-gradient font-weight-bold" >تغيير كلمة المرور</a>
                     </p>
 
                       <p class="mt-4 text-sm text-center">

@@ -12,6 +12,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RejectReasonController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PasswordController;
 
 
 /*
@@ -40,6 +41,14 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/register', [UserController::class, 'create'])->name('register');
     Route::post('/register', [UserController::class, 'store'])->name('register');
+
+    Route::get('/forgot-password', [PasswordController::class, 'forgot'])->name('password.request');
+
+    Route::post('/forgot-password', [PasswordController::class, 'sendEmail'])->name('password.email');
+
+    Route::get('/reset-password', [PasswordController::class, 'resetPassword'])->name('password.form');
+
+    Route::post('/reset-password', [PasswordController::class, 'reset'])->name('password.reset');
 
 });
 
