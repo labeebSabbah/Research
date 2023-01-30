@@ -75,7 +75,6 @@ class PostController extends Controller
     public function pay(Request $r, Post $post)
     {
         $message = 'added a new post.';
-        $reciever = User::where('admin', 1)->first()->id;
         $post->update(['paid' => 1]);
         $user = User::find($post->author_id);
         $user->update(['paid' => 1]);

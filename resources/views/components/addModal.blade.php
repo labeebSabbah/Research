@@ -14,14 +14,23 @@
                 <div class="mb-3">
                     <label for="name" class="form-label">الاسم</label>
                     <input type="text" class="form-control" name="name">
+                    @error('name')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                 </div>
                 <div class="mb-3">
                     @if (Route::currentRouteName() == 'dashboard.reasons.index')
                     <label class="form-label">الوصف (اختياري)</label>
                     <textarea name="description" cols="30" rows="10" style="resize: none;" class="form-control"></textarea>
+                    @error('description')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     @else
                     <label for="value" class="form-label">القيمة</label>
                     <input type="text" class="form-control" name="value">
+                    @error('value')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     @endif
                 </div>
             </form>
@@ -52,14 +61,23 @@
                 <div class="mb-3">
                     <label for="name" class="form-label">الاسم</label>
                     <input type="text" class="form-control" name="name" id="name">
+                    @error('name')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                 </div>
                 <div class="mb-3">
                   @if (Route::currentRouteName() == 'dashboard.reasons.index')
                   <label class="form-label">الوصف (اختياري)</label>
                   <textarea name="description" id="description" cols="30" rows="10" style="resize: none;" class="form-control"></textarea>
+                  @error('description')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                      @enderror
                   @else
                     <label for="value" class="form-label">القيمة</label>
                     <input type="text" class="form-control" name="value" id="value">
+                    @error('value')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     @endif
                 </div>
             </form>

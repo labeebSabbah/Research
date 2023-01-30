@@ -48,6 +48,9 @@
                         <div class="mb-3">
                           <label>سياسة النشر</label>
                           <textarea type="text" name="value" id="editor" cols="10" rows="10" class="form-control mb-2" style="resize: none;">{!! $share->value ?? ''!!}</textarea>
+                          @error('value')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         </div>
                       </form>
                       </div>

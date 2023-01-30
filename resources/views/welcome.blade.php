@@ -1,3 +1,8 @@
+@php
+    use App\Models\Category;
+    $categories = Category::all();
+@endphp
+
 <x-layout.landing>
 
 
@@ -226,56 +231,26 @@
             <div class="auto-container">
                 <div class="sec-title centred">
                     <h6>Clinical Services</h6>
-                    <h2>Explore Our Main Services.</h2>
+                    <h2>التصنيفات</h2>
                 </div>
                 <div class="row clearfix">
+                    @foreach ($categories as $c)
                     <div class="col-lg-4 col-md-6 col-sm-12 service-block">
                         <div class="service-block-two wow fadeInUp animated" data-wow-delay="00ms" data-wow-duration="1500ms">
                             <div class="inner-box">
-                                <figure class="image-box"><img src="{{ url('landing/images/service/service-1') }}.jpg" alt=""></figure>
+                                <figure class="image-box"><img src="{{ $c->image }}" alt=""></figure>
                                 <div class="lower-content">
-                                    <div class="icon-box"><i class="icon-39"></i></div>
-                                    <h4><a href="research.html">Clinical Microbiology <br />Tests</a></h4>
-                                    <p>Excepteur sint ocecat pro sunt in culpa. qui officia deserunt mollit anim id est. perspiciatis unde.</p>
-                                    <div class="btn-box"><a href="research.html" class="theme-btn-two">Read More</a></div>
+                                    <h4><a href="{{ route('category', ['category' => $c->id]) }}">{{ $c->title }}</a></h4>
+                                    <p>{{ $c->description }}</p>
+                                    <div class="btn-box"><a href="{{ route('category', ['category' => $c->id]) }}" class="theme-btn-two">تصفح</a></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 service-block">
-                        <div class="service-block-two wow fadeInUp animated" data-wow-delay="300ms" data-wow-duration="1500ms">
-                            <div class="inner-box">
-                                <figure class="image-box"><img src="{{ url('landing/images/service/service-2') }}.jpg" alt=""></figure>
-                                <div class="lower-content">
-                                    <div class="icon-box"><i class="icon-40"></i></div>
-                                    <h4><a href="research.html">Testing for Traces & <br />Impurities</a></h4>
-                                    <p>Excepteur sint ocecat pro sunt in culpa. qui officia deserunt mollit anim id est. perspiciatis unde.</p>
-                                    <div class="btn-box"><a href="research.html" class="theme-btn-two">Read More</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-12 service-block">
-                        <div class="service-block-two wow fadeInUp animated" data-wow-delay="600ms" data-wow-duration="1500ms">
-                            <div class="inner-box">
-                                <figure class="image-box"><img src="{{ url('landing/images/service/service-3') }}.jpg" alt=""></figure>
-                                <div class="lower-content">
-                                    <div class="icon-box"><i class="icon-41"></i></div>
-                                    <h4><a href="research.html">Clinical Biochemistry <br />Tests</a></h4>
-                                    <p>Excepteur sint ocecat pro sunt in culpa. qui officia deserunt mollit anim id est. perspiciatis unde.</p>
-                                    <div class="btn-box"><a href="research.html" class="theme-btn-two">Read More</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="more-btn">
-                    <a href="research.html" class="theme-btn-one">More Services</a>
-                </div>
+                    @endforeach
             </div>
         </section>
         <!-- service-style-two end -->
-
 
         <!-- team-style-two -->
         <section class="team-style-two bg-color-1">

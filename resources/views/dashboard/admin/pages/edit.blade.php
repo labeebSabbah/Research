@@ -44,10 +44,16 @@
                     <div class="mb-3">
                       <label for="name" class="form-label">الاسم</label>
                       <input type="text" name="name" class="form-control" value="{{ $page->name ?? '' }}">
+                      @error('name')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                    <div class="mb-3">
                     <label for="content">محتوى الصفحة</label>
                     <textarea name="content" id="editor" cols="30" rows="10" class="form-control" style="resize: none;">{!! $page->content ?? '' !!}</textarea>
+                    @error('content')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                      @enderror
                    </div>
                   </div>
                 </form>

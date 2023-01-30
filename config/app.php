@@ -186,6 +186,7 @@ return [
          * Package Service Providers...
          */
         Webklex\PDFMerger\Providers\PDFMergerServiceProvider::class,
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class,
         /*
          * Application Service Providers...
          */

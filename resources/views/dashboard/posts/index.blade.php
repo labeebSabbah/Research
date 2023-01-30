@@ -6,6 +6,8 @@
         <link href="{{ url('/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     </x-slot>
 
+    <x-alerts />
+
     <!-- Page Wrapper -->
   <div id="wrapper">
 
@@ -81,7 +83,7 @@
                           @if ($p->paid)
                             <span class="btn-circle btn-sm btn-success mx-2"><i class="fas fa-check"></i></span>تم الدفع
                           @else
-                            <a class="btn btn-primary" href="{{ route('dashboard.pay', ['post' => $p->id]) }}">ادفع</a>
+                            <a class="btn btn-primary" href="{{ route('dashboard.pay.confirm', ['post' => $p->id]) }}">ادفع</a>
                           @endif
                         </td>
                         <td>

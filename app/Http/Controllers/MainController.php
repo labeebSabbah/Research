@@ -19,6 +19,12 @@ class MainController extends Controller
         return view('contact');
     }
 
+    public function category(Category $category)
+    {
+        $version = Version::where('category_id', $category->id)->latest()->first();
+        return view('category', compact('category', 'version'));
+    }
+
     public function search()
     {
         return view('search');

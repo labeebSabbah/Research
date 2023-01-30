@@ -126,49 +126,79 @@
                 <div class="mb-3">
                     <label for="title" class="form-label">الاسم</label>
                     <input type="text" class="form-control" name="title">
+                    @error('title')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                   <label for="num_of_posts" class="form-label">عدد المنشورات</label>
                   <input type="text" class="form-control" name="num_of_posts">
+                  @error('num_of_posts')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">الوصف (اختياري)</label>
                     <textarea class="form-control" name="description" cols="30" rows="10" style="resize: none !important;"></textarea>
+                    @error('description')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                 </div>
                 <div class="row">
                   <div class="mb-3 col-lg-6">
                     <label for="image" class="form-label">الصورة (اختياري)</label>
                     <input type="file" class="form-control" name="image" accept="image/*">
+                    @error('image')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                   </div>
                   <div class="mb-3 col-lg-6">
                   <label for="cover_file" class="form-label">ملف الغلاف</label>
                   <input type="file" class="form-control" name="cover_file" accept=".pdf">
+                  @error('cover_file')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                   </div>
                 </div>
                 <div class="row">
                   <div class="mb-3 col-lg-6">
                     <label for="description_file" class="form-label">الصفحات الأولى في المجلة</label>
                     <input type="file" class="form-control" name="description_file" accept=".pdf">
+                    @error('description_file')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                   </div>
                   <div class="mb-3 col-lg-6">
                     <label for="certification_file" class="form-label">ملف الشهادة</label>
                     <input type="file" class="form-control" name="certification_file" accept=".pdf">
+                    @error('certification_file')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                   </div>
                 </div>
                 <div class="row">
                   <div class="mb-3 col-lg-6">
                     <label for="template_file">ملف النموذج / عربي</label>
                     <input type="file" class="form-control" name="template_file" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                    @error('template_file')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                   </div>
 
                     <div class="mb-3 col-lg-6">
                         <label for="template_file">ملف النموذج / انجليزي</label>
                         <input type="file" class="form-control" name="template_file_en" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                        @error('template_file_en')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                   <div class="mb-3 col-lg-6">
                     <label for="index_file">ملف الفهرس</label>
                     <input type="file" class="form-control" name="index_file" accept=".pdf">
+                    @error('index_file')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                   </div>
                 </div>
                 </div>
@@ -200,47 +230,77 @@
                 <div class="mb-3">
                     <label for="title" class="form-label">الاسم</label>
                     <input type="text" class="form-control" name="title" id="title">
+                    @error('title')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                 </div>
                 <div class="mb-3">
                   <label for="num_of_posts" class="form-label">عدد المنشورات</label>
                   <input type="text" class="form-control" name="num_of_posts" id="num_of_posts">
+                  @error('num_of_posts')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">الوصف (اختياري)</label>
                     <textarea class="form-control" name="description" cols="30" rows="10" style="resize: none !important;" id="description"></textarea>
+                    @error('description')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                 </div>
                 <div class="row">
                   <div class="mb-3 col-lg-6">
                     <label for="image" class="form-label">الصورة (اختياري)</label>
                     <input type="file" class="form-control" name="image" accept="image/*">
+                    @error('image')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                 </div>
                 <div class="mb-3 col-lg-6">
                   <label for="cover_file" class="form-label">ملف الغلاف</label>
                   <input type="file" class="form-control" name="cover_file" accept=".pdf">
+                  @error('cover_file')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                 </div>
                 </div>
                 <div class="row">
                   <div class="mb-3 col-lg-6">
                     <label for="description_file" class="form-label">ملف الوصف</label>
                     <input type="file" class="form-control" name="description_file" accept=".pdf">
+                    @error('description_file')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                   </div>
                   <div class="mb-3 col-lg-6">
                     <label for="certification_file" class="form-label">ملف الشهادة</label>
                     <input type="file" class="form-control" name="certification_file" accept=".pdf">
+                    @error('certification_file')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                   </div>
                 </div>
                 <div class="row">
                   <div class="mb-3 col-lg-6">
                     <label for="template_file">ملف النموذج/ عربي</label>
                     <input type="file" class="form-control" name="template_file" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                    @error('template_file')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                   </div>
                     <div class="mb-3 col-lg-6">
                         <label for="template_file">ملف النموذج/ انجليزي</label>
                         <input type="file" class="form-control" name="template_file_en" accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                        @error('template_file_en')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                   <div class="mb-3 col-lg-6">
                     <label for="index_file">ملف الفهرس</label>
                     <input type="file" class="form-control" name="index_file" accept=".pdf">
+                    @error('index_file')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                   </div>
                 </div>
                 </div>

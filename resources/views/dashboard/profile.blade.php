@@ -44,6 +44,9 @@
                       <div class="mb-3">
                         <label for="name" class="form-label">الاسم</label>
                         <input type="text" name="name" class="form-control" value="{{ auth()->user()->name }}">
+                        @error('name')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="email" class="form-label">البريد الالكتروني</label>
@@ -52,24 +55,39 @@
                       <div class="mb-3">
                         <label for="phone" class="form-label">رقم الهاتف</label>
                         <input type="text" name="phone" class="form-control" value="{{ auth()->user()->phone }}">
+                        @error('phone')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                     </div>
                     <div>
                       <div class="mb-3">
                         <label for="username" class="form-label">اسم المستخدم</label>
                         <input type="text" name="username" class="form-control" value="{{ auth()->user()->username }}">
+                        @error('username')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="newpassword" class="form-label">كلمة السر الجديدة</label>
                         <input type="password" name="newpassword" class="form-control">
+                        @error('newpassword')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="confirmnew" class="form-label">تأكيد كلمة السر الجديدة</label>
                         <input type="password" name="confirmnew" class="form-control">
+                        @error('confirmnew')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="image" class="form-label">صورة</label>
                         <input type="file" class="form-control" name="image" accept="image/*">
+                        @error('image')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                     </div>
                   </form>

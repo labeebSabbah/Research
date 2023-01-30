@@ -46,10 +46,16 @@
                         <div class="mb-3">
                           <label for="title" class="form-label">العنوان</label>
                           <input type="text" name="title" class="form-control" value="{{ $about[0]->value ?? '' }}">
+                          @error('title')
+                              <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                           <label for="description" class="form-label">الوصف</label>
                           <textarea class="form-control" id="editor" name="description" cols="30" rows="10" style="resize: none;">{!! $about[1]->value ?? '' !!}</textarea>
+                          @error('description')
+                              <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                       </div>
                     </form>

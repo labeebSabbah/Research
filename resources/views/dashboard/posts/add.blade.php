@@ -48,28 +48,46 @@
                       <div class="mb-3">
                         <label for="name" class="form-label">اسم المؤلف</label>
                         <input type="text" name="name" class="form-control" value="{{ auth()->user()->name }}">
+                        @error('name')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="title" class="form-label">عنوان المنشور</label>
                         <input type="text" name="title" class="form-control">
+                        @error('title')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="university" class="form-label">اسم الجامعة</label>
                         <input type="text" name="university" class="form-control">
+                        @error('university')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                     </div>
                     <div>
                       <div class="mb-3">
                         <label for="specialty" class="form-label">اسم التخصص</label>
                         <input type="text" name="specialty" class="form-control">
+                        @error('specialty')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="supervisor" class="form-label">اسم المشرف</label>
                         <input type="text" name="supervisor" class="form-control">
+                        @error('supervisor')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="pages" class="form-label">عدد الصفحات</label>
                         <input type="text" name="pages" class="form-control">
+                        @error('pages')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="category_id" class="form-label">التصنيف</label>
@@ -78,22 +96,37 @@
                               <option value="{{ $c->id }}">{{ $c->title }}</option>
                           @endforeach
                         </select>
+                        @error('category_id')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="keywords" class="from-label">كلمات مفتاحية</label>
                         <input type="text" class="form-control" name="keywords">
+                        @error('keywords')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="description">الوصف (اختياري)</label>
                         <textarea name="description" cols="10" rows="5" class="form-control"></textarea>
+                        @error('description')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>
                       <div class="mb-3">
                         <label for="file" class="form-label">ملف المنشور</label>
                         <input type="file" name="file" class="form-control" accept=".pdf">
+                        @error('file')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div> 
                       <div class="mb-3" style="font-size: large">
                         <input type="checkbox" id="share" name="share" class="form-check-input" checked>
                         <label for="share" class="form-check-label mr-3"> اوافق على </label> <a href="{{ route('dashboard.policy') }}" target="_blank">سياسة النشر</a>
+                        @error('share')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                       </div>                    
                     </div>
                   </form>

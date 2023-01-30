@@ -15,6 +15,7 @@
         "setasign/fpdf": "^1.8",
         "setasign/fpdi": "^2.3",
         "setasign/tfpdf": "^1.33",
+        "srmklive/paypal": "~1.0",
         "webklex/laravel-pdfmerger": "^1.3"
     },
     "require-dev": {

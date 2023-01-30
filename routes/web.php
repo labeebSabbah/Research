@@ -13,6 +13,7 @@ use App\Http\Controllers\RejectReasonController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\PaymentController;
 
 
 /*
@@ -33,6 +34,8 @@ Route::get('/page/{page}', [PageController::class, 'show'])->name('page');
 Route::get('/contact', [MainController::class, 'contact'])->name('contact');
 
 Route::post('/contact', [MailController::class, 'contact'])->name('contact');
+
+Route::get('/category/{category}', [MainController::class, 'category'])->name('category');
 
 Route::middleware('guest')->group(function () {
 
@@ -111,7 +114,8 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/templates', [CategoryController::class, 'templates'])->name('templates');
 
-            Route::get('/pay/{post}', [PostController::class, 'pay'])->name('pay');
+            Route::get('confirm/{post}', [PaymentController::class, 'index'])->name('pay.confirm');
+            Route::get('/pay/{post}', [PaymentController::class, 'pay'])->name('pay');
 
             Route::get('/policy', [PostController::class, 'policy'])->name('policy');
 
@@ -132,6 +136,8 @@ Route::middleware('auth')->group(function () {
 
 });
 
+Route::get('/pay/success', [PaymentController::class, 'success'])->name('pay.success');
+Route::get('/pay/cancel', [PaymentController::class, 'cancel'])->name('pay.cancel');
 
 Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');
