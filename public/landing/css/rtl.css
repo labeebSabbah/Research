@@ -1,11 +1,11 @@
 
 
 .rtl {
-  direction: rtl; 
+  direction: rtl;
 }
 
 .ltr {
-  direction: ltr; 
+  direction: ltr;
 }
 
 .rtl .pull-left{
@@ -38,7 +38,7 @@
   margin-left: 0px;
 }
 
-.rtl .main-menu .navigation > li > ul > li > a, 
+.rtl .main-menu .navigation > li > ul > li > a,
 .rtl .main-menu .navigation > li > .megamenu li > a{
   text-align: right;
 }
@@ -111,14 +111,14 @@
   text-align: right;
 }
 
-.rtl .main-menu .navigation > li > ul > li > a:before, 
+.rtl .main-menu .navigation > li > ul > li > a:before,
 .rtl .main-menu .navigation > li > .megamenu li > a:before{
   left: inherit;
   right: 0px;
   content: "\f104";
 }
 
-.rtl .main-menu .navigation > li > ul > li > a:hover, 
+.rtl .main-menu .navigation > li > ul > li > a:hover,
 .rtl .main-menu .navigation > li > .megamenu li > a:hover{
   padding-left: 0px;
   padding-right: 15px;
@@ -268,4 +268,16 @@
 .rtl .feature-block-one .inner-box .btn-box{
   left: inherit;
   right: 50px;
+}
+
+.rtl .page-title .bread-crumb li{
+    padding-left: 15px;
+    margin-left: 5px;
+
+    padding-right: 0;
+    margin-right: 0;
+}
+.rtl .page-title .bread-crumb li:before {
+    right: auto;
+    left: 0;
 }

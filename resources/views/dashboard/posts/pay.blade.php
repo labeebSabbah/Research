@@ -21,7 +21,7 @@
                 <div class="card-body">
                   <div role="form" class="text-start container">
                     <div class="input-group input-group-outline my-3">
-                        <h2 class="text-right">عنوان المنشور: <br> دور القوات المسلحة الاردنية في حماية الوطن</h2>
+                        <h2 class="text-right">عنوان المنشور: <br> {{$post->title}}</h2>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                         <h3 class="text-right">سعر المنشور: <br> 20$</h3>

@@ -95,6 +95,7 @@
         $('#page').val(data);
     }
     function change(data, name, value){
+
         $('#id').val(data);
         $('#name').val(name);
         $('#oldname').val(name);
@@ -102,6 +103,17 @@
         $('#value').val(value);
         @else
         $('#description').html(value);
+        @endif
+    }
+
+    function change_new(e){
+        $('#id').val($(e).attr('att-id'));
+        $('#name').val($(e).attr('att-name'));
+        $('#oldname').val($(e).attr('att-name'));
+        @if (Route::currentRouteName() != 'dashboard.reasons.index')
+        $('#value').val($(e).attr('att-description'));
+        @else
+        $('#description').html($(e).attr('att-description'));
         @endif
     }
   </script>

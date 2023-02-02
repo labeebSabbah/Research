@@ -46,8 +46,12 @@
                       <div class="mb-3">
                         <label>{{ $c->name }}</label>
                         <input type="text" readonly value="{{ $c->value }}" class="form-control mb-2">
-                        <button type="button" class="btn btn-primary" onclick="change({{ $c->id }}, '{{ $c->name }}', '{{ $c->value ?? '' }}')" data-toggle="modal" data-target="#updateModal">تعديل</button>
-                        <button type="submit" class="btn btn-primary">حذف</a>
+                        <button type="button" class="btn btn-primary"
+                                att-id="{{ $c->id }}"
+                                att-name="{{ $c->name}}"
+                                att-description="{{ $c->value ?? '' }}"
+                                onclick="change_new(this)" data-toggle="modal" data-target="#updateModal">تعديل</button>
+                          <button type="submit" class="btn btn-primary">حذف</button>
                       </div>
                     </form>
                       @endforeach

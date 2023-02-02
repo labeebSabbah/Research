@@ -1,4 +1,4 @@
- 
+
 /* Css For Laborex */
 
 /************ TABLE OF CONTENTS ***************
@@ -44,7 +44,7 @@
 
 
 
-/*** 
+/***
 
 ====================================================================
   Reset
@@ -59,7 +59,7 @@
 }
 
 
-/*** 
+/***
 
 ====================================================================
   Global Settings
@@ -144,7 +144,7 @@ input,button,select,textarea{
 ul,li{
   list-style:none;
   padding:0px;
-  margin:0px; 
+  margin:0px;
 }
 
 input{
@@ -276,7 +276,7 @@ h1,h2,h3,h4,h5,h6{
 
 .handle-preloader .animation-preloader .spinner{
   border: 3px solid #ffffff;
-  border-top-color: rgba(255, 255, 255, 0.5); 
+  border-top-color: rgba(255, 255, 255, 0.5);
 }
 
 /* AnimaciÃ³n del preloader */
@@ -614,7 +614,7 @@ img {
 
 
 
-/*** 
+/***
 
 ====================================================================
                         Home-Page-One
@@ -709,7 +709,7 @@ img {
 
 .main-header .logo-box .logo{
   position: relative;
-  max-width: 240px;
+  max-width: 400px;
   width: 100%;
 }
 
@@ -857,7 +857,7 @@ img {
 
 .main-menu .navigation > li.current > a,
 .main-menu .navigation > li:hover > a{
-  
+
 }
 
 .main-menu .navigation > li.dropdown > a:before{
@@ -897,7 +897,7 @@ img {
 
 .main-menu .navigation > li > ul.from-right{
   left:auto;
-  right:0px;  
+  right:0px;
 }
 
 .main-menu .navigation > li > ul > li{
@@ -960,7 +960,7 @@ img {
 }
 
 .main-menu .navigation > li > ul > li:last-child{
-  border-bottom:none; 
+  border-bottom:none;
 }
 
 .main-menu .navigation > li > ul > li > a,
@@ -1019,7 +1019,7 @@ img {
   font-size:16px;
   font-weight:800;
   text-align:center;
-  z-index:5;  
+  z-index:5;
 }
 
 .main-menu .navigation > li > ul > li > ul{
@@ -1048,7 +1048,7 @@ img {
 
 .main-menu .navigation > li > ul > li > ul.from-right{
   left:auto;
-  right:0px;  
+  right:0px;
 }
 
 .main-menu .navigation > li > ul > li > ul > li{
@@ -1097,11 +1097,11 @@ img {
 }
 
 .main-menu .navigation > li > ul > li > ul > li:last-child{
-  border-bottom:none; 
+  border-bottom:none;
 }
 
 .main-menu .navigation > li > ul > li > ul > li:last-child{
-  border-bottom:none; 
+  border-bottom:none;
 }
 
 .main-menu .navigation > li > ul > li > ul > li > a{
@@ -1154,7 +1154,7 @@ img {
   line-height:24px;
   font-size:16px;
   font-weight:900;
-  z-index:5;  
+  z-index:5;
 }
 
 .main-menu .navigation > li.dropdown:hover > ul,
@@ -1173,7 +1173,7 @@ img {
   filter: alpha(opacity=100);
   top: 0%;
   -webkit-transform: rotateX(0);
-  transform: rotateX(0); 
+  transform: rotateX(0);
 }
 
 .main-menu .navigation li.dropdown .dropdown-btn{
@@ -1194,7 +1194,7 @@ img {
 
 .main-menu .navigation li.current.dropdown .dropdown-btn,
 .main-menu .navigation li:hover .dropdown-btn{
-  
+
 }
 
 .main-menu .navigation li.dropdown ul li.dropdown .dropdown-btn{
@@ -1277,13 +1277,13 @@ img {
 }
 
 .mobile-menu .navbar-collapse{
-  display:block !important; 
+  display:block !important;
 }
 
 .mobile-menu .nav-logo{
   position:relative;
   padding:50px 25px;
-  text-align:left;  
+  text-align:left;
   padding-bottom: 100px;
 }
 
@@ -1410,7 +1410,7 @@ img {
   -moz-transition: all 500ms ease;
   -ms-transition: all 500ms ease;
   -o-transition: all 500ms ease;
-  transition: all 500ms ease; 
+  transition: all 500ms ease;
 }
 
 .mobile-menu .navigation li ul li > a{
@@ -1430,7 +1430,7 @@ img {
   -moz-transition: all 500ms ease;
   -ms-transition: all 500ms ease;
   -o-transition: all 500ms ease;
-  transition: all 500ms ease; 
+  transition: all 500ms ease;
 }
 
 .mobile-menu .navigation li.current > a:before{
@@ -1454,7 +1454,7 @@ img {
   -moz-transition: all 500ms ease;
   -ms-transition: all 500ms ease;
   -o-transition: all 500ms ease;
-  transition: all 500ms ease; 
+  transition: all 500ms ease;
   z-index:5;
 }
 
@@ -1462,7 +1462,7 @@ img {
   color: #ffffff;
   -webkit-transform:rotate(90deg);
   -ms-transform:rotate(90deg);
-  transform:rotate(90deg);  
+  transform:rotate(90deg);
 }
 
 .mobile-menu .navigation li > ul,
@@ -1491,11 +1491,11 @@ img {
   -moz-transition: all 500ms ease;
   -ms-transition: all 500ms ease;
   -o-transition: all 500ms ease;
-  transition: all 500ms ease; 
+  transition: all 500ms ease;
 }
 
 .mobile-menu .social-links li a:hover{
-  
+
 }
 
 div#mCSB_1_container{
@@ -1528,7 +1528,7 @@ div#mCSB_1_container{
 }
 
 .mobile-menu .contact-info ul li a:hover{
-  
+
 }
 
 .mobile-menu .contact-info ul li:last-child{
@@ -1594,7 +1594,7 @@ div#mCSB_1_container{
   position:relative;
   padding:0px 15px 0px;
   max-width:1024px;
-  margin:0 auto;  
+  margin:0 auto;
   margin-top:150px;
   margin-bottom: 100px;
   transition: all 900ms ease;
@@ -1649,7 +1649,7 @@ div#mCSB_1_container{
   margin-bottom:20px;
   margin-top: 30px;
   letter-spacing:1px;
-  text-align:center;  
+  text-align:center;
 }
 
 .search-popup .recent-searches{
@@ -1660,7 +1660,7 @@ div#mCSB_1_container{
 
 .search-popup .recent-searches li{
   display:inline-block;
-  margin:0px 10px 10px 0px; 
+  margin:0px 10px 10px 0px;
 }
 
 .search-popup .recent-searches li a{
@@ -1678,7 +1678,7 @@ div#mCSB_1_container{
 }
 
 .search-popup .recent-searches li a:hover{
-  
+
 }
 
 
@@ -1971,7 +1971,7 @@ div#mCSB_1_container{
 }
 
 .service-block-one .inner-box h4 a:hover{
-  
+
 }
 
 .service-block-one .inner-box p{
@@ -2164,7 +2164,7 @@ div#mCSB_1_container{
   border-radius: 50%;
 }
 
-.video-section .video-btn a:after, 
+.video-section .video-btn a:after,
 .video-section .video-btn a:before {
   width: 100%;
   height: 100%;
@@ -2714,7 +2714,7 @@ div#mCSB_1_container{
   -ms-transition:all 1500ms ease;
   -o-transition:all 1500ms ease;
   -moz-transition:all 1500ms ease;
-  transition:all 1500ms ease; 
+  transition:all 1500ms ease;
 }
 
 
@@ -3397,7 +3397,7 @@ div#mCSB_1_container{
 }
 
 
-/*** 
+/***
 
 ====================================================================
                         Home-Page-Two
@@ -3549,7 +3549,7 @@ div#mCSB_1_container{
   -o-transition:all .4s ease-in .8s;
   transition:all .4s ease-in .8s;
   cursor:url(../images/icons/cross-out.png),
-  pointer; 
+  pointer;
   z-index: 999999;
 }
 
@@ -3668,7 +3668,7 @@ div#mCSB_1_container{
 }
 
 .close-side-widget:hover{
-  
+
 }
 
 .sidebar-info-contents .content-inner{
@@ -3681,7 +3681,7 @@ div#mCSB_1_container{
 
 .sidebar-info-contents .content-inner .logo img{
   display:inline-block;
-  max-width:100%; 
+  max-width:100%;
 }
 
 .sidebar-info-contents .content-inner .content-box{
@@ -3776,7 +3776,7 @@ div#mCSB_1_container{
 }
 
 .sidebar-info-contents .content-inner .contact-info ul li a:hover{
-  
+
 }
 
 .sidebar-info-contents .content-inner .contact-info h4{
@@ -4767,7 +4767,7 @@ h4 a:hover{
 }
 
 
-/*** 
+/***
 
 ====================================================================
                         Home-Page-Three
@@ -5300,7 +5300,7 @@ h4 a:hover{
 }
 
 .accordion-box .block .acc-content.current{
-  display:block;  
+  display:block;
 }
 
 .accordion-box .block .acc-btn{
@@ -5627,7 +5627,7 @@ h4 a:hover{
 }
 
 
-/*** 
+/***
 
 ====================================================================
                         Home-Page-Four
@@ -6087,7 +6087,7 @@ h4 a:hover{
 }
 
 .tabs-box .tab.active-tab{
-  display:block;  
+  display:block;
 }
 
 .tabs-box .tab{
@@ -6798,7 +6798,7 @@ h4 a:hover{
 }
 
 
-/*** 
+/***
 
 ====================================================================
                         Home-Page-Five
@@ -7146,7 +7146,7 @@ h4 a:hover{
 }
 
 .three-item-carousel .team-block-one .inner-box .image-box:before{
-  z-index: 1;
+  z-index: 0;
 }
 
 .three-item-carousel .team-block-one .inner-box .image-box .social-style-one{
@@ -7159,7 +7159,7 @@ h4 a:hover{
 
 
 
-/*** 
+/***
 
 ====================================================================
                         About-Page
@@ -7393,7 +7393,7 @@ h4 a:hover{
   border-radius: 50%;
 }
 
-.video-style-two .video-btn a:after, 
+.video-style-two .video-btn a:after,
 .video-style-two .video-btn a:before {
   width: 100%;
   height: 100%;
@@ -7488,7 +7488,7 @@ h4 a:hover{
 }
 
 
-/*** 
+/***
 
 ====================================================================
                         Books-Page
@@ -7832,6 +7832,9 @@ h4 a:hover{
   color: #222;
   margin-bottom: 8px;
 }
+.default-form .form-group label.error{
+    color: #dc3545 !important;
+}
 
 .default-form .form-group input[type='text'],
 .default-form .form-group input[type='email'],
@@ -8100,7 +8103,7 @@ h4 a:hover{
 }
 
 
-/*** 
+/***
 
 ====================================================================
                         Team-Page
@@ -8391,7 +8394,7 @@ h4 a:hover{
 }
 
 
-/*** 
+/***
 
 ====================================================================
                         Events-Page
@@ -8608,7 +8611,7 @@ h4 a:hover{
 }
 
 
-/*** 
+/***
 
 ====================================================================
                         Gallery-Page
@@ -8690,7 +8693,7 @@ h4 a:hover{
 }
 
 
-/*** 
+/***
 
 ====================================================================
                         Blog-Page
@@ -9199,11 +9202,11 @@ h4 a:hover{
 }
 
 .blog-details-content .post-share-option .social-links li:nth-child(2) a{
-  
+
 }
 
 .blog-details-content .post-share-option .social-links li:last-child a{
-  
+
 }
 
 .blog-details-content .author-box{
@@ -9383,7 +9386,7 @@ h4 a:hover{
 }
 
 
-/*** 
+/***
 
 ====================================================================
                         Contact-Page
@@ -9415,7 +9418,8 @@ h4 a:hover{
   position: relative;
   display: inline-block;
   float: left;
-  width: 33.333%;
+  /*width: 33.333%;*/
+  width: 50%;
   padding-left: 95px;
 }
 

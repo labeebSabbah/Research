@@ -28,13 +28,11 @@ class VersionController extends Controller
 
         $v = Version::where('category_id', $c)->latest()->first();
         if ($v === NULL) {
-
             $v = Version::create([
                 'title' => 1,
                 'file' => VersionController::merge([$f], 1, $category, $f),
                 'category_id' => $c
             ]);
-
         } else {
 
             if (count($v->posts) >= $category->num_of_posts)

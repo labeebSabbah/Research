@@ -11,16 +11,16 @@ class MailController extends Controller
     public function contact(Request $r)
     {
         $data = array(
-            'name' => 'Website',
+            'name' => $r->name,
             'sent' => $r->message,
             'phone' => $r->phone,
         );
 
         Mail::send('mail', $data, function($message) use ($r) {
-            $message->to("lablob.sabbah@gmail.com", "TDC Assassin")->subject($r->subject);
+            $message->to("info@globaljournal.web.jo", "TDC Assassin")->subject($r->subject);
             $message->from($r->email, $r->name);
         });
 
-        return redirect()->back();
+        return redirect(route('contact'))->with('success','تمت عملية الارسال بنجاح');
     }
 }

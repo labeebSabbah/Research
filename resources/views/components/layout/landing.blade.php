@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- Mirrored from azim.commonsupport.com/Laborex/index-rtl.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 14 Jan 2023 15:04:22 GMT -->
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
-<title>Research</title>
+<title>مجلة أبحاث المعرفة الإنسانية الجديدة</title>
 
 <!-- Fav Icon -->
 <link rel="icon" href="{{ url('landing/images/favicon.ico') }}" type="image/x-icon">
@@ -42,34 +40,6 @@
 
         <x-landing.header />
 
-        {{-- <!-- Mobile Menu  -->
-        <div class="mobile-menu">
-            <div class="menu-backdrop"></div>
-            <div class="close-btn"><i class="fas fa-times"></i></div>
-
-            <nav class="menu-box">
-                <div class="nav-logo"><a href="index.html"><img src="{{ url('landing/images/logo-2.png') }}" alt="" title=""></a></div>
-                <div class="menu-outer"><!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header--></div>
-                <div class="contact-info">
-                    <h4>Contact Info</h4>
-                    <ul>
-                        <li>Chicago 12, Melborne City, USA</li>
-                        <li><a href="tel:+8801682648101">+88 01682648101</a></li>
-                        <li><a href="mailto:info@example.com">info@example.com</a></li>
-                    </ul>
-                </div>
-                <div class="social-links">
-                    <ul class="clearfix">
-                        <li><a href="index.html"><span class="fab fa-twitter"></span></a></li>
-                        <li><a href="index.html"><span class="fab fa-facebook-square"></span></a></li>
-                        <li><a href="index.html"><span class="fab fa-pinterest-p"></span></a></li>
-                        <li><a href="index.html"><span class="fab fa-instagram"></span></a></li>
-                        <li><a href="index.html"><span class="fab fa-youtube"></span></a></li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-        <!-- End Mobile Menu --> --}}
 
         {{ $slot }}
 

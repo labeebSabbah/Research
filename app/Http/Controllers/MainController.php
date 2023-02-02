@@ -25,6 +25,12 @@ class MainController extends Controller
         return view('category', compact('category', 'version'));
     }
 
+    public function templates()
+    {
+        $categories = Category::all();
+        return view('templates', compact('categories' ));
+    }
+
     public function search()
     {
         return view('search');

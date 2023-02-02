@@ -103,5 +103,5 @@ class PaymentController extends Controller
 
         dd('حدث خطأ اثناء الدفع');
     }
-    
+
 }

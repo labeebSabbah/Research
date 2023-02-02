@@ -30,18 +30,20 @@
                             </li>
 
 
-                            <li class="dropdown"><a href="index.html">التصنيفات</a>
-                                <ul>
+                            <li class="dropdown"><a >المجالات</a>
+                                <ul style="max-height: 310px;overflow: auto;">
                                     @foreach ($categories as $category)
-                                        <li><a href="">{{ $category->title }}</a></li>
+                                        <li><a href="{{route('category',$category->id)}}">{{ $category->title }}</a></li>
                                     @endforeach
                                 </ul>
                             </li>
 
-                            <li class="dropdown"><a href="index.html">الاصدارات</a>
+                            <li class=""><a href="{{route('templates')}}">القوالب</a></li>
+
+                            <li class="dropdown d-none"><a >الاصدارات</a>
                                 <ul>
-                                    <li><a href="gallery.html">تصنيف 1</a></li>
-                                    <li><a href="gallery-2.html">تصنيف 1</a></li>
+                                    <li><a >تصنيف 1</a></li>
+                                    <li><a >تصنيف 1</a></li>
                                 </ul>
                             </li>
 

@@ -1,18 +1,16 @@
 <!-- main header -->
 <header class="main-header style-two">
     <!-- header-top -->
-    <div class="header-top d-none" >
+    <div class="header-top" >
         <div class="auto-container">
             <div class="top-inner clearfix">
                 <ul class="social-links pull-left clearfix">
-                    <li><h6>Share with on:</h6></li>
-                    <li><a href="index.html"><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="index.html"><i class="fab fa-twitter"></i></a></li>
-                    <li><a href="index.html"><i class="fab fa-instagram"></i></a></li>
-                    <li><a href="index.html"><i class="fab fa-pinterest-p"></i></a></li>
+                    <li><h6>مجلة أبحاث المعرفة الإنسانية الجديدة، تصدر عن: المحور الإنساني العالمي للتنمية والأبحاث </h6></li>
+                    <li class="d-none"><a href=""><i class="fab fa-facebook-f"></i></a></li>
+
                 </ul>
                 <div class="text pull-right">
-                    <p><i class="icon-22"></i>Every day: 9:00am - 6:00pm</p>
+                    <p><i class="icon-22 d-none"></i> ISSN:2708-7239 Print & ISSN:2710-5059 Online</p>
                 </div>
             </div>
         </div>
@@ -29,7 +27,7 @@
                     <li>
                         <i class="icon-29"></i>
                         <h5>البريد الالكتروني</h5>
-                        <p><a href="mailto:info@example.com">info@global-journal.org</a></p>
+                        <p><a href="mailto:info@global-journal.org">info@global-journal.org</a></p>
                     </li>
 
                     @if(auth()->user())
@@ -80,23 +78,16 @@
     <nav class="menu-box">
         <div class="nav-logo"><a href="index.html"><img src="assets/images/logo-2.png" alt="" title=""></a></div>
         <div class="menu-outer"><!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header--></div>
-        <div class="contact-info">
-            <h4>Contact Info</h4>
-            <ul>
-                <li>Chicago 12, Melborne City, USA</li>
-                <li><a href="tel:+8801682648101">+88 01682648101</a></li>
-                <li><a href="mailto:info@example.com">info@example.com</a></li>
+        <div class="contact-info text-center pt-5">
+            <h4>تواصل معنا</h4>
+            <ul >
+                <li>Global Humanitarian Pivot for Development and Research
+                    P.O.BOX: 711661 AMMAN 11171 JORDAN</li>
+                <li><a >P.O.BOX: 711661 AMMAN 11171 JORDAN</a></li>
+                <li><a href="info@humanitarianpivot.org">info@humanitarianpivot.org</a></li>
             </ul>
         </div>
-        <div class="social-links">
-            <ul class="clearfix">
-                <li><a href="index.html"><span class="fab fa-twitter"></span></a></li>
-                <li><a href="index.html"><span class="fab fa-facebook-square"></span></a></li>
-                <li><a href="index.html"><span class="fab fa-pinterest-p"></span></a></li>
-                <li><a href="index.html"><span class="fab fa-instagram"></span></a></li>
-                <li><a href="index.html"><span class="fab fa-youtube"></span></a></li>
-            </ul>
-        </div>
+
     </nav>
 </div>
 <!-- End Mobile Menu -->

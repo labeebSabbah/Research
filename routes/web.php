@@ -36,6 +36,7 @@ Route::get('/contact', [MainController::class, 'contact'])->name('contact');
 Route::post('/contact', [MailController::class, 'contact'])->name('contact');
 
 Route::get('/category/{category}', [MainController::class, 'category'])->name('category');
+Route::get('/templates', [MainController::class, 'templates'])->name('templates');
 
 Route::middleware('guest')->group(function () {
 
@@ -145,10 +146,10 @@ Route::get('/clear-cache', function() {
 });
 
 //Clear route cache:
-/*Route::get('/route-cache', function() {
+Route::get('/route-cache', function() {
     Artisan::call('route:cache');
     return 'Routes cache has been cleared';
-});*/
+});
 
 //Clear config cache:
 Route::get('/config-cache', function() {
