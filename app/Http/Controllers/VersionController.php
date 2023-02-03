@@ -108,9 +108,8 @@ class VersionController extends Controller
         $pdf->setSourceFile($cover);
         $pdf->useTemplate($pdf->importPage(1));
         $pdf->setFont("DejaVuSans", "", 20);
-        $pdf->WriteText(30, 20, "No. " . $no);
-        $pdf->WriteText(100, 120, $cat . " Category");
-        $pdf->Image($qr->getDataUri(), 30, 250, 30, 30, 'png');
+        $pdf->WriteText(15, 15, "No. " . $no);
+        $pdf->Image($qr->getDataUri(), 15, 237, 30, 30, 'png');
         $pdf->Output($output, 'F');
         return $output;
     }
@@ -142,12 +141,14 @@ class VersionController extends Controller
             $image = "<img src='{$qr->getDataUri()}'>";
             $data .= '<tr>'
             . '<td>' . $id . '</td>'
-            . '<td>' . $f->title . '</td>'
+            . '<td>' . $f->title . '<br>' . $f->user->name . '</td>'
             . "<td>{$image}</td>"
             . '</tr>';
             $id = $id + 1;
         }
-        $html = '<br><br><br><br><br><br><table autosize="1" style="text-align: center; font-size: 50px;">
+        $html = '
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>       
+        <table autosize="1" style="text-align: center; font-size: 50px;">
 		<tr>
 		<th style="width: 10%"><strong>رقم البحث</strong></th>
 		<th style="width: 70%"><strong>اسم البحث</strong></th>
@@ -185,12 +186,15 @@ class VersionController extends Controller
         $pdf->setSourceFile($cover);
         $pdf->useTemplate($pdf->importPage(1));
         $pdf->setFont("DejaVuSans", "", 20);
-        $pdf->WriteText(30, 20, "No. " . $no);
-        $pdf->WriteText(100, 120, $post->category->title . " Category");
-        $pdf->WriteText(100, 150, $post->title);
-        $pdf->WriteText(100, 180, $post->user->name);
-        $pdf->WriteText(100, 220, "" . date_format($post->created_at, 'Y-m-d'));
-        $pdf->Image($qr->getDataUri(), 30, 250, 30, 30, 'png');
+        $pdf->WriteText(15, 15, "No. " . $no);
+        $date = date_format($post->created_at, 'Y-m-d');
+        $html = "<div style='text-align: center; position: fixed; top: 60%; width: 100%; font-size: 40px;'>
+        <p>{$post->title}</p>
+        <p>{$post->user->name}</p>
+        <p>{$date}</p>
+    </div>";
+        $pdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
+        $pdf->Image($qr->getDataUri(), 15, 237, 30, 30, 'png');
         $pdf->Output($output, 'F');
         return $output;
     }
