@@ -318,6 +318,7 @@
 			nav:true,
 			smartSpeed: 500,
 			autoplay: 1000,
+            autoWidth:false,
 			navText: [ '<span class="icon-19"></span>', '<span class="icon-18"></span>' ],
 			responsive:{
 				0:{
@@ -333,7 +334,7 @@
 					items:2
 				},
 				1024:{
-					items:3
+					items:4
 				}
 			}
 		});

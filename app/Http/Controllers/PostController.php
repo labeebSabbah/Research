@@ -48,7 +48,9 @@ class PostController extends Controller
             'file' => 'required|file'
         ]);
 
+
         $data = $r->all();
+        $data['invoice_id'] = rand(1000,1000000);
 
         if ($data['file']->getClientOriginalExtension() != 'pdf') {
             return back()->withErrors('');

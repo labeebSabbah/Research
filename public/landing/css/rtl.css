@@ -1,7 +1,38 @@
+@font-face {
+    font-family: "Tajawal";
+    src: url("../fonts/Tajawal/Tajawal-Light.ttf") format("truetype");
+}
+@font-face {
+    font-family: "Cairo";
+    src: url("../fonts/Cairo/static/Cairo-Light.ttf") format("truetype");
+}
 
+body,input,button,select,textarea,p,
+.theme-btn-two,
+.main-menu .navigation > li > a,
+.main-menu .navigation > li > ul > li > a,
+.main-menu .navigation > li > .megamenu li > a,
+.main-menu .navigation > li > ul > li > ul > li > a,
+.footer-top .logo-widget .text .info li a,
+.education-block-one .inner-box h3 span,
+.awards-section .inner-box .single-item h3 span,
+.blog-sidebar .sidebar-widget .tags-list li a{
+    font-family: "Cairo" !important;
+}
+
+h1,h2,h3,h4,h5,h6,a,
+.handle-preloader .animation-preloader .txt-loading .letters-loading,
+.counter-block-one .inner-box .count-outer,
+.counter-block-two .inner-box .count-outer,
+.page-title .bread-crumb li,
+.gallery-page-section .filters .filter-tabs li,
+.blog-details-content .text .list-item li{
+    font-family: "Tajawal" !important;
+}
 
 .rtl {
   direction: rtl;
+
 }
 
 .ltr {
@@ -280,4 +311,21 @@
 .rtl .page-title .bread-crumb li:before {
     right: auto;
     left: 0;
+}
+
+.rtl .team-style-two .owl-nav{
+    bottom: 45px;
+}
+
+.team-block-one .inner-box .lower-content .designation{
+    color: #000;
+    font-weight: bold;
+}
+.rtl .team-style-two .sec-title p{
+    color: #000;
+    font-weight: bold;
+}
+.footer-bottom p, .footer-bottom a{
+    color: #000 !important;
+    font-weight: bold !important;
 }

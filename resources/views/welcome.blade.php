@@ -319,10 +319,15 @@ echo phpinfo();
             <div class="auto-container">
                 <div class="row clearfix">
                     <div class="col-lg-4 col-md-12 col-sm-12 content-column">
-                        <div class="sec-title">
+                        <div class="sec-title text-dark">
                            {{-- <h6>Team Member</h6>--}}
-                            <h2>الهيئة الاستشارية العلمية العليا</h2>
-                            <p></p>
+                            <h2 >   هيئة التحرير ومستشاروه</h2>
+                            <p class="bold-text"  style="color: #000"><b>المدير العام:</b> الأستاذ الدكتور أحمد النعيمي/ الأردن</p>
+                            <p  class="bold-text" style="color: #000"><b>رئيس التحرير:</b> الأستاذ الدكتور العيد جلولي/ الجزائر</p>
+                            <p  class="bold-text" style="color: #000"><b>مدير التحرير: </b>الدكتوره انصاف بدر</p>
+                            <p  class="bold-text" style="color: #000"><b>سكرتير التحرير: </b>الأستاذة مرام رحمون</p>
+                            <br>
+                            <p  class="bold-text" style="direction: rtl"><b> <<<< </b> <b>الهيئة والمستشارون</b></p>
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-12 col-sm-12 inner-column">
@@ -335,7 +340,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الأستاذ الدكتور محمد ثناء الله الندوي</a></h4>
-                                            <span class="designation">الهند/ جامعة علي قراه الإسلامية</span>
+                                            <span class="designation bold-text">الهند/ جامعة علي قراه الإسلامية</span>
                                         </div>
                                     </div>
                                 </div>
@@ -346,7 +351,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الأستاذة الدكتوره أوميدا غفارواه</a></h4>
-                                            <span class="designation">طاجكستان/ عميدة معهد العلوم الاجتماعية في جامعة خجند</span>
+                                            <span class="designation bold-text">طاجكستان/ عميدة معهد العلوم الاجتماعية في جامعة خجند</span>
                                         </div>
                                     </div>
                                 </div>
@@ -357,7 +362,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الدكتور أحمد أحمد وسيدات</a></h4>
-                                            <span class="designation">موريتانيا/ جامعة نوكشوط العصرية</span>
+                                            <span class="designation bold-text">موريتانيا/ جامعة نوكشوط العصرية</span>
                                         </div>
                                     </div>
                                 </div>
@@ -368,7 +373,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الأستاذ الدكتور العيد جلولي</a></h4>
-                                            <span class="designation">الجزائر/ جامعة قاصدي مرباح-ورقلة</span>
+                                            <span class="designation bold-text">الجزائر/ جامعة قاصدي مرباح-ورقلة</span>
                                         </div>
                                     </div>
                                 </div>
@@ -379,7 +384,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الأستاذ الدكتور بروس ستوارت هال</a></h4>
-                                            <span class="designation">الولايات المتحدة الأمريكية/ جامعة كاليفورنيا</span>
+                                            <span class="designation bold-text">الولايات المتحدة الأمريكية/ جامعة كاليفورنيا</span>
                                         </div>
                                     </div>
                                 </div>
@@ -390,7 +395,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الدكتورة آمنة محمود أبو حطب</a></h4>
-                                            <span class="designation">فلسطين/ وزارة التربية والتعليم العالي الفلسطينية</span>
+                                            <span class="designation bold-text">فلسطين/ وزارة التربية والتعليم العالي الفلسطينية</span>
                                         </div>
                                     </div>
                                 </div>
@@ -401,7 +406,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الأستاذ الدكتور محمد شهيد ماتي</a></h4>
-                                            <span class="designation">جنوب إفريقيا/ جامعة جوهانسبورغ</span>
+                                            <span class="designation bold-text">جنوب إفريقيا/ جامعة جوهانسبورغ</span>
                                         </div>
                                     </div>
                                 </div>
@@ -412,7 +417,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الأستاذ الدكتور رفعت عبدالله سليمان حسين</a></h4>
-                                            <span class="designation">مصر/ جامعة قناة السويس</span>
+                                            <span class="designation bold-text">مصر/ جامعة قناة السويس</span>
                                         </div>
                                     </div>
                                 </div>
@@ -423,7 +428,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الدكتور حسين حسين زيدان الخلف</a></h4>
-                                            <span class="designation">العراق/ وزارة التربية والتعليم العراقية</span>
+                                            <span class="designation bold-text">العراق/ وزارة التربية والتعليم العراقية</span>
                                         </div>
                                     </div>
                                 </div>
@@ -434,7 +439,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الدكتورة ضياء نوالي</a></h4>
-                                            <span class="designation">المغرب/ جامعة ابن زهر</span>
+                                            <span class="designation bold-text">المغرب/ جامعة ابن زهر</span>
                                         </div>
                                     </div>
                                 </div>
@@ -445,7 +450,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الدكتور حسام العفوري</a></h4>
-                                            <span class="designation">الأردن/ الجامعة العربية المفتوحة</span>
+                                            <span class="designation bold-text">الأردن/ الجامعة العربية المفتوحة</span>
                                         </div>
                                     </div>
                                 </div>
@@ -456,7 +461,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الأستاذ الدكتور عبد الرحمن الفواز</a></h4>
-                                            <span class="designation">الأردن/ جامعة البلقاء التطبيقية</span>
+                                            <span class="designation bold-text">الأردن/ جامعة البلقاء التطبيقية</span>
                                         </div>
                                     </div>
                                 </div>
@@ -467,7 +472,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الدكتور حبيب أخروف</a></h4>
-                                            <span class="designation">فرنسا/ جامعة السوربون</span>
+                                            <span class="designation bold-text">فرنسا/ جامعة السوربون</span>
                                         </div>
                                     </div>
                                 </div>
@@ -478,7 +483,7 @@ echo phpinfo();
                                         </figure>
                                         <div class="lower-content">
                                             <h4><a >الأستاذ الدكتور أحمد النعيمي</a></h4>
-                                            <span class="designation">الأردن/ جامعة البلقاء التطبيقية</span>
+                                            <span class="designation bold-text">الأردن/ جامعة البلقاء التطبيقية</span>
                                         </div>
                                     </div>
                                 </div>

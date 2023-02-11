@@ -22,7 +22,9 @@ class Post extends Model
         'file',
         'paid',
         'category_id',
-        'keywords'
+        'keywords',
+        'invoice_id'
+
     ];
 
     protected $dateFormat = 'Y-m-d';
@@ -32,8 +34,8 @@ class Post extends Model
         'updated_at' => 'date:Y-m-d',
         'published_on' => 'date:Y-m-d'
     ];
-    
-    public function user() 
+
+    public function user()
     {
         return $this->belongsTo(User::class, 'author_id');
     }

@@ -1,5 +1,11 @@
 <x-layout.landing>
 
+    <style>
+        .custom-page-html table{
+            width: 100% !important;
+            margin: 15px 0;
+        }
+    </style>
 
         <!-- Page Title -->
         <section class="page-title centred" style="background-image: url({{ url('landing/images/background/page-title') }}.jpg);">
@@ -17,8 +23,10 @@
             </div>
         </section>
         <!-- End Page Title -->
-
+    <div class="sidebar-page-container p-5 custom-page-html" style="direction: rtl;text-align: right">
         {!! $page->content !!}
+    </div>
+
 
 
 
