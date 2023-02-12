@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UploadYourPost;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
@@ -27,7 +29,7 @@ class PaymentController extends Controller
         $data['items'] = [
             [
                 'name' => 'Post',
-                'price' => '20',
+                'price' => '1',//change
                 'desc'  => 'Payment for post',
                 'qty' => 1
             ]
@@ -35,12 +37,12 @@ class PaymentController extends Controller
 
 
 
-        //$data['invoice_id'] = $post->invoice_id;
-        $data['invoice_id'] = $post->id;
+        $data['invoice_id'] = $post->invoice_id;
+        //$data['invoice_id'] = $post->id;
         $data['invoice_description'] = "Order #{$data['invoice_id']} Invoice";
         $data['return_url'] = route('pay.success');
         $data['cancel_url'] = route('pay.cancel');
-        $data['total'] = 20;
+        $data['total'] = 1;//change
         $provider = new ExpressCheckout;
         $response = $provider->setExpressCheckout($data);
         $response = $provider->setExpressCheckout($data, true);
@@ -69,7 +71,7 @@ class PaymentController extends Controller
         $data['items'] = [
             [
                 'name' => 'Post',
-                'price' => '20',
+                'price' => '1',//change
                 'desc'  => 'Payment for post',
                 'qty' => 1
             ]
@@ -79,23 +81,31 @@ class PaymentController extends Controller
         $data['invoice_description'] = "Order #{$data['invoice_id']} Invoice";
         $data['return_url'] = route('pay.success');
         $data['cancel_url'] = route('pay.cancel');
-        $data['total'] = 20;
+        $data['total'] = 1;//change
 
         $payment_status = $provider->doExpressCheckoutPayment($data, $token, $PayerID);
 
         if (in_array(strtoupper($payment_status['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
 
-            $post = Post::find($response['INVNUM']);//from id
-            //$post = Post::where('invoice_id',$response['INVNUM'])->first();
-            $post->update(['paid' => true]);
+            //$post = Post::find($response['INVNUM']);//from id
+            $post = Post::where('invoice_id',$response['INVNUM'])->first();
+            $post->update([
+                'paid' => true,
+                'pay_amount' => '1',//change
+                'paid_at' => now(),
+            ]);
 
             $user = User::find($post->author_id);
             $user->update(['paid' => true]);
 
+            //auth()->user()->email
+            $admin = User::where('admin', 1)->first();
+            Mail::to($admin->email)->send(new UploadYourPost($post));
+
             $message = 'added a new post.';
             $reciever = User::where('admin', 1)->first()->id;
             NotificationController::new($reciever, $message);
-
+            
             return redirect()->route('dashboard.posts.index');
 
         }

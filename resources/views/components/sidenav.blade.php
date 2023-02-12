@@ -80,7 +80,7 @@
     <a href="{{ route('dashboard.categories.index') }}" class="nav-link">
       <i class="fa fa-list-alt"></i>
       <span>
-        التصنيفات
+        المجلات
       </span>
     </a>
   </li>
@@ -88,7 +88,7 @@
     <a class="nav-link" href="{{ route('dashboard.admin.posts') }}">
       <i class="fa fa-file"></i>
       <span>
-        اخر المنشورات
+        البحوث
       </span>
     </a>
   </li>
@@ -104,7 +104,7 @@
   <li class="nav-item">
     <a href="{{ route('dashboard.posts.index') }}" class="nav-link">
       <i class="fa fa-file"></i>
-      منشوراتي
+      ابحاثي
     </a>
   </li>
   @endif

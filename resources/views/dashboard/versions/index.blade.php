@@ -1,7 +1,7 @@
 <x-layout.app>
 
-    <x-slot:title>التصنيفات</x-slot>
-
+ <x-slot:title>الاصدارات</x-slot>
+ 
     <x-slot:style>
         <link href="{{ url('/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     </x-slot>
@@ -25,35 +25,29 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
-              <h6 class="m-0 font-weight-bold text-primary text-right">التصنيفات</h6>
+              <h6 class="m-0 font-weight-bold text-primary text-right">الاصدارات</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered text-right" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>التصنيف</th>
-                      <th>تاريخ النشر</th>
-                      <th>رقم العدد</th>
-                      <th>تصفح</th>
+                      <th>المجلة</th>
+                      <th>رقم المجلد</th>
+                      <th>عدد البحوث</th>
+                      <th>الاعدادات</th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                      <th>التصنيف</th>
-                      <th>تاريخ النشر</th>
-                      <th>رقم العدد</th>
-                      <th>تصفح</th>
-                    </tr>
-                  </tfoot>
+
                   <tbody>
                     @foreach ($versions as $v)
                       <tr>
                         <td>{{ $v->category->title }}</td>
-                        <td>{!! date_format($v->created_at, 'Y-m-d') !!}</td>
                         <td>{{ $v->title }}</td>
+                         <td>{{count($v->posts)}}</td>
                         <td>
                             <a href="{{ url($v->file) }}" target="_blank" class="btn btn-primary">تصفح</a>
+                            <a href="{{ route('dashboard.rebuild', ['v' => $v->id]) }}" class="btn btn-primary">اعادة انشاء</a>
                         </td>
                       </tr>
                     @endforeach

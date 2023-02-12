@@ -19,9 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->integer('pages');
-            $table->string('supervisor');
             $table->string('university');
-            $table->string('specialty');
             $table->timestamps();
             $table->timestamp('published_on')->nullable();
             $table->integer('status')->default(1);

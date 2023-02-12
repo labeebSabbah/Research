@@ -56,21 +56,41 @@ class VersionController extends Controller
                     unlink($v->file);
                 }
 
-                $v->update([ 'file' => VersionController::merge($files, $v->title, $category, $f)]);
+                $v->update([ 'file' => VersionController::merge($files, $v->title, $category, $f, $v->file)]);
 
             }
         }
         $v->posts()->attach($id);
 
-        return $v->title;
+        return $v;
     }
 
-    public static function merge($files, $number, Category $category, Post $f)
+    public function rebuild(Version $v)
+    {
+        $files = [];
+        foreach($v->posts as $p)
+        {
+            $files[] = $p;
+        }
+        if (file_exists($v->file))
+        {
+            unlink($v->file);
+        }
+        $v->update([ 'file' => VersionController::merge($files, $v->title, $v->category, new Post(), $v->file)]);
+        return redirect()->back()->with('success', 'تم إعادة انشاء المجلد بنجاح');
+    }
+
+    public static function merge($files, $number, Category $category, Post $f, $name = NULL)
     {
         $pdf = PDFMerger::init();
 
         $filename = 'uploads/versions/' . time() . '.pdf';
 
+        if($name != NULL)
+        {
+            $filename = $name;
+        }
+        
         $pdf->addPDF(VersionController::fill($category->cover_file, $number, $category->title, $filename));
 
         $pdf->addPDF($category->description_file, 'all');
@@ -86,8 +106,12 @@ class VersionController extends Controller
         $pdf->merge();
         $pdf->save($filename);
 
+        $f = self::writeAll($filename,$number);
+
         return $filename;
     }
+
+
 
     public static function fill($cover, $no, $cat, $link)
     {
@@ -102,13 +126,14 @@ class VersionController extends Controller
             unlink($output);
         }
 
+        $text = 'المجلد رقم : '.$no . ' العدد رقم 1 ';
         $pdf->AddPage();
         $pdf->autoScriptToLang = true;
         $pdf->autoLangToFont = true;
         $pdf->setSourceFile($cover);
         $pdf->useTemplate($pdf->importPage(1));
         $pdf->setFont("DejaVuSans", "", 20);
-        $pdf->WriteText(15, 15, "No. " . $no);
+        $pdf->WriteText(65, 200, $text);
         $pdf->Image($qr->getDataUri(), 15, 237, 30, 30, 'png');
         $pdf->Output($output, 'F');
         return $output;
@@ -141,16 +166,16 @@ class VersionController extends Controller
             $image = "<img src='{$qr->getDataUri()}'>";
             $data .= '<tr>'
             . '<td>' . $id . '</td>'
-            . '<td>' . $f->title . '<br>' . $f->user->name . '</td>'
+            . '<td>' . $f->title . '<br>' . $f->user->name .'<br>'.date_format($f->published_on, 'Y-m-d'). '</td>'
             . "<td>{$image}</td>"
             . '</tr>';
             $id = $id + 1;
         }
         $html = '
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>       
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         <table autosize="1" style="text-align: center; font-size: 50px;">
 		<tr>
-		<th style="width: 10%"><strong>رقم البحث</strong></th>
+		<th style="width: 10%"><strong>تسلسل</strong></th>
 		<th style="width: 70%"><strong>اسم البحث</strong></th>
 		<th style="width: 20%"><strong>QR</strong></th>
 		</tr>
@@ -170,15 +195,9 @@ class VersionController extends Controller
     public static function cover($post, $cover, $no)
     {
         $qr = VersionController::qr(url($post->file));
-
         $pdf = new \Mpdf\Mpdf();
 
-        $output = Storage::disk('local')->path('post.pdf');
-
-        if(file_exists($output))
-        {
-            unlink($output);
-        }
+        $output = Storage::disk('local')->path(rand(1, 1000000) . '.pdf');
 
         $pdf->AddPage();
         $pdf->autoScriptToLang = true;
@@ -186,12 +205,13 @@ class VersionController extends Controller
         $pdf->setSourceFile($cover);
         $pdf->useTemplate($pdf->importPage(1));
         $pdf->setFont("DejaVuSans", "", 20);
-        $pdf->WriteText(15, 15, "No. " . $no);
+        //$pdf->WriteText(15, 15, "No. " . $no);
         $date = date_format($post->created_at, 'Y-m-d');
-        $html = "<div style='text-align: center; position: fixed; top: 60%; width: 100%; font-size: 40px;'>
+        $html = "<div style='text-align: center; position: fixed; top: 60%; width: 100%; font-size: 35px;'>
+        <p style='font-size: 20px;'>1 العدد رقم ". $no . " : المجلد رقم</p>
         <p>{$post->title}</p>
         <p>{$post->user->name}</p>
-        <p>{$date}</p>
+        <p>{$date} : تاريخ النشر</p>
     </div>";
         $pdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
         $pdf->Image($qr->getDataUri(), 15, 237, 30, 30, 'png');
@@ -218,8 +238,36 @@ class VersionController extends Controller
 
     public function index()
     {
-        $versions = Version::with('category')->get();
+         $versions = Version::with(['category','posts'])->orderBy('category_id', 'asc')->get();
         return view('dashboard.versions.index', compact('versions'));
+    }
+
+    public static function writeAll($filename,$number){
+        $pdf = PDFMerger::init();
+        $pdf->addPDF(self::writeSerialNumberForAllFile($filename,$number));
+        $pdf->merge();
+        $pdf->save($filename);
+        return $filename;
+    }
+    public static function writeSerialNumberForAllFile($file_name,$no){
+        $output = Storage::disk('local')->path('post.pdf');
+        if(file_exists($output))
+        {
+            unlink($output);
+        }
+        $pdf = new \Mpdf\Mpdf();
+        $count = $pdf->setSourceFile(public_path($file_name));
+        $text = 'المجلد رقم : '.$no . ' العدد رقم 1 ';
+        for ($i=1; $i<=$count; $i++){
+            $pdf->AddPage();
+            $pdf->autoScriptToLang = true;
+            $pdf->autoLangToFont = true;
+            $pdf->useTemplate($pdf->importPage($i));
+            $pdf->setFont("DejaVuSans", "", 10);
+            $pdf->WriteText(15, 5, $text);
+        }
+        $pdf->Output($output, 'F');
+        return $output;
     }
 
 }

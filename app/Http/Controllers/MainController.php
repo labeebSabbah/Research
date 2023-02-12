@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Category;
 use App\Models\Version;
+use App\Models\Post;
 
 class MainController extends Controller
 {
@@ -25,14 +26,24 @@ class MainController extends Controller
         return view('category', compact('category', 'version'));
     }
 
+    public function version(Version $version)
+    {
+        $category = Category::find($version->category_id);
+        return view('category', compact(['category' ,'version']));
+    }
+
     public function templates()
     {
         $categories = Category::all();
         return view('templates', compact('categories' ));
     }
 
-    public function search()
+    public function search(Request $r)
     {
-        return view('search');
+        if ($r->search == NULL)
+            $posts = [];
+        else
+        $posts = Post::where('title', 'LIKE', '%' . $r->search . '%')->where('published_on', '!=', NULL)->paginate(15);
+        return view('search', compact('posts'));
     }
 }

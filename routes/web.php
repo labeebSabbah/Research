@@ -27,7 +27,8 @@ use App\Http\Controllers\PaymentController;
 |
 */
 
-Route::get('/', [MainController::class, 'index'])->name('home');
+Route::get('/', [MainController::class, 'index'])->name('welcome');
+Route::get('/home', [MainController::class, 'index'])->name('home');
 
 Route::get('/page/{page}', [PageController::class, 'show'])->name('page');
 
@@ -35,24 +36,28 @@ Route::get('/contact', [MainController::class, 'contact'])->name('contact');
 
 Route::post('/contact', [MailController::class, 'contact'])->name('contact');
 
+Route::get('/search', [MainController::class, 'search'])->name('search');
+
 Route::get('/category/{category}', [MainController::class, 'category'])->name('category');
+Route::get('/version/{version}', [MainController::class, 'version'])->name('version');
 Route::get('/templates', [MainController::class, 'templates'])->name('templates');
 
 Route::middleware('guest')->group(function () {
 
     Route::get('/login', [UserController::class, 'show'])->name('login');
+    Route::get('/login_sent_verify', [UserController::class, 'login_sent_verify'])->name('login.login_sent_verify');
+    Route::post('/login_send_again', [UserController::class, 'login_send_again'])->name('login.login_send_again');
     Route::post('/login', [UserController::class, 'login'])->name('login');
 
     Route::get('/register', [UserController::class, 'create'])->name('register');
     Route::post('/register', [UserController::class, 'store'])->name('register');
+    Route::get('/user/verify/{token}', [UserController::class, 'verifyEmail'])->name('user.verifyEmail');
 
     Route::get('/forgot-password', [PasswordController::class, 'forgot'])->name('password.request');
-
     Route::post('/forgot-password', [PasswordController::class, 'sendEmail'])->name('password.email');
-
     Route::get('/reset-password', [PasswordController::class, 'resetPassword'])->name('password.form');
-
     Route::post('/reset-password', [PasswordController::class, 'reset'])->name('password.reset');
+
 
 });
 
@@ -60,7 +65,7 @@ Route::middleware('auth')->group(function () {
 
     Route::group(['prefix' => '/dashboard', 'as' => 'dashboard.'], function () {
 
-        Route::get('/', function () {return view('dashboard.index');})->name('index');
+        Route::get('/', [UserController::class, 'dashboard'])->name('index');
 
         Route::get('/profile', function() {return view('dashboard.profile');})->name('profile');
 
@@ -72,7 +77,10 @@ Route::middleware('auth')->group(function () {
             Route::delete('/category/{c}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
             Route::get('/checkPosts', [PostController::class, 'show'])->name('admin.posts');
+            
             Route::put('/acceptPosts', [PostController::class, 'accept'])->name('admin.post');
+            
+            Route::get('/rebuild/{v}', [VersionController::class, 'rebuild'])->name('rebuild');
 
             Route::prefix('settings')->group(function () {
 
@@ -100,6 +108,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/version/{c}', [VersionController::class, 'store'])->name('version');
 
             Route::get('/versions', [VersionController::class, 'index'])->name('versions.index');
+            
+            Route::get('/users_pay', [PostController::class, 'users_pay'])->name('users.users_pay');
 
             // Route::resource('versions', VersionController::class)->only([
             //     'index', 'store', 'show', 'update', 'destroy'
@@ -140,15 +150,16 @@ Route::middleware('auth')->group(function () {
 Route::get('/pay/success', [PaymentController::class, 'success'])->name('pay.success');
 Route::get('/pay/cancel', [PaymentController::class, 'cancel'])->name('pay.cancel');
 
+Route::get('/clear-all', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    return 'Application has been cleared';
+});
+
 Route::get('/clear-cache', function() {
     Artisan::call('cache:clear');
     return 'Application cache has been cleared';
-});
-
-//Clear route cache:
-Route::get('/route-cache', function() {
-    Artisan::call('route:cache');
-    return 'Routes cache has been cleared';
 });
 
 //Clear config cache:
@@ -159,6 +170,14 @@ Route::get('/config-cache', function() {
 
 // Clear view cache:
 Route::get('/view-clear', function() {
-   Artisan::call('view:clear');
+    Artisan::call('view:clear');
     return 'View cache has been cleared';
 });
+
+//Clear route cache:
+Route::get('/route-cache', function() {
+    Artisan::call('route:clear');
+    return 'Routes cache has been cleared';
+});
+
+

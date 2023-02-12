@@ -21,10 +21,10 @@
                 <div class="card-body">
                   <div role="form" class="text-start container">
                     <div class="input-group input-group-outline my-3">
-                        <h2 class="text-right">عنوان المنشور: <br> {{$post->title}}</h2>
+                        <h2 class="text-right">عنوان البحث: <br> {{$post->title}}</h2>
                     </div>
                     <div class="input-group input-group-outline mb-3">
-                        <h3 class="text-right">سعر المنشور: <br> 20$</h3>
+                        <h3 class="text-right">السعر: <br> 20$</h3>
                     </div>
                     <div class="text-center row">
                         <a class="btn btn-secondary my-4 mb-2 text-white col-md" href="{{ route('pay.cancel') }}">الغاء</a>

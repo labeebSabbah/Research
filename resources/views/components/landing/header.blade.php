@@ -31,7 +31,15 @@
                     </li>
 
                     @if(auth()->user())
-                        <li class="btn-box"><a href="{{route('dashboard.index')}}" class="theme-btn-one">لوحة التحكم</a></li>
+
+                        <li class="btn-box">
+                            <a href="{{route('dashboard.index')}}" class="theme-btn-one">لوحة التحكم</a>
+                            @if(auth()->user()->admin == 0)
+                                <a href="{{route('dashboard.posts.create')}}" class="theme-btn-one">انشر بحثك</a>
+                            @endif
+
+                        </li>
+
                     @else
                         <li class="btn-box">
                             <a href="{{route('login')}}" class="theme-btn-one">تسجيل الدخول </a>

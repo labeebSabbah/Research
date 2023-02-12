@@ -90,7 +90,14 @@
         <div class="auto-container">
             <div class="inner-box clearfix">
                 <div class="text pull-left text-right">
-                    <h2>قوالب البحث المعتمدة <br />قم بتحميل قالب البحث المناسب</h2>
+                    <h2>
+                        <span>انشر بحثك بخطوات بسيطة واحصل على شهادة النشر فوراً</span>
+                        <ul style="font-size: 18px; list-style-type: circle;">
+                            <li>-<a href="@if(auth()->user()) {{route('dashboard.index')}} @else {{route('login')}} @endif">سجل اشتراكك</a> في الموقع</li>
+                            <li>-قم <a href="{{route('templates')}}">بتحميل قالب البحث المعتمد</a> لدينا لتضمين بحثك فيه وتحويله الى تنسيق PDF</li>
+                            <li>-حمل بحثك عبر نموذج <a href="@if(auth()->user()) {{route('dashboard.posts.index')}} @else {{route('login')}} @endif">النشر المعتمد </a></li>
+                        </ul>
+                    </h2>
                 </div>
                 <div class="btn-box pull-right">
                     <a href="{{route('templates')}}" class="theme-btn-one">تحميل قوالب البحث</a>

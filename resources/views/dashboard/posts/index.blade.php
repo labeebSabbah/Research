@@ -29,8 +29,8 @@
             <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
               <h6 class="m-0 font-weight-bold text-primary text-right">منشوراتي</h6>
               <div>
-                <a href="{{ route('dashboard.posts.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">اضافة</a>
-                <a href="" data-toggle="modal" data-target="#downloadTemplateModal" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">تحميل النماذج</a>
+                <a href="{{ route('dashboard.posts.create') }}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">اضافة</a>
+                <a href="" data-toggle="modal" data-target="#downloadTemplateModal" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">قوالب الابحاث </a>
               </div>
             </div>
             <div class="card-body">
@@ -65,11 +65,14 @@
                         <td>{!! date_format($p->created_at, 'Y-m-d') !!}</td>
                         <td>
                           @if ($p->status == 1)
-                            <span class="btn-circle btn-sm btn-warning"><i class="fas fa-clock"></i></span>
+                            <span class="btn-circle btn-sm btn-warning"><i class="fas fa-clock"></i> </span>
+                              <span>انتظار الموافقة</span>
                           @elseif ($p->status == 2)
-                            <span class="btn-circle btn-sm btn-success"><i class="fas fa-check"></i></span>
+                            <span class="btn-circle btn-sm btn-success"><i class="fas fa-check"></i> </span>
+                              <span>قبول</span>
                           @else
-                            <span class="btn-circle btn-sm btn-danger"><i class="fas fa-times"></i></span>
+                            <span class="btn-circle btn-sm btn-danger"><i class="fas fa-times"></i> </span>
+                              <span>رفض</span>
                           @endif
                         </td>
                         <td>
@@ -87,13 +90,19 @@
                           @endif
                         </td>
                         <td>
-                          @if ($p->status != 2)
+                        
+                          @if ($p->status == 1 && $p->paid == 0)
                             <a role="button" class="btn btn-primary" href="{{ route('dashboard.posts.edit', ['post' => $p->id]) }}">تعديل</a>
+                          @endif
+                          @if ($p->published_on !== NULL)
+                          @php
+                          @endphp
+                          <a href="../{{ $p->versions[0]->file }}" target="_blank" class="btn btn-primary" download>تحميل المجلة</a>
                           @endif
                         </td>
                         <td>
                           @if ($p->status === 2)
-                          <a target="_blank" href="{{ route('certificate', ['p' => $p->id]) }}" class="btn btn-primary">اصدر</a>
+                          <a target="_blank" href="../{{ $p->certificate_file }}" class="btn btn-primary">اصدر</a>
                           @endif
                         </td>
                       </tr>
@@ -116,7 +125,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="downloadTemplateModalLabel">النماذج</h5>
+                        <h5 class="modal-title" id="downloadTemplateModalLabel">قوالب الابحاث</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -178,10 +187,36 @@
   </div>
   <!-- End of Page Wrapper -->
 
+
+
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="rotateDevice" tabindex="-1" role="dialog" aria-labelledby="rotateDeviceLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="rotateDeviceLabel">قم بتدوير جهازك</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p style="text-align: center;direction: rtl">من الأفضل عرض هذه الصفحة في الاتجاه العمودي</p>
+                        <img class="w-50 m-auto d-block" src="{{url('img/rotate.png')}}">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <x-slot:script>
         <!-- Page level plugins -->
@@ -190,6 +225,13 @@
 
         <!-- Page level custom scripts -->
         <script src="{{ url('/js/demo/datatables-demo.js') }}"></script>
+        <script>
+            $(document).ready(function(){
+                if($(window).width() < 768){
+                    $('#rotateDevice').modal('show');
+                }
+            })
+        </script>
 
     </x-slot>
 

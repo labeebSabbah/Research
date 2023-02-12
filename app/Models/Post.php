@@ -14,17 +14,20 @@ class Post extends Model
         'title',
         'description',
         'pages',
-        'supervisor',
         'university',
-        'specialty',
         'published_on',
         'status',
         'file',
         'paid',
         'category_id',
         'keywords',
-        'invoice_id'
-
+        'invoice_id',
+        'research_major',
+        'exact_specialty_research',
+        'search_language',
+        'pay_amount',
+        'paid_at',
+        'certificate_file'
     ];
 
     protected $dateFormat = 'Y-m-d';
@@ -32,7 +35,8 @@ class Post extends Model
     protected $casts = [
         'created_at' => 'date:Y-m-d',
         'updated_at' => 'date:Y-m-d',
-        'published_on' => 'date:Y-m-d'
+        'published_on' => 'date:Y-m-d',
+        'paid_at' => 'date:Y-m-d',
     ];
 
     public function user()

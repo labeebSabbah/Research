@@ -53,4 +53,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Notification::class, 'reciever_id');
     }
+
+    public function verifyuser(){
+        return $this->hasOne(Verifyuser::class);
+    }
 }

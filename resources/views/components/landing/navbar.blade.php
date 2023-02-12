@@ -38,7 +38,7 @@
                                 </ul>
                             </li>
 
-                            <li class=""><a href="{{route('templates')}}">القوالب</a></li>
+                            <li class="d-none"><a href="{{route('templates')}}">القوالب</a></li>
 
                             <li class="dropdown d-none"><a >الاصدارات</a>
                                 <ul>

@@ -1,6 +1,6 @@
 <x-layout.app>
 
-    <x-slot:title>تعديل منشور</x-slot>
+    <x-slot:title>تعديل البحث</x-slot>
 
     <x-slot:style>
         <style>
@@ -28,8 +28,18 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">تعديل المنشور</h1>
+           <h1 class="h3 mb-0 text-gray-800">تعديل البحث</h1>
           </div>
+          
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
 
           <!-- Content Row -->
           <div style="width: 100%">
@@ -45,55 +55,71 @@
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="author_id" value="{{ auth()->user()->id }}">
-                    <div>
+
                       <div class="mb-3">
-                        <label for="name" class="form-label">اسم المؤلف</label>
-                        <input type="text" name="name" class="form-control" value="{{ auth()->user()->name }}">
+                          <label for="name" class="form-label">*اسم المؤلف</label>
+                          <input type="text" name="name" class="form-control" value="{{ auth()->user()->name }}">
                       </div>
                       <div class="mb-3">
-                        <label for="title" class="form-label">عنوان المنشور</label>
-                        <input type="text" name="title" class="form-control" value="{{ $post->title }}">
+                          <label for="title" class="form-label">* عنوان البحث</label>
+                          <input type="text" name="title" class="form-control" value="{{ $post->title }}">
                       </div>
                       <div class="mb-3">
-                        <label for="university" class="form-label">اسم الجامعة</label>
-                        <input type="text" name="university" class="form-control" value="{{ $post->university }}">
-                      </div>
-                    </div>
-                    <div>
-                      <div class="mb-3">
-                        <label for="specialty" class="form-label">اسم التخصص</label>
-                        <input type="text" name="specialty" class="form-control" value="{{ $post->specialty }}">
+                          <label for="research_major" class="from-label">*التخصص الرئيسي للبحث </label>
+                          <input type="text" class="form-control" name="research_major" value="{{ $post->research_major }}">
+                          @error('research_major')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                          @enderror
                       </div>
                       <div class="mb-3">
-                        <label for="supervisor" class="form-label">اسم المشرف</label>
-                        <input type="text" name="supervisor" class="form-control" value="{{ $post->supervisor }}">
+                          <label for="exact_specialty_research" class="from-label">*التخصص الدقيق للبحث</label>
+                          <input type="text" class="form-control" name="exact_specialty_research" value="{{ $post->exact_specialty_research }}">
+                          @error('exact_specialty_research')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                          @enderror
                       </div>
                       <div class="mb-3">
-                        <label for="pages" class="form-label">عدد الصفحات</label>
-                        <input type="text" name="pages" class="form-control" value="{{ $post->pages }}">
+                          <label for="search_language" class="from-label">*لغة البحث</label>
+                          <select name="search_language" class="form-control">
+                              <option value="عربي" @if($post->search_language == 'عربي') selected @endif>عربي</option>
+                              <option value="انجليزي" @if($post->search_language == 'انجليزي') selected @endif>انجليزي</option>
+                              <option value="فرنسي"  @if($post->search_language == 'فرنسي') selected @endif>فرنسي</option>
+                          </select>
                       </div>
                       <div class="mb-3">
-                        <label for="category_id" class="form-label">التصنيف</label>
-                        <select name="category_id" class="form-control">
-                          @foreach ($categories as $c)
-                              <option value="{{ $c->id }}" @if($post->category_id == $c->id) selected @endif>{{ $c->title }}</option>
-                          @endforeach
-                        </select>
+                          <label for="university" class="form-label">اسم الجامعة</label>
+                          <input type="text" name="university" class="form-control" value="{{ $post->university }}">
+                      </div>
+                      
+                      <div class="mb-3">
+                          <label for="pages" class="form-label">عدد الصفحات</label>
+                          <input type="text" name="pages" class="form-control" value="{{ $post->pages }}">
                       </div>
                       <div class="mb-3">
-                        <label for="keywords" class="from-label">كلمات مفتاحية</label>
-                        <input type="text" class="form-control" name="keywords" value="{{ $post->keywords }}">
+                          <label for="category_id" class="form-label">*المجلة</label>
+                          <select name="category_id" class="form-control">
+                              @foreach ($categories as $c)
+                                  <option value="{{ $c->id }}" @if($post->category_id == $c->id) selected @endif>{{ $c->title }}</option>
+                              @endforeach
+                          </select>
+                      </div>
+                      
+                      <div class="mb-3">
+                          <label for="keywords" class="from-label">كلمات مفتاحية</label>
+                           <p>استخدام كلمات مفتاحية ذات صلة بالمحتوى الذي تقدمه والفصل بينها باشارة <strong>(-)</strong> . </p>
+                          <p>مثال : الهوايات - كرة القدم - كرة السلة - كرة اليد ..الخ</p>
+                          <input type="text" class="form-control" name="keywords" value="{{ $post->keywords }}">
                       </div>
                       <div class="mb-3">
-                        <label for="description">الوصف (اختياري)</label>
-                        <textarea name="description" cols="10" rows="5" class="form-control">{{ $post->description }}</textarea>
+                          <label for="description">الوصف </label>
+                          <textarea name="description" cols="10" rows="5" class="form-control">{{ $post->description }}</textarea>
                       </div>
                       <div class="mb-3">
-                        <label for="file" class="form-label">ملف المنشور</label>
-                        <a href="{{ url($post->file) }}" target="_blank" class="btn btn-primary">الملف</a>
-                        <input type="file" name="file" class="form-control" accept=".pdf">
-                      </div>                     
-                    </div>
+                          <label for="file" class="form-label">* ملف البحث</label>
+                          <a href="{{ url($post->file) }}" target="_blank" class="btn btn-primary">الملف</a>
+                          <input type="file" name="file" class="form-control" accept=".pdf">
+                      </div>
+                      
                   </form>
               </div>
               <div class="card-footer">

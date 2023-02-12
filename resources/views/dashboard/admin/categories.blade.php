@@ -1,6 +1,6 @@
 <x-layout.app>
 
-    <x-slot:title>التصنيفات</x-slot>
+    <x-slot:title>المجلات</x-slot>
 
     <x-slot:style>
         <link href="{{ url('/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -25,7 +25,7 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
-              <h6 class="m-0 font-weight-bold text-primary text-right">التصنيفات</h6>
+              <h6 class="m-0 font-weight-bold text-primary text-right">المجلات</h6>
               <a data-toggle="modal" data-target="#addModal" class="btn btn-primary text-white">اضافة</a>
             </div>
             <div class="card-body">
@@ -131,7 +131,7 @@
                     @enderror
                 </div>
                 <div class="mb-3">
-                  <label for="num_of_posts" class="form-label">عدد المنشورات</label>
+                  <label for="num_of_posts" class="form-label">عدد البحوث</label>
                   <input type="text" class="form-control" name="num_of_posts">
                   @error('num_of_posts')
                           <div class="alert alert-danger">{{ $message }}</div>
@@ -235,7 +235,7 @@
                         @enderror
                 </div>
                 <div class="mb-3">
-                  <label for="num_of_posts" class="form-label">عدد المنشورات</label>
+                  <label for="num_of_posts" class="form-label">عدد البحوث</label>
                   <input type="text" class="form-control" name="num_of_posts" id="num_of_posts">
                   @error('num_of_posts')
                           <div class="alert alert-danger">{{ $message }}</div>

@@ -127,6 +127,9 @@ return [
         'template_file_en'      => 'ملف النموذج بالانجليزية',
         'index_file'            => 'ملف الفهرس',
         'value'                 => 'القيمة',
+        'research_major'           => 'التخصص الرئيسي للبحث',
+        'exact_specialty_research' => 'التخصص الدقيق للبحث',
+        'search_language'          => 'لغة البحث',
 
     ],
 

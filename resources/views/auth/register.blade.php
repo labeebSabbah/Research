@@ -26,23 +26,42 @@
                           <div class="card-body">
                               <form role="form" class="text-start" action="{{ route('register') }}" method="POST">
                                   @csrf
-                                  <div class="input-group input-group-outline mb-3">
-                                      <input type="text" name="name" class="form-control" placeholder="الاسم">
+                                  <div class="form-group input-group-outline mb-3">
+                                      <input type="text" name="name" class="form-control" value="{{old('name')}}" placeholder="الاسم" required>
+                                      @error('name')
+                                      <small  class="form-text text-danger w-100 text-right">{{$message}}</small>
+                                      @enderror
+
                                   </div>
-                                  <div class="input-group input-group-outline mb-3">
-                                      <input type="email" name="email" class="form-control" placeholder="البريد الاكتروني">
+                                  <div class="form-group input-group-outline mb-3">
+                                      <input type="email" name="email" class="form-control" value="{{old('email')}}" placeholder="البريد الاكتروني" required>
+                                      @error('email')
+                                      <small  class="form-text text-danger w-100 text-right">{{$message}}</small>
+                                      @enderror
                                   </div>
-                                  <div class="input-group input-group-outline mb-3">
-                                      <input type="text" name="phone" class="form-control" placeholder="رقم الهاتف">
+                                  <div class="form-group input-group-outline mb-3">
+                                      <input type="text" name="phone" class="form-control" value="{{old('phone')}}" placeholder="رقم الهاتف">
+                                      @error('phone')
+                                      <small  class="form-text text-danger w-100 text-right">{{$message}}</small>
+                                      @enderror
                                   </div>
-                                  <div class="input-group input-group-outline mb-3">
-                                      <input type="text" name="username" class="form-control" placeholder="اسم المستخدم">
+                                  <div class="form-group input-group-outline mb-3">
+                                      <input type="text" name="username" class="form-control" value="{{old('username')}}" placeholder="اسم المستخدم" required>
+                                      @error('username')
+                                      <small  class="form-text text-danger w-100 text-right">{{$message}}</small>
+                                      @enderror
                                   </div>
-                                  <div class="input-group input-group-outline mb-3">
-                                      <input type="password" name="password" class="form-control" placeholder="كلمة السر">
+                                  <div class="form-group input-group-outline mb-3">
+                                      <input type="password" name="password" class="form-control" placeholder="كلمة السر" required>
+                                      @error('password')
+                                      <small  class="form-text text-danger w-100 text-right">{{$message}}</small>
+                                      @enderror
                                   </div>
-                                  <div class="input-group input-group-outline mb-3">
-                                      <input type="password" name="confirm" class="form-control" placeholder="تأكيد كلمة السر">
+                                  <div class="form-group input-group-outline mb-3">
+                                      <input type="password" name="confirm" class="form-control" placeholder="تأكيد كلمة السر" required>
+                                      @error('confirm')
+                                      <small  class="form-text text-danger w-100 text-right">{{$message}}</small>
+                                      @enderror
                                   </div>
                                   <div class="text-center">
                                       <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2 text-white" style="background: #22b6af;">التسجيل</button>
