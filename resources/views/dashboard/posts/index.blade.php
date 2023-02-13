@@ -97,7 +97,7 @@
                           @if ($p->published_on !== NULL)
                           @php
                           @endphp
-                          <a href="../{{ $p->versions[0]->file }}" target="_blank" class="btn btn-primary" download>تحميل المجلة</a>
+                          <a @isset($p->versions[0]) href="../{{ $p->versions[0]->file }}" @endisset target="_blank" class="btn btn-primary" download>تحميل المجلة</a>
                           @endif
                         </td>
                         <td>
