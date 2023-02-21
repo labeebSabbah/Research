@@ -110,11 +110,9 @@ class VersionController extends Controller
 
         $f = self::writeAll($filename,$number);
 
-        // $title = $category->title . ' المجلد رقم ' . $number . ' العدد رقم 1';
+        $title = $category->title . ' المجلد رقم ' . $number . ' العدد رقم 1';
 
-        // VersionController::setMetaData($filename, $title, 'مجلة أبحاث المعرفة الانسانية الجديدة');
-
-        return $filename;
+        return VersionController::setMetaData($filename, $title, 'مجلة أبحاث المعرفة الانسانية الجديدة');
     }
 
 
@@ -242,34 +240,42 @@ class VersionController extends Controller
         return $qr;
     }
 
-    // public static function setMetaData($file, $title, $author, $subject = 'مجلة أبحاث المعرفة الانسانية الجديدة')
-    // {
-    //     $pdf = new \Mpdf\Mpdf();
-    //     $pagecount = $pdf->SetSourceFile($file);
-    //     for ($i=1; $i<=$pagecount; $i++) {
-    //         $import_page = $pdf->ImportPage($i);
-    //         $pdf->UseTemplate($import_page);
+    public static function setMetaData($file, $title, $author, $subject = 'مجلة أبحاث المعرفة الانسانية الجديدة')
+    {
+        $pdf = new \Mpdf\Mpdf();
+        $pagecount = $pdf->SetSourceFile(public_path($file));
+        for ($i=1; $i<=$pagecount; $i++) {
+            $import_page = $pdf->ImportPage($i);
+            $pdf->UseTemplate($import_page);
 
-    //         if ($i < $pagecount)
-    //             $pdf->AddPage();
-    //     }
+            if ($i < $pagecount)
+                $pdf->AddPage();
+        }
 
-    //     $output = Storage::disk('local')->path(rand(1, 1000000) . '.pdf');
+        if ($author == 'مجلة أبحاث المعرفة الانسانية الجديدة')
+            $output = Storage::disk('public')->path(basename($file));
+        else
+            $output = Storage::disk('public')->path('posts/' . basename($file));
 
-    //     $pdf->SetTitle($title);
+        $pdf->SetTitle($title);
 
-    //     $pdf->SetAuthor($author);
+        $pdf->SetAuthor($author);
 
-    //     $pdf->SetSubject($subject);
+        $pdf->SetSubject($subject);
 
-    //     if (file_exists($file)) {
-    //         unlink($file);
-    //     }
+        $pdf->Output($output, 'F');
 
-    //     $pdf->Output($output, 'F');
+        if ($author == 'مجلة أبحاث المعرفة الانسانية الجديدة') {
+            $filename = 'versions/' . basename($output);
+            Version::where('file', $file)->update(['file' => $filename]);
+        }
+        else {
+            $filename = 'versions/posts/' . basename($output);
+            Post::where('file', $file)->update(['file' => $filename]);
+        }
 
-    //     File::move($output, $file);
-    // }
+        return $filename;
+    }
 
     public function index()
     {

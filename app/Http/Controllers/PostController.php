@@ -69,7 +69,7 @@ class PostController extends Controller
 
           $p = Post::create($data);
 
-        //   VersionController::setMetaData($p->file, $p->title . ' ' . $p->category->title, $p->user->name);
+          VersionController::setMetaData($p->file, $p->title . ' ' . $p->category->title, $p->user->name);
 
         }
         catch (Exception $e)
@@ -147,10 +147,12 @@ class PostController extends Controller
             $data['file']->move($target, $filename);
             $data['file'] = $target . $filename;
 
-            // VersionController::setMetaData($post->file, $post->title . ' ' . $post->category->title, $post->user->name);
         }
 
         $post->update($data);
+
+        if ($r->hasFile('file'))
+            VersionController::setMetaData($data['file'], $post->title . ' ' . $post->category->title, $post->user->name);
 
         return redirect()->route('dashboard.posts.index');
     }

@@ -6,7 +6,9 @@
         <link href="{{ url('/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     </x-slot>
 
-    <x-alerts />
+    <x-errors />
+
+    <x-success />
 
     <!-- Page Wrapper -->
   <div id="wrapper">
