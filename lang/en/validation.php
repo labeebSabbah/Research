@@ -52,7 +52,7 @@ return [
     'json'                 => 'يجب أن يكون :attribute نصآ من نوع JSON',
     'max'                  => [
         'numeric' => 'قد لا يكون :attribute أكبر من :max.',
-        'file'    => 'قد لا يكون حجم الملف :attribute أكبر من :max كيلوبايت.',
+        'file'    => 'قد لا يكون حجم الملف :attribute أكبر من 5 ميجابايت.',
         'string'  => 'قد لا يكون عدد الأحرف في :attribute أكبر من :max حرفاً/حروف.',
         'array'   => 'قد لا يكون عدد العناصر في :attribute أكبر من :max عنصراً/عناصر.',
     ],

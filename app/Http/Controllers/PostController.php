@@ -49,7 +49,7 @@ class PostController extends Controller
             'research_major' => 'required',
             'exact_specialty_research' => 'required',
             'search_language' => 'required',
-            'file' => 'required|file'
+            'file' => 'required|file|max:5120'
         ]);
 
 
@@ -67,7 +67,9 @@ class PostController extends Controller
           $data['file']->move($target, $filename);
           $data['file'] = $target . $filename;
 
-          Post::create($data);
+          $p = Post::create($data);
+
+        //   VersionController::setMetaData($p->file, $p->title . ' ' . $p->category->title, $p->user->name);
 
         }
         catch (Exception $e)
@@ -122,7 +124,7 @@ class PostController extends Controller
             //'pages' => 'required|numeric|integer',
             'category_id' => 'required',
             //'keywords' => 'required',
-            'file' => 'nullable|file',
+            'file' => 'nullable|file|max:5120',
             'research_major' => 'required',
             'exact_specialty_research' => 'required',
             'search_language' => 'required',
@@ -144,6 +146,8 @@ class PostController extends Controller
             $filename = time() . ".pdf";
             $data['file']->move($target, $filename);
             $data['file'] = $target . $filename;
+
+            // VersionController::setMetaData($post->file, $post->title . ' ' . $post->category->title, $post->user->name);
         }
 
         $post->update($data);

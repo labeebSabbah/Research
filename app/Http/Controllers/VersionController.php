@@ -10,6 +10,8 @@ use Webklex\PDFMerger\Facades\PDFMergerFacade as PDFMerger;
 use setasign\Fpdi\Fpdi;
 use Illuminate\Support\Facades\Storage;
 
+use File;
+
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
@@ -107,6 +109,10 @@ class VersionController extends Controller
         $pdf->save($filename);
 
         $f = self::writeAll($filename,$number);
+
+        // $title = $category->title . ' المجلد رقم ' . $number . ' العدد رقم 1';
+
+        // VersionController::setMetaData($filename, $title, 'مجلة أبحاث المعرفة الانسانية الجديدة');
 
         return $filename;
     }
@@ -235,6 +241,35 @@ class VersionController extends Controller
 
         return $qr;
     }
+
+    // public static function setMetaData($file, $title, $author, $subject = 'مجلة أبحاث المعرفة الانسانية الجديدة')
+    // {
+    //     $pdf = new \Mpdf\Mpdf();
+    //     $pagecount = $pdf->SetSourceFile($file);
+    //     for ($i=1; $i<=$pagecount; $i++) {
+    //         $import_page = $pdf->ImportPage($i);
+    //         $pdf->UseTemplate($import_page);
+
+    //         if ($i < $pagecount)
+    //             $pdf->AddPage();
+    //     }
+
+    //     $output = Storage::disk('local')->path(rand(1, 1000000) . '.pdf');
+
+    //     $pdf->SetTitle($title);
+
+    //     $pdf->SetAuthor($author);
+
+    //     $pdf->SetSubject($subject);
+
+    //     if (file_exists($file)) {
+    //         unlink($file);
+    //     }
+
+    //     $pdf->Output($output, 'F');
+
+    //     File::move($output, $file);
+    // }
 
     public function index()
     {
