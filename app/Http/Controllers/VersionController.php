@@ -277,6 +277,31 @@ class VersionController extends Controller
         return $filename;
     }
 
+    public static function check($file)
+    {
+        $filepdf = fopen(public_path($file),"r");
+        if ($filepdf) {
+            $line_first = fgets($filepdf);
+            fclose($filepdf);
+        } else{
+            dd('error opening the file.');
+        }
+        // extract number such as 1.4 ,1.5 from first read line of pdf file
+        preg_match_all('!\d+!', $line_first, $matches);
+        // save that number in a variable
+        $pdfversion = implode('.', $matches[0]);
+        
+        if ($pdfversion > "1.4")
+        {
+            $new = pathinfo($file, PATHINFO_DIRNAME) . '/' . pathinfo($file, PATHINFO_FILENAME) . '1.pdf';
+            shell_exec('gswin64 -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="'.public_path($new).'" "' . public_path($file) . '"');
+            unlink($file);
+            return $new;
+        }
+
+        return $file;
+    }
+
     public function index()
     {
          $versions = Version::with(['category','posts'])->orderBy('category_id', 'asc')->get();

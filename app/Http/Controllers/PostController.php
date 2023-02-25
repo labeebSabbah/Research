@@ -65,7 +65,7 @@ class PostController extends Controller
           $target = "uploads/files/";
           $filename = time() . ".pdf";
           $data['file']->move($target, $filename);
-          $data['file'] = $target . $filename;
+          $data['file'] = VersionController::check($target . $filename);
 
           $p = Post::create($data);
 
@@ -145,7 +145,7 @@ class PostController extends Controller
             $target = "uploads/files/";
             $filename = time() . ".pdf";
             $data['file']->move($target, $filename);
-            $data['file'] = $target . $filename;
+            $data['file'] = VersionController::check($target . $filename);
 
         }
 
