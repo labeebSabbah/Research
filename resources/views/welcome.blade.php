@@ -26,7 +26,7 @@ echo phpinfo();
                     <div class="auto-container">
                         <div class="content-box">
                             <div class="text">
-                                <h2>أول مشروع للنشر الذاتي في تاريخ المجلات العلمية المحكمة</h2>
+                                <h2 style="font-size: 35px">أول مشروع للنشر الذاتي في تاريخ المجلات العلمية المحكمة</h2>
                                 <p></p>
                             </div>
                             <div class="image-box">
@@ -43,7 +43,7 @@ echo phpinfo();
                     <div class="auto-container">
                         <div class="content-box">
                             <div class="text">
-                                <h2>لا أحد وصي على أحد: انْشُر بحثك بنفسك واحْصُل على ترقيتك</h2>
+                                <h2 style="font-size: 35px">لا أحد وصي على أحد: انْشُر بحثك بنفسك واحْصُل على ترقيتك</h2>
                                 <p></p>
 
                             </div>
@@ -62,11 +62,11 @@ echo phpinfo();
                     <div class="auto-container">
                         <div class="content-box">
                             <div class="text">
-                                <h2>أول مجلة دولية تعتمد النشر الإلكتروني بالمعنى الحرفي للكلمة</h2>
+                                <h2 style="font-size: 35px">أول مجلة دولية تعتمد النشر الإلكتروني بالمعنى الحرفي للكلمة</h2>
                                 <p></p>
 
                             </div>
-                            <div class="image-box">
+                            <div class="image-box c1">
                                 <figure class="image"><img src="{{ url('landing/images/banner/3.png') }}" alt=""></figure>
                                 <div class="shape">
                                     <div class="shape-1"></div>
@@ -80,7 +80,7 @@ echo phpinfo();
                     <div class="auto-container">
                         <div class="content-box">
                             <div class="text">
-                                <h2>عندما تكون باحثاً فإنّ القراء هم الذين يحكمون على بحثك وليس شخصاً أو اثنين</h2>
+                                <h2 style="font-size: 35px">عندما تكون باحثاً فإنّ القراء هم الذين يحكمون على بحثك وليس شخصاً أو اثنين</h2>
                                 <p></p>
 
                             </div>
@@ -98,7 +98,7 @@ echo phpinfo();
                     <div class="auto-container">
                         <div class="content-box">
                             <div class="text">
-                                <h2>يتوجب على النشر العلمي والأكاديمي أنْ يفتح آفاقاً جديدة في هذا المجال: وهذا بالضبط ما نفعله</h2>
+                                <h2 style="font-size: 35px">يتوجب على النشر العلمي والأكاديمي أنْ يفتح آفاقاً جديدة في هذا المجال: وهذا بالضبط ما نفعله</h2>
                                 <p></p>
 
                             </div>
@@ -116,11 +116,10 @@ echo phpinfo();
                     <div class="auto-container">
                         <div class="content-box">
                             <div class="text">
-                                <h2>يجب على المجلات العلمية أنْ تثق بالباحثين</h2>
-                                <p>يجب على المجلات العلمية أنْ تثق بالباحثين وأنْ تترك مؤسساتهم العلمية والأكاديمية والبحثية وسائر القراء يحكمون على أعمالهم البحثية: وهذا ما نقوم به اليوم</p>
-
+                                <h2 style="font-size: 35px">يجب على المجلات العلمية أنْ تثق بالباحثين وأنْ تترك مؤسساتهم البحثية والقراء يحكمون على أعمالهم، وهذا ما نقوم به اليوم</h2>
+                                <p></p>
                             </div>
-                            <div class="image-box">
+                            <div class="image-box c1">
                                 <figure class="image"><img src="{{ url('landing/images/banner/3.png') }}" alt=""></figure>
                                 <div class="shape">
                                     <div class="shape-1"></div>
@@ -134,7 +133,7 @@ echo phpinfo();
                     <div class="auto-container">
                         <div class="content-box">
                             <div class="text">
-                                <h2>أول مجلة تتحدى جمود أساليب النشر العلمي وتعمل على إصلاح المسار والمسيرة</h2>
+                                <h2 style="font-size: 35px">أول مجلة تتحدى جمود أساليب النشر العلمي وتعمل على إصلاح المسار والمسيرة</h2>
                                 <p></p>
                             </div>
                             <div class="image-box">

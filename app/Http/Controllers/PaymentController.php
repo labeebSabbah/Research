@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Mail\Template;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UploadYourPost;
 use Illuminate\Http\Request;
@@ -100,12 +101,26 @@ class PaymentController extends Controller
 
             //auth()->user()->email
             $admin = User::where('admin', 1)->first();
-            Mail::to($admin->email)->send(new UploadYourPost($post));
+           /* Mail::to($admin->email)->send(new UploadYourPost($post));*/
+
+            $data_email = [
+                'title'=>'بحث بانتظار التدقيق ',
+                'description'=>
+                    'اسم البحث : '. $post->title .'<br>' .
+                    'اسم المؤلف  :' .auth()->user()->name .'<br>'.
+                    'التخصص الرئيسي للبحث  :' .$post->research_major .'<br>'.
+                    'التخصص الدقيق للبحث  :' .$post->exact_specialty_research .'<br>'.
+                    'اسم المجلة :' . $post->category->title .'<br>'.
+                    'ملف البحث :' . '<a target="_blank" href="'.url($post->file).'">عرض الملف</a>'
+            ];
+            Mail::to($admin->email)->send(new Template($data_email));
 
             $message = 'added a new post.';
             $reciever = User::where('admin', 1)->first()->id;
             NotificationController::new($reciever, $message);
-            
+
+
+
             return redirect()->route('dashboard.posts.index');
 
         }

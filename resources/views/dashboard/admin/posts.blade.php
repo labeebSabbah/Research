@@ -34,9 +34,12 @@
                                     <tr>
                                         <th>الاسم</th>
                                         <th> عنوان البحث</th>
+                                        <th> اسم المجلة  </th>
                                         <th> الدفع </th>
                                         <th> حالة البحث </th>
+                                        <th> تاريخ الادخال  </th>
                                         <th> تاريخ النشر  </th>
+
                                         <th>اعدادات</th>
                                     </tr>
                                     </thead>
@@ -53,12 +56,13 @@
                                                 </a>
                                             </td>
                                             <td>{{ $p->title }}</td>
+                                            <td>{{ $p->category->title }}</td>
                                             <td>
                                                 @if($p->paid)
                                                     <span class="btn-circle btn-sm btn-success"><i class="fas fa-check"></i> </span>
                                                     <span>مسدد</span>
                                                 @else
-                                                    <span class="btn-circle btn-sm btn-danger"><i class="fas fa-times"></i> </span>
+                                                    <span class="btn-circle btn-sm btn-danger"><i class="fas fa-dollar-sign"></i> </span>
                                                     <span>غير مسدد</span>
                                                 @endif
                                             </td>
@@ -71,10 +75,10 @@
 
                                                 @case(1)
                                                 @if($p->paid)
-                                                    <span class="btn-circle btn-sm btn-warning"><i class="fas fa-clock"></i> </span>
+                                                    <span class="btn-circle btn-sm btn-warning"><i class="fas fa-clipboard-list"></i> </span>
                                                     <span> قيد التدقيق  </span>
                                                 @else
-                                                    <span class="btn-circle btn-sm btn-warning"><i class="fas fa-clock"></i> </span>
+                                                    <span class="btn-circle btn-sm btn-danger"><i class="fas fa-dollar-sign"></i> </span>
                                                     <span>غير مسدد</span>
                                                 @endif
                                                 @break
@@ -89,12 +93,16 @@
 
                                             </td>
                                             <td>
+                                                {!! date_format($p->created_at, 'Y-m-d') !!}
+                                            </td>
+                                            <td>
                                                 @if ($p->published_on === NULL)
                                                     -
                                                 @else
                                                     {!! date_format($p->published_on, 'Y-m-d') !!}
                                                 @endif
                                             </td>
+
                                             <td>
                                                 @if($p->paid && $p->status == 1)
                                                     <a
@@ -119,8 +127,17 @@
                                                     >
                                                         تدقيق البحث
                                                     </a>
-                                                @else
                                                 @endif
+
+                                                    @if($p->paid && $p->status == 2)
+                                                        <a target="_blank" href="../{{ $p->certificate_file }}" class="btn btn-sm btn-primary">شهادة النشر</a>
+                                                    @endif
+
+                                                    @if($p->paid == 0 && $p->status == 1)
+                                                        <a class="btn btn-sm btn-danger text-light " onclick="deletePost(this)" att_post_id="{{$p->id}}">حذف </a>
+                                                    @endif
+
+
 
                                             </td>
                                         </tr>
@@ -181,7 +198,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">عنوان البحث</label>
-                            <input type="text" class="form-control" id="title" readonly>
+                            <input type="text" class="form-control" id="title" name="title">
                         </div>
                         <div class="mb-3">
                             <label class="from-label">التخصص الرئيسي للبحث</label>
@@ -249,15 +266,23 @@
                         <div class="mb-3 text-right">
 
                             <label class="form-label">سبب الرفض</label>
-                            <select class="form-control reason">
+
+
+                            <select class="form-control reason" id="select_reason_reject">
                                 @foreach ($reasons as $r)
-                                    <option value="{{ $r->name }}">{{ $r->name }}</option>
+                                    <option value="{{ $r->name }}" attr_description="{{ $r->description }}">{{ $r->name }}</option>
                                 @endforeach
                             </select>
+
                         </div>
                         <div class="mb-3 text-right">
                             <label class="form-label">وصف (اختياري)</label>
-                            <textarea cols="30" rows="10" class="form-control desc" style="resize: none;"></textarea>
+                            <textarea cols="30" rows="10" class="form-control desc"  id="desc_reject" style="resize: none;">
+                                @isset($reasons[0])
+                                    {{$reasons[0]->description}}
+                                @endisset
+
+                            </textarea>
                         </div>
                     </form>
 
@@ -307,6 +332,35 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >حذف</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 text-right">
+                        <p>هل تريد الإستمرار في عملية الحذف؟ </p>
+                    </div>
+                    <form action="{{ route('dashboard.admin.post.delete') }}" method="POST" id="deletePostForm" class="d-none">
+                        @csrf
+                        @method('delete')
+                        <input type="hidden" value="0" name="id" id="id_post_delete">
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">الغاء</button>
+                    <a class="btn btn-danger text-white" onclick="$('#deletePostForm').submit()">حذف البحث</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <x-slot:script>
         <!-- Page level plugins -->
         <script src="{{ url('/vendor/datatables/jquery.dataTables.min.js') }}"></script>
@@ -316,6 +370,10 @@
         <script src="{{ url('/js/demo/datatables-demo.js') }}"></script>
 
         <script>
+            $('#select_reason_reject').change(function (){
+                var option = $('option:selected', this).attr('attr_description');
+                $('#desc_reject').text(option);
+            })
             function clicked(e) {
                 var f = $(e);
                 $('#id').val(f.attr('att_id'));
@@ -323,7 +381,6 @@
                 $('#title').val(f.attr('att_title'));
                 $('#university').val(f.attr('att_university'));
                 $('#email_rg').html(f.attr('att_email'));
-
 
                 $('#pages').val(f.attr('att_pages'));
                 $('#keywords').val(f.attr('att_keywords'));
@@ -343,6 +400,12 @@
                 $('#userModal').modal('show');
             }
 
+            function deletePost(e){
+                var f = $(e);
+               $('#id_post_delete').val(f.attr('att_post_id'));
+                $('#deleteModal').modal('show');
+            }
+
             function view_reject(){
                 $('#approveModal').modal('hide');
                 setTimeout(function () {
@@ -350,6 +413,8 @@
                 },500)
 
             }
+
+
         </script>
     </x-slot:script>
 

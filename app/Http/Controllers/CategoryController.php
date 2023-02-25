@@ -60,19 +60,23 @@ class CategoryController extends Controller
 
                     $filename = time() . '_cover.pdf';
                     $data['cover_file']->move($target, $filename);
-                    $data['cover_file'] = $target . $filename;
+                    //$data['cover_file'] = $target . $filename;
+                    $data['cover_file'] = VersionController::check($target . $filename);
 
                     $filename = time() . '_description.pdf';
                     $data['description_file']->move($target, $filename);
-                    $data['description_file'] = $target . $filename;
+                    //$data['description_file'] = $target . $filename;
+                    $data['description_file'] = VersionController::check($target . $filename);
 
                     $filename = time() . '_certification.pdf';
                     $data['certification_file']->move($target, $filename);
-                    $data['certification_file'] = $target . $filename;
+                    //$data['certification_file'] = $target . $filename;
+                    $data['certification_file'] = VersionController::check($target . $filename);
 
                     $filename = time() . '_index.pdf';
                     $data['index_file']->move($target, $filename);
-                    $data['index_file'] = $target . $filename;
+                    //$data['index_file'] = $target . $filename;
+                    $data['index_file'] = VersionController::check($target . $filename);
 
                     $filename = time() . '_template.' . $data['template_file']->getClientOriginalExtension();
                     $data['template_file']->move($target, $filename);
@@ -155,7 +159,32 @@ class CategoryController extends Controller
                 $target = 'uploads/categories/';
                 $filename = time() . '_cover' . '.pdf';
                 $data['cover_file']->move($target, $filename);
-                $data['cover_file'] = $target . $filename;
+                //$data['cover_file'] = $target . $filename;
+                $data['cover_file'] = VersionController::check($target . $filename);
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
+        }
+		
+		if ($r->hasFile('index_file'))
+        {
+            $r->validate([
+                'index_file' => 'file'
+            ]);
+
+            try {
+                if (file_exists($c->index_file)) {
+                    unlink($c->index_file);
+                }
+            } catch (\Throwable $th) {
+            }
+
+            try {
+                $target = 'uploads/categories/';
+                $filename = time() . '_index' . '.pdf';
+                $data['index_file']->move($target, $filename);
+                //$data['index_file'] = $target . $filename;
+                $data['index_file'] = VersionController::check($target . $filename);
             } catch (\Throwable $th) {
                 //throw $th;
             }
@@ -178,7 +207,8 @@ class CategoryController extends Controller
                 $target = 'uploads/categories/';
                 $filename = time() . '_description' . '.pdf';
                 $data['description_file']->move($target, $filename);
-                $data['description_file'] = $target . $filename;
+                //$data['description_file'] = $target . $filename;
+                $data['description_file'] = VersionController::check($target . $filename);
             } catch (\Throwable $th) {
                 //throw $th;
             }
@@ -201,7 +231,8 @@ class CategoryController extends Controller
                 $target = 'uploads/categories/';
                 $filename = time() . '_certification' . '.pdf';
                 $data['certification_file']->move($target, $filename);
-                $data['certification_file'] = $target . $filename;
+                //$data['certification_file'] = $target . $filename;
+                $data['certification_file'] = VersionController::check($target . $filename);
             } catch (\Throwable $th) {
                 //throw $th;
             }

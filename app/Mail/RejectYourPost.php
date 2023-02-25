@@ -23,7 +23,7 @@ class RejectYourPost extends Mailable
     public function build()
     {
         return $this->view('emails.rejectPost')
-            ->subject(' رفض بحث'.' '.$this->data['title'])
+            ->subject('للأسف لقد تم رفض نشر بحثك')
             ->with([
                 'test_message' =>''
             ]);

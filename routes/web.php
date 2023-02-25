@@ -41,6 +41,7 @@ Route::get('/search', [MainController::class, 'search'])->name('search');
 Route::get('/category/{category}', [MainController::class, 'category'])->name('category');
 Route::get('/version/{version}', [MainController::class, 'version'])->name('version');
 Route::get('/templates', [MainController::class, 'templates'])->name('templates');
+Route::get('/notActiveAccount', [MainController::class, 'notActiveAccount'])->name('notActiveAccount');
 
 Route::middleware('guest')->group(function () {
 
@@ -61,7 +62,7 @@ Route::middleware('guest')->group(function () {
 
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth','CheckActivatedUser'])->group(function () {
 
     Route::group(['prefix' => '/dashboard', 'as' => 'dashboard.'], function () {
 
@@ -75,13 +76,11 @@ Route::middleware('auth')->group(function () {
             Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
             Route::put('/category', [CategoryController::class, 'update'])->name('categories.update');
             Route::delete('/category/{c}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-
             Route::get('/checkPosts', [PostController::class, 'show'])->name('admin.posts');
-            
             Route::put('/acceptPosts', [PostController::class, 'accept'])->name('admin.post');
-            
+            Route::put('/payFromSystem', [PostController::class, 'payFromSystem'])->name('admin.payFromSystem');
+            Route::delete('/delete', [PostController::class, 'delete'])->name('admin.post.delete');
             Route::get('/rebuild/{v}', [VersionController::class, 'rebuild'])->name('rebuild');
-
             Route::prefix('settings')->group(function () {
 
                 Route::get('/social', [SettingsController::class, 'social'])->name('social');
@@ -91,9 +90,7 @@ Route::middleware('auth')->group(function () {
                 Route::resource('reasons', RejectReasonController::class)->only([
                     'index', 'store','destroy'
                 ]);
-
                 Route::resource('pages', PageController::class);
-
                 Route::put('/reason', [RejectReasonController::class, 'update'])->name('reasons.update');
                 Route::post('/add', [SettingsController::class, 'add'])->name('settings.add');
                 Route::put('/update', [SettingsController::class, 'update'])->name('settings.update');
@@ -102,14 +99,20 @@ Route::middleware('auth')->group(function () {
             });
 
             Route::get('/users', [UserController::class, 'users'])->name('users');
-
             Route::get('/user/{u}', [UserController::class, 'user'])->name('user');
+            Route::get('/user/activated/{u}', [UserController::class, 'activated'])->name('user.activated');
 
             Route::get('/version/{c}', [VersionController::class, 'store'])->name('version');
 
             Route::get('/versions', [VersionController::class, 'index'])->name('versions.index');
-            
+
             Route::get('/users_pay', [PostController::class, 'users_pay'])->name('users.users_pay');
+
+            Route::get('/users_request', [PostController::class, 'users_request'])->name('users.users_request');
+
+            Route::get('/post_rejects', [PostController::class, 'post_rejects'])->name('users.post_rejects');
+
+            Route::get('/users_not_pay', [PostController::class, 'users_not_pay'])->name('users.users_not_pay');
 
             // Route::resource('versions', VersionController::class)->only([
             //     'index', 'store', 'show', 'update', 'destroy'
@@ -120,6 +123,7 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::middleware('user')->group(function () {
+
 
             Route::resource('posts', PostController::class)->except(['show']);
 
@@ -150,6 +154,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/pay/success', [PaymentController::class, 'success'])->name('pay.success');
 Route::get('/pay/cancel', [PaymentController::class, 'cancel'])->name('pay.cancel');
 
+
 Route::get('/clear-all', function() {
     Artisan::call('cache:clear');
     Artisan::call('config:cache');
@@ -157,27 +162,6 @@ Route::get('/clear-all', function() {
     return 'Application has been cleared';
 });
 
-Route::get('/clear-cache', function() {
-    Artisan::call('cache:clear');
-    return 'Application cache has been cleared';
+Route::get('/storagelink', function () {
+    Artisan::call('storage:link');
 });
-
-//Clear config cache:
-Route::get('/config-cache', function() {
-    Artisan::call('config:cache');
-    return 'Config cache has been cleared';
-});
-
-// Clear view cache:
-Route::get('/view-clear', function() {
-    Artisan::call('view:clear');
-    return 'View cache has been cleared';
-});
-
-//Clear route cache:
-Route::get('/route-cache', function() {
-    Artisan::call('route:clear');
-    return 'Routes cache has been cleared';
-});
-
-

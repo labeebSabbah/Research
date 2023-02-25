@@ -53,14 +53,14 @@
                             @foreach ($version->posts as $p)
                                 <div class="col-lg-12 news-block">
                                     <div class="news-block-one">
-                                        <div class="inner-box">
+                                        <div class="inner-box" style="box-shadow: 0 10px 30px #00000094;">
                                             <div class="lower-content text-right">
                                                 <h4><a >{{ $p->title }}</a></h4>
                                                 <div class="post-info">
-                                                    <p>الباحث : {{ $p->user->name }} </p>
-                                                    <p> {!! date_format($p->created_at, 'Y-m-d') !!} </p>
+                                                    <p style="color: #000000;font-weight: bold;">الباحث : {{ $p->user->name }} </p>
+                                                    <p style="color: #000000;font-weight: bold;"> {!! date_format($p->created_at, 'Y-m-d') !!} </p>
                                                 </div>
-                                                <p>{{ $p->description }}</p>
+                                                <p style="color: #000000;font-weight: bold;"> {{ $p->description }}</p>
                                                 <div class="btn-box"><a href="../{{ $p->file }}" download class="theme-btn-two">تحميل</a></div>
                                             </div>
                                         </div>
@@ -93,9 +93,9 @@
                     <h2>
                         <span>انشر بحثك بخطوات بسيطة واحصل على شهادة النشر فوراً</span>
                         <ul style="font-size: 18px; list-style-type: circle;">
-                            <li>-<a href="@if(auth()->user()) {{route('dashboard.index')}} @else {{route('login')}} @endif">سجل اشتراكك</a> في الموقع</li>
-                            <li>-قم <a href="{{route('templates')}}">بتحميل قالب البحث المعتمد</a> لدينا لتضمين بحثك فيه وتحويله الى تنسيق PDF</li>
-                            <li>-حمل بحثك عبر نموذج <a href="@if(auth()->user()) {{route('dashboard.posts.index')}} @else {{route('login')}} @endif">النشر المعتمد </a></li>
+                            <li>- <a href="@if(auth()->user()) {{route('dashboard.index')}} @else {{route('login')}} @endif">سجل اشتراكك</a> في الموقع</li>
+                            <li>- قم <a href="{{route('templates')}}">بتحميل قالب البحث المعتمد</a> لدينا لتضمين بحثك فيه وتحويله الى تنسيق PDF</li>
+                            <li>- حمل بحثك عبر نموذج <a href="@if(auth()->user()) {{route('dashboard.posts.create')}} @else {{route('login')}} @endif">النشر المعتمد </a></li>
                         </ul>
                     </h2>
                 </div>

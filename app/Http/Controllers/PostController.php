@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Mail\RejectYourPost;
 use App\Mail\AcceptYourPost;
+use App\Mail\Template;
+use App\Models\Version;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
@@ -28,12 +30,15 @@ class PostController extends Controller
         $posts = Post::orderBy('id', 'desc')->where('author_id', auth()->user()->id)->get();
         $categories = Category::all();
         return view('dashboard.posts.index', compact('posts','categories'));
+
+
     }
 
     public function create()
     {
         $categories = Category::all();
-        return view('dashboard.posts.add', compact('categories'));
+        $share = Settings::where('page', 4)->first();
+        return view('dashboard.posts.add', compact('categories','share'));
     }
 
     public function store(Request $r)
@@ -65,11 +70,27 @@ class PostController extends Controller
           $target = "uploads/files/";
           $filename = time() . ".pdf";
           $data['file']->move($target, $filename);
+          //$data['file'] = $target . $filename;
           $data['file'] = VersionController::check($target . $filename);
 
-          $p = Post::create($data);
+          $post  = Post::create($data);
+          $admin = User::where('admin', 1)->first();
 
-          VersionController::setMetaData($p->file, $p->title . ' ' . $p->category->title, $p->user->name);
+
+
+          VersionController::setMetaData($post->file, $post->title . ' ' . $post->category->title, $post->user->name);
+
+            $data_email = [
+                'title'=>'اضافة بحث جديد ',
+                'description'=>
+                    'اسم البحث : '. $post->title .'<br>' .
+                    'اسم المؤلف  :' .auth()->user()->name .'<br>'.
+                    'التخصص الرئيسي للبحث  :' .$post->research_major .'<br>'.
+                    'التخصص الدقيق للبحث  :' .$post->exact_specialty_research .'<br>'.
+                    'اسم المجلة :' . $post->category->title .'<br>'.
+                    'ملف البحث :' . '<a target="_blank" href="'.url($post->file).'">عرض الملف</a>'
+            ];
+            Mail::to($admin->email)->send(new Template($data_email));
 
         }
         catch (Exception $e)
@@ -93,8 +114,7 @@ class PostController extends Controller
     public function show()
     {
         //$posts = Post::where('paid', 1)->where('status', 1)->get();
-        $posts = Post::all();
-
+        $posts = Post::with('category')->get();
         $reasons = RejectReason::all();
         return view('dashboard.admin.posts', compact(['posts', 'reasons']));
     }
@@ -103,6 +123,25 @@ class PostController extends Controller
     {
         $posts = Post::where('paid', 1)->get();
         return view('dashboard.admin.usersPay', compact(['posts']));
+    }
+
+    public function users_not_pay()
+    {
+        $posts = Post::where('paid', 0)->get();
+        return view('dashboard.admin.usersNotPay', compact(['posts']));
+    }
+
+    public function users_request()
+    {
+        $reasons = RejectReason::all();
+        $posts = Post::where(['paid'=> 1,'status'=>1])->with('category')->get();
+        return view('dashboard.admin.usersRequest', compact(['posts','reasons']));
+    }
+
+    public function post_rejects()
+    {
+        $posts = Post::where(['paid'=> 1,'status'=>0])->with('category')->get();
+        return view('dashboard.admin.postRejects', compact(['posts']));
     }
 
     public function edit(Post $post)
@@ -128,6 +167,7 @@ class PostController extends Controller
             'research_major' => 'required',
             'exact_specialty_research' => 'required',
             'search_language' => 'required',
+
         ]);
 
         $data = $r->all();
@@ -145,8 +185,8 @@ class PostController extends Controller
             $target = "uploads/files/";
             $filename = time() . ".pdf";
             $data['file']->move($target, $filename);
+            //$data['file'] = $target . $filename;
             $data['file'] = VersionController::check($target . $filename);
-
         }
 
         $post->update($data);
@@ -159,30 +199,34 @@ class PostController extends Controller
 
     public function accept(Request $r)
     {
+
         $data = $r->all();
         $p = Post::find($data['id']);
-
+        $p->update(["title" => $data['title']]);
         $user = User::where('id', $p->author_id)->first();
-
         if ($data['accepted']) {
             $date = date('Y-m-d');
             $p->update([
                 'status' => 2,
                 'published_on' => $date
             ]);
-            
+
             $v = VersionController::store($p->category_id, $p, $p->id);
             NotificationController::new($p->author_id, "Accepted post with title " . $p->title . " and shared in research NO. " . $v);
-            $certificate = PostController::certificate($p);
-           
-        
+            $certificate = PostController::certificate($p,$v);
+
+
             $data_email = [
+                'name'=>$user->name,
                 'title'=>$p->title,
                 'file'=>$v->file,
+                'category'=>$p->category->title,
+                'version'=>$v->title,
+                'version_file'=>$v->file,
                 'certificate'=>$certificate,
             ];
             Mail::to($user->email)->send(new AcceptYourPost($data_email));
-            
+
             return redirect()->route('dashboard.versions.index');
         } else {
 
@@ -190,6 +234,7 @@ class PostController extends Controller
                 'status' => 0
             ]);
             $data_email = [
+                'name'=>$user->name,
                 'title'=>$p->title,
                 'file'=>$p->file,
                 'reason'=>$data['reason'],
@@ -202,15 +247,34 @@ class PostController extends Controller
         return redirect()->back();
     }
 
+    public function payFromSystem(Request $r){
+        $data = $r->all();
+        $p = Post::find($data['id']);
+        $data['paid'] = 1;
+        $data['pay_amount'] = 0;
+        $data['paid_at'] = now() ;
+        $p->update($data);
+        return redirect()->back();
+    }
+
+    public function delete(Request $r)
+    {
+        $data = $r->all();
+        $p = Post::find($data['id']);
+        $p->delete();
+
+        return redirect()->back();
+    }
+
     public function policy()
     {
         $share = Settings::where('page', 4)->first();
         return view('dashboard.posts.share', compact('share'));
     }
 
-    public static function certificate(Post $p)
+    public static function certificate(Post $p,Version $v)
     {
-        if ($p->status !== 2)
+        if ($p->status != 2)
         {
             return redirect()->back();
         }
@@ -218,7 +282,7 @@ class PostController extends Controller
         $result = Builder::create()
         ->writer(new PngWriter())
         ->writerOptions([])
-        ->data(url($p->file))
+        ->data(url($v->file))
         ->encoding(new Encoding('UTF-8'))
         ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
         ->size(300)
@@ -236,15 +300,15 @@ class PostController extends Controller
         $pdf->useTemplate($pdf->importPage(1));
         $pdf->setFont("DejaVuSans", "", 20);
 
-        $html = '<div style="text-align: center; position: fixed; top: 30%; width: 100%;">
-        <p style="font-size: 20px;">' . $p->user->name . '</p>
-        <br>
-        <p style="font-size: 20px; margin-top: 27px; font-weight: bold;">' . $p->title . '</p>
+        $html = '<div style="text-align: center; position: fixed; top: 325px;direction: rtl; width: 100%;">
+        <p  style="font-size: 20px;">' . $p->user->name . '</p>
+
+        <p  style="font-size: 18px; margin-top: 70px; font-weight: bold;direction: rtl"> <label >'. $p->title .' </label><br> في مجلة '. $p->category->title .' المجلد '. $v->title .' العدد الأول بتاريخ '. date('Y-m-d') .'</p>
         </div>';
 
         $output = 'certifications/' . time() .  '.pdf';
         $pdf->WriteHTML($html ,\Mpdf\HTMLParserMode::HTML_BODY);
-        $pdf->Image($result->getDataUri(), 150, 225, 30, 30, 'png');
+        $pdf->Image($result->getDataUri(), 150, 235, 30, 30, 'png');
         $pdf->Output($output, 'F');
         $p->update(['certificate_file' => $output]);
         return $output;

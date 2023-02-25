@@ -10,8 +10,6 @@ use Webklex\PDFMerger\Facades\PDFMergerFacade as PDFMerger;
 use setasign\Fpdi\Fpdi;
 use Illuminate\Support\Facades\Storage;
 
-use File;
-
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
@@ -73,6 +71,7 @@ class VersionController extends Controller
         foreach($v->posts as $p)
         {
             $files[] = $p;
+            $certificate = PostController::certificate($p,$v);
         }
         if (file_exists($v->file))
         {
@@ -85,14 +84,13 @@ class VersionController extends Controller
     public static function merge($files, $number, Category $category, Post $f, $name = NULL)
     {
         $pdf = PDFMerger::init();
-
         $filename = 'uploads/versions/' . time() . '.pdf';
 
         if($name != NULL)
         {
             $filename = $name;
         }
-        
+
         $pdf->addPDF(VersionController::fill($category->cover_file, $number, $category->title, $filename));
 
         $pdf->addPDF($category->description_file, 'all');
@@ -111,8 +109,7 @@ class VersionController extends Controller
         $f = self::writeAll($filename,$number);
 
         $title = $category->title . ' المجلد رقم ' . $number . ' العدد رقم 1';
-
-        return VersionController::setMetaData($filename, $title, 'مجلة أبحاث المعرفة الانسانية الجديدة');
+        return VersionController::setMetaData($filename, $title, 'مجلة أبحاث المعرفة الانسانية الجديدة');;
     }
 
 
@@ -130,15 +127,19 @@ class VersionController extends Controller
             unlink($output);
         }
 
-        $text = 'المجلد رقم : '.$no . ' العدد رقم 1 ';
+        //$html = '<img style="width: 150px;height: 150px;margin-top:900px;" src= "'.$qr->getDataUri().'" >';
+
+        $text = 'المجلد رقم  '.$no . ' العدد رقم 1 ';
         $pdf->AddPage();
         $pdf->autoScriptToLang = true;
         $pdf->autoLangToFont = true;
         $pdf->setSourceFile($cover);
         $pdf->useTemplate($pdf->importPage(1));
         $pdf->setFont("DejaVuSans", "", 20);
+
+        $pdf->Image($qr->getDataUri(), 15, 251, 30, 30, 'png');
         $pdf->WriteText(65, 200, $text);
-        $pdf->Image($qr->getDataUri(), 15, 237, 30, 30, 'png');
+        //$pdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
         $pdf->Output($output, 'F');
         return $output;
     }
@@ -167,10 +168,10 @@ class VersionController extends Controller
         foreach ($files as $f)
         {
             $qr = VersionController::qr(url($f->file));
-            $image = "<img src='{$qr->getDataUri()}'>";
-            $data .= '<tr>'
-            . '<td>' . $id . '</td>'
-            . '<td>' . $f->title . '<br>' . $f->user->name .'<br>'.date_format($f->published_on, 'Y-m-d'). '</td>'
+            $image = "<img width='150' src='{$qr->getDataUri()}'>";
+            $data .= '<tr style="font-size: 33px">'
+            . '<td style="font-size: 33px" >' . $id . '</td>'
+            . '<td style="font-size: 33px">' . $f->title . '<br>' . $f->user->name .'<br>'.date_format($f->published_on, 'Y-m-d'). '</td>'
             . "<td>{$image}</td>"
             . '</tr>';
             $id = $id + 1;
@@ -210,15 +211,15 @@ class VersionController extends Controller
         $pdf->useTemplate($pdf->importPage(1));
         $pdf->setFont("DejaVuSans", "", 20);
         //$pdf->WriteText(15, 15, "No. " . $no);
-        $date = date_format($post->created_at, 'Y-m-d');
+        $date = date_format($post->published_on, 'Y-m-d');
         $html = "<div style='text-align: center; position: fixed; top: 60%; width: 100%; font-size: 35px;'>
-        <p style='font-size: 20px;'>1 العدد رقم ". $no . " : المجلد رقم</p>
+       <p style='font-size: 20px;direction: rtl'>المجلد رقم ". $no . "  العدد رقم 1 </p>
         <p>{$post->title}</p>
         <p>{$post->user->name}</p>
         <p>{$date} : تاريخ النشر</p>
     </div>";
         $pdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
-        $pdf->Image($qr->getDataUri(), 15, 237, 30, 30, 'png');
+        $pdf->Image($qr->getDataUri(), 15, 251, 30, 30, 'png');
         $pdf->Output($output, 'F');
         return $output;
     }
@@ -277,31 +278,6 @@ class VersionController extends Controller
         return $filename;
     }
 
-    public static function check($file)
-    {
-        $filepdf = fopen(public_path($file),"r");
-        if ($filepdf) {
-            $line_first = fgets($filepdf);
-            fclose($filepdf);
-        } else{
-            dd('error opening the file.');
-        }
-        // extract number such as 1.4 ,1.5 from first read line of pdf file
-        preg_match_all('!\d+!', $line_first, $matches);
-        // save that number in a variable
-        $pdfversion = implode('.', $matches[0]);
-        
-        if ($pdfversion > "1.4")
-        {
-            $new = pathinfo($file, PATHINFO_DIRNAME) . '/' . pathinfo($file, PATHINFO_FILENAME) . '1.pdf';
-            shell_exec('gswin64 -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="'.public_path($new).'" "' . public_path($file) . '"');
-            unlink($file);
-            return $new;
-        }
-
-        return $file;
-    }
-
     public function index()
     {
          $versions = Version::with(['category','posts'])->orderBy('category_id', 'asc')->get();
@@ -323,17 +299,46 @@ class VersionController extends Controller
         }
         $pdf = new \Mpdf\Mpdf();
         $count = $pdf->setSourceFile(public_path($file_name));
-        $text = 'المجلد رقم : '.$no . ' العدد رقم 1 ';
+        //$text = 'المجلد رقم : '.$no . ' العدد رقم 1 ';
+        $text = 'Volume '.$no .' Issue 01, New Humanitarian Knowledge Research, ISSN:2708-7239 Print ISSN:2710-5059 Online';
         for ($i=1; $i<=$count; $i++){
             $pdf->AddPage();
             $pdf->autoScriptToLang = true;
             $pdf->autoLangToFont = true;
             $pdf->useTemplate($pdf->importPage($i));
-            $pdf->setFont("DejaVuSans", "", 10);
-            $pdf->WriteText(15, 5, $text);
+            $pdf->setFont("DejaVuSans", "", 9);
+            $pdf->WriteText(12, 5, $text);
         }
         $pdf->Output($output, 'F');
         return $output;
+    }
+
+
+    public static function check($file)
+    {
+        $filepdf = fopen(public_path($file),"r");
+        if ($filepdf) {
+            $line_first = fgets($filepdf);
+            fclose($filepdf);
+        } else{
+            dd('error opening the file.');
+        }
+        // extract number such as 1.4 ,1.5 from first read line of pdf file
+        preg_match_all('!\d+!', $line_first, $matches);
+        // save that number in a variable
+        $pdfversion = implode('.', $matches[0]);
+
+
+        if ($pdfversion > "1.4")
+        {
+            $new = pathinfo($file, PATHINFO_DIRNAME) . '/' . pathinfo($file, PATHINFO_FILENAME) . '1.pdf';
+
+            shell_exec('gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="'.public_path($new).'" "' . public_path($file) . '"');
+            unlink($file);
+            return $new;
+        }
+
+        return $file;
     }
 
 }

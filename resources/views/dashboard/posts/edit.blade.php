@@ -30,7 +30,7 @@
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
            <h1 class="h3 mb-0 text-gray-800">تعديل البحث</h1>
           </div>
-          
+
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -90,7 +90,7 @@
                           <label for="university" class="form-label">اسم الجامعة</label>
                           <input type="text" name="university" class="form-control" value="{{ $post->university }}">
                       </div>
-                      
+
                       <div class="mb-3">
                           <label for="pages" class="form-label">عدد الصفحات</label>
                           <input type="text" name="pages" class="form-control" value="{{ $post->pages }}">
@@ -103,7 +103,7 @@
                               @endforeach
                           </select>
                       </div>
-                      
+
                       <div class="mb-3">
                           <label for="keywords" class="from-label">كلمات مفتاحية</label>
                            <p>استخدام كلمات مفتاحية ذات صلة بالمحتوى الذي تقدمه والفصل بينها باشارة <strong>(-)</strong> . </p>
@@ -117,9 +117,9 @@
                       <div class="mb-3">
                           <label for="file" class="form-label">* ملف البحث</label>
                           <a href="{{ url($post->file) }}" target="_blank" class="btn btn-primary">الملف</a>
-                          <input type="file" name="file" class="form-control" accept=".pdf">
+                          <input type="file" name="file" id="myPdf" class="form-control" accept=".pdf">
                       </div>
-                      
+
                   </form>
               </div>
               <div class="card-footer">
@@ -155,6 +155,62 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-    <x-slot:script></x-slot>
+      <x-slot:script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+          <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+          <script>
+              var pdfjsLib = window['pdfjs-dist/build/pdf'];
+              pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
+              $("#myPdf").on("change", function(e){
+                  var file = e.target.files[0]
+                  if(file.type == "application/pdf"){
+                      var fileReader = new FileReader();
+                      fileReader.onload = function() {
+                          var pdfData = new Uint8Array(this.result);
+                          // Using DocumentInitParameters object to load binary data.
+                          var loadingTask = pdfjsLib.getDocument({data: pdfData});
+                          loadingTask.promise.then(function(pdf) {
+                              console.log('PDF loaded');
+                              var numPages = pdf.numPages;
+                              if(numPages > 20){
+                                  alert('الحد الاعلى من عدد صفحات البحث التي يتم الموافقة هي 20 صفحة ');
+                                  $("#myPdf").val('')
+                              }
+
+                              /* // Fetch the first page
+                               var pageNumber = 1;
+                               pdf.getPage(pageNumber).then(function(page) {
+                                   console.log('Page loaded');
+
+                                   var scale = 1.5;
+                                   var viewport = page.getViewport({scale: scale});
+
+                                   // Prepare canvas using PDF page dimensions
+                                   var canvas = $("#pdfViewer")[0];
+                                   var context = canvas.getContext('2d');
+                                   canvas.height = viewport.height;
+                                   canvas.width = viewport.width;
+
+                                   // Render PDF page into canvas context
+                                   var renderContext = {
+                                       canvasContext: context,
+                                       viewport: viewport
+                                   };
+                                   var renderTask = page.render(renderContext);
+                                   renderTask.promise.then(function () {
+                                       console.log('Page rendered');
+                                   });
+                               });*/
+
+                          }, function (reason) {
+                              // PDF loading error
+                              console.error(reason);
+                          });
+                      };
+                      fileReader.readAsArrayBuffer(file);
+                  }
+              });
+          </script>
+      </x-slot:script>
 
 </x-layout.app>

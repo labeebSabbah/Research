@@ -32,13 +32,19 @@
 
                     @if(auth()->user())
 
-                        <li class="btn-box">
-                            <a href="{{route('dashboard.index')}}" class="theme-btn-one">لوحة التحكم</a>
-                            @if(auth()->user()->admin == 0)
-                                <a href="{{route('dashboard.posts.create')}}" class="theme-btn-one">انشر بحثك</a>
-                            @endif
+                        @if(auth()->user()->activated)
+                            <li class="btn-box">
+                                <a href="{{route('dashboard.index')}}" class="theme-btn-one">لوحة التحكم</a>
+                                @if(auth()->user()->admin == 0)
+                                    <a href="{{route('dashboard.posts.create')}}" class="theme-btn-one">انشر بحثك</a>
+                                @endif
 
-                        </li>
+                            </li>
+                        @else
+                            <a href="{{route('contact')}}" class="theme-btn-one">التواصل مع الدعم الفني</a>
+                        @endif
+
+
 
                     @else
                         <li class="btn-box">

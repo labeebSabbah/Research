@@ -34,10 +34,12 @@
                                             <tr>
                                                 <th> الاسم </th>
                                                 <th> عنوان البحث</th>
+                                                <th> اسم المجلة  </th>
                                                 <th> الدفع </th>
                                                 <th> حالة البحث </th>
                                                 <th> تاريخ الدفع  </th>
                                                 <th> القيمة المدفوعة </th>
+                                                <th> الشهادات </th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -53,6 +55,7 @@
                                                         </a>
                                                     </td>
                                                     <td>{{ $p->title }}</td>
+                                                    <td>{{ $p->category->title }}</td>
                                                     <td>
                                                         @if($p->paid)
                                                             <span class="btn-circle btn-sm btn-success"><i class="fas fa-check"></i> </span>
@@ -95,7 +98,23 @@
                                                     </td>
 
                                                     <td>
-                                                        {!! $p->pay_amount ?? '' !!}$
+                                                        @isset($p->pay_amount)
+                                                            @if($p->pay_amount == 0)
+                                                                مجاني
+                                                            @else
+                                                                {!! $p->pay_amount ?? '' !!}$
+                                                            @endif
+                                                        @else
+                                                            -
+                                                        @endif
+
+                                                    </td>
+
+                                                    <td>
+                                                        @if($p->status == 2)
+                                                            <a target="_blank" href="../{{ $p->certificate_file }}" class="btn btn-sm btn-primary">شهادة النشر</a>
+
+                                                        @endif
                                                     </td>
 
                                                 </tr>

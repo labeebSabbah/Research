@@ -37,28 +37,29 @@
                                         <h4>{{ $p->title }}</h4>
                                         <div class="discription">
                                             @if ($p->published_on != null)
-                                            <p> تاريخ النشر : {{ date_format($p->published_on, 'Y-m-d') }}</p>
+                                            <p style="color: #000000;font-weight: bold;"> تاريخ النشر : {{ date_format($p->published_on, 'Y-m-d') }}</p>
                                             @endif
                                         </div>
                                         <div class="text">
-                                            <p>{{ $p->description }}</p>
+                                            <p style="color: #000000;font-weight: bold;">{{ $p->description }}</p>
                                         </div>
                                         <div class="odi-code">
-                                            <p>اسم الناشر : {{ $p->user->name }}</p>
+                                            <p style="color: #000000;font-weight: bold;">اسم الناشر : {{ $p->user->name }}</p>
                                         </div>
                                         <div class="download-option mb-2" dir="ltr">
                                             <a href="../{{ $p->file }}" download><i class="icon-55"></i> تحميل</a>
-                                        </div>
-                                        @if (isset($p->versions[0]))
-                                        <div class="download-option" dir="ltr">
+                                            @if (isset($p->versions[0]))
                                             <a href="{{ route('version', ['version' => $p->versions[0]->id]) }}"><i class="icon-55"></i> الاصدار</a>
+                                            @endif
                                         </div>
-                                        @endif
+
+
+
                                     </div>
                                 </div>
                                 @endforeach
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
                 @else

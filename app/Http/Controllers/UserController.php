@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\VerifyEmail;
+use App\Mail\Template;
 use App\Models\User;
 use App\Models\Verifyuser;
 use Carbon\Carbon;
@@ -21,8 +22,8 @@ class UserController extends Controller
         }else{
             return redirect()->route('dashboard.posts.index');
         }
-      
-        
+
+
     }
 
     public function create()
@@ -86,7 +87,17 @@ class UserController extends Controller
             if(!$user->email_verified_at){
                 $user->email_verified_at = Carbon::now();
                 $user->save();
+
+                $admin = User::where('admin', 1)->first();
+
+                $data_email = [
+                    'title'=>'تسجيل مستخدم جديد',
+                    'description'=> 'اسم المستخدم : '. $user->name .'<br>' .'البريد الالكتروني :' .$user->email
+                ];
+                Mail::to($admin->email)->send(new Template($data_email));
                 return redirect()->route('login')->with('success','تم تفعيل حسابك');
+
+
             }else{
                 return redirect()->route('login')->with('success',' حسابك مفعّل ');
             }
@@ -116,15 +127,23 @@ class UserController extends Controller
             }
             if (Hash::check($r->password, $u->password)) {
 
-                if($u->email_verified_at){
-                    Auth::attempt([$type => $r->info, 'password' => $r->password]);
-                    $r->session()->regenerate();
-                    return redirect(route('home'));
-                }else{
-                    return redirect()->back()->with('error', 'حسابك غير مفعّل , يرجى التأكد من صندوق الوارد الخاص بك في الايميل الذي التسجيل به والبحث عن ايميل التفعيل   ')
-                        ->with('view_resend-active',$u->email);
+                if($u->activated){
+                    if($u->email_verified_at){
+                        Auth::attempt([$type => $r->info, 'password' => $r->password]);
+                        $r->session()->regenerate();
+                        $last_login = User::where("id", $u->id)->update(["last_login" => Carbon::now()]);
 
+
+
+                        return redirect(route('home'));
+                    }else{
+                        return redirect()->back()->with('error', 'حسابك غير مفعّل , يرجى التأكد من صندوق الوارد الخاص بك في الايميل الذي التسجيل به والبحث عن ايميل التفعيل   ')
+                            ->with('view_resend-active',$u->email);
+                    }
+                }else{
+                    return redirect()->back()->with('error', 'حسابك معطّل');
                 }
+
 
 
             } else {
@@ -142,12 +161,13 @@ class UserController extends Controller
         $r->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required|numeric|min:10',
             'username' => 'required',
             'confirmnew' => 'required_with:newpassword|same:newpassword',
             'image' => 'nullable|image'
         ]);
-
+        if($r->input('phone') != null){
+            $validate['phone'] = 'numeric|min:10|unique:users,phone';
+        }
         $data = $r->all();
 
         if ($data['newpassword'] != NULL) {
@@ -191,6 +211,14 @@ class UserController extends Controller
     public function user(User $u)
     {
         return view('dashboard.admin.user', compact('u'));
+    }
+
+
+    public function activated(User $u)
+    {
+        $u->activated = !$u->activated;
+        $u->save();
+        return redirect()->back()->withErrors('');
     }
 
     public function logout(Request $r)

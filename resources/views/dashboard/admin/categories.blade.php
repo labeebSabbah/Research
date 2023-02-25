@@ -266,7 +266,7 @@
                 </div>
                 <div class="row">
                   <div class="mb-3 col-lg-6">
-                    <label for="description_file" class="form-label">ملف الوصف</label>
+                    <label for="description_file" class="form-label">ملف الصفحات الاولى للمجلة</label>
                     <input type="file" class="form-control" name="description_file" accept=".pdf">
                     @error('description_file')
                           <div class="alert alert-danger">{{ $message }}</div>

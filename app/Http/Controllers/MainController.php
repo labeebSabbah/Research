@@ -20,6 +20,10 @@ class MainController extends Controller
         return view('contact');
     }
 
+    public function notActiveAccount(){
+        return view('notActiveAccount');
+    }
+
     public function category(Category $category)
     {
         $version = Version::where('category_id', $category->id)->latest()->first();

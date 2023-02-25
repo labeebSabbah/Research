@@ -84,14 +84,14 @@
       </span>
     </a>
   </li>
-  <li class="nav-item @if($route == 'dashboard.admin.posts') active @endif">
+  {{--<li class="nav-item @if($route == 'dashboard.admin.posts') active @endif">
     <a class="nav-link" href="{{ route('dashboard.admin.posts') }}">
       <i class="fa fa-file"></i>
       <span>
         البحوث
       </span>
     </a>
-  </li>
+  </li>--}}
   <li class="nav-item @if($route == 'dashboard.versions.index') active @endif">
     <a href="{{ route('dashboard.versions.index') }}" class="nav-link">
       <i class="fa fa-tags"></i>
@@ -100,6 +100,24 @@
       </span>
     </a>
   </li>
+
+  <li class="nav-item" id="posts">
+            <a class="nav-link collapsed" data-toggle="collapse" data-target="#collapsePosts" aria-expanded="true" aria-controls="collapsePosts">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>الأبحاث</span>
+
+            </a>
+            <div id="collapsePosts" class="collapse @if($route == 'dashboard.users.users_request' || $route == 'dashboard.users.post_rejects' || $route == 'dashboard.users.users_not_pay' || $route == 'dashboard.users.users_pay' || $route == 'dashboard.admin.posts')) show @endif" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">الأبحاث</h6>
+                    <a class="collapse-item @if($route == 'dashboard.admin.posts') active @endif" href="{{ route('dashboard.admin.posts') }}" id="post_proccess">الكل </a>
+                    <a class="collapse-item @if($route == 'dashboard.users.users_request') active @endif" href="{{ route('dashboard.users.users_request') }}" id="post_proccess">قيد التدقيق </a>
+                    <a class="collapse-item @if($route == 'dashboard.users.post_rejects') active @endif" href="{{ route('dashboard.users.post_rejects') }}" id="post_reject"> مرفوض</a>
+                    <a class="collapse-item @if($route == 'dashboard.users.users_not_pay') active @endif" href="{{ route('dashboard.users.users_not_pay') }}" id="post_reject"> غير مسدد</a>
+                    <a class="collapse-item @if($route == 'dashboard.users.users_pay') active @endif" href="{{ route('dashboard.users.users_pay') }}" id="post_reject">  المسدد</a>
+                </div>
+            </div>
+        </li>
   @else
   <li class="nav-item">
     <a href="{{ route('dashboard.posts.index') }}" class="nav-link">

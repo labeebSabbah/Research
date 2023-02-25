@@ -21,7 +21,7 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          
+
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
@@ -35,26 +35,36 @@
                       <th>الصورة</th>
                       <th>الاسم</th>
                       <th>البريد الالكتروني</th>
+                      <th>تاريخ آخر دخول </th>
                       <th></th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                      <th>الصورة</th>
-                      <th>الاسم</th>
-                      <th>البريد الالكتروني</th>
-                      <th></th>
-                    </tr>
-                  </tfoot>
+
                   <tbody>
                     @foreach ($users as $u)
                       <tr>
-                        <td><img src="{{ url('/' . $u->image) }}" alt="#" width="40px" height="40px"></td>
+                        <td>
+                            <img src="@if($u->image != null) {{url($u->image)}} @else {{url('user-avatar.png')}} @endif" alt="#" width="40px" height="40px">
+                            @if($u->activated)
+                                <i class="fa fa-check text-success"></i>
+                            @else
+                                <i class="fa fa-times text-danger"></i>
+                            @endif
+
+                        </td>
                         <td>{{ $u->name }}</td>
                         <td>{{ $u->email }}</td>
+                          <td>@if(isset($u->last_login)) {{$u->last_login}} @else - @endif</td>
                         <td>
                           <a class="btn btn-primary" href="{{ route('dashboard.user', ['u' => $u->id]) }}">تعديل</a>
+                            @if($u->activated)
+                                <a class="btn btn-danger" href="{{ route('dashboard.user.activated', ['u' => $u->id]) }}">تعطيل الحساب</a>
+                            @else
+                                <a class="btn btn-success" href="{{ route('dashboard.user.activated', ['u' => $u->id]) }}">تفعيل الحساب</a>
+                            @endif
+
                         </td>
+
                       </tr>
                     @endforeach
                   </tbody>

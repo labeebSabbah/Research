@@ -1,7 +1,7 @@
 <x-layout.app>
 
  <x-slot:title>الاصدارات</x-slot>
- 
+
     <x-slot:style>
         <link href="{{ url('/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     </x-slot>
@@ -21,7 +21,7 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          
+
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
@@ -46,7 +46,7 @@
                         <td>{{ $v->title }}</td>
                          <td>{{count($v->posts)}}</td>
                         <td>
-                            <a href="{{ url($v->file) }}" target="_blank" class="btn btn-primary">تصفح</a>
+                            <a href="{{ url($v->file) . '?'. rand(100,1000000) }}" target="_blank" class="btn btn-primary">تصفح</a>
                             <a href="{{ route('dashboard.rebuild', ['v' => $v->id]) }}" class="btn btn-primary">اعادة انشاء</a>
                         </td>
                       </tr>
@@ -92,5 +92,5 @@
         <!-- Page level custom scripts -->
         <script src="{{ url('/js/demo/datatables-demo.js') }}"></script>
     </x-slot>
-    
+
 </x-layout.app>

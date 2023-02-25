@@ -30,6 +30,15 @@
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">اضافة  بحث جديد</h1>
           </div>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
 
           <!-- Content Row -->
           <div style="width: 100%">
@@ -109,8 +118,8 @@
                       </div>
                       <div class="mb-3">
                           <label for="keywords" class="from-label">كلمات مفتاحية</label>
-                          <p>استخدام كلمات مفتاحية ذات صلة بالمحتوى الذي تقدمه والفصل بينها باشارة <strong>(-)</strong> . </p>
-                          <p>مثال : الهوايات - كرة القدم - كرة السلة - كرة اليد ..الخ</p>
+                          <p>استخدام كلمات مفتاحية ذات صلة بالمحتوى الذي تقدمه والفصل بينها باشارة – <strong>لتسهل من عمليات البحث داخل الموقع</strong></p>
+                          <p>مثال : اصول الفقه-احكام-الحديث الشريف</p>
                           <input type="text" class="form-control" name="keywords">
                           @error('keywords')
                           <div class="alert alert-danger">{{ $message }}</div>
@@ -126,14 +135,15 @@
                       <div class="mb-3">
                           <label for="file" class="form-label">*ملف البحث</label>
                           <p>ملاحظة هامة: تأكد من انك قمت <a class="text-info" data-toggle="modal" data-target="#downloadTemplateModal" style="text-decoration: underline;font-weight: bold;cursor: pointer">بتحميل ملف قالب البحث المعتمد</a> في المجلة وتضمين محتوى بحثك فيه قبل تحويله إلى تنسيق PDF وارفاقه في هذا النموذج، لأن عدم اتباعك لهذا الشرط يعتبر سبباً وجيها لرفض طلب النشر.</p>
-                          <input type="file" name="file" class="form-control" accept=".pdf">
+                          <input type="file" name="file" id="myPdf" class="form-control" accept=".pdf" >
                           @error('file')
                           <div class="alert alert-danger">{{ $message }}</div>
                           @enderror
                       </div>
                       <div class="mb-3" style="font-size: large">
                           <input type="checkbox" id="share" name="share" class="form-check-input" checked>
-                          <label for="share" class="form-check-label mr-3"> اوافق على </label> <a href="{{ route('dashboard.policy') }}" target="_blank">سياسة النشر</a>
+                          {{--href="{{ route('dashboard.policy') }}"--}}
+                          <label for="share" class="form-check-label mr-3"> اوافق على </label> <a class="text-primary" style="cursor: pointer" data-toggle="modal" data-target="#PublicationPolicyModal"  target="_blank">سياسة النشر</a>
                           @error('share')
                           <div class="alert alert-danger">{{ $message }}</div>
                           @enderror
@@ -202,11 +212,11 @@
                                   <th scope="row">1</th>
                                   <td>{{$c->title}}</td>
                                   <td class="text-center">
-                                      <a href="../{{ $c->template_file }}" type="button" class="btn btn-primary">
+                                      <a href="{{ url($c->template_file) }}" type="button" class="btn btn-primary">
                                           تحميل / عربي <i class="fa fa-download" aria-hidden="true"></i>
                                       </a>
 
-                                      <a href="../{{ $c->template_file_en }}" type="button" class="btn btn-primary">
+                                      <a href="{{url($c->template_file_en)  }}" type="button" class="btn btn-primary">
                                           تحميل / انجليزي <i class="fa fa-download" aria-hidden="true"></i>
                                       </a>
                                   </td>
@@ -226,7 +236,87 @@
           </div>
       </div>
 
+      <!-- Publication policy-->
+      <div class="modal fade" id="PublicationPolicyModal" tabindex="-1" role="dialog" aria-labelledby="PublicationPolicyModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="PublicationPolicyModalLabel">سياسة النشر</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+
+                      <div style="text-align: right;direction: rtl">
+                          @isset($share)
+                              {!! $share->value !!}
+                          @endisset
+                      </div>
+
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                  </div>
+              </div>
+          </div>
+      </div>
     <x-slot:script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+        <script>
+            var pdfjsLib = window['pdfjs-dist/build/pdf'];
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://mozilla.github.io/pdf.js/build/pdf.worker.js';
+            $("#myPdf").on("change", function(e){
+                var file = e.target.files[0]
+                if(file.type == "application/pdf"){
+                    var fileReader = new FileReader();
+                    fileReader.onload = function() {
+                        var pdfData = new Uint8Array(this.result);
+                        // Using DocumentInitParameters object to load binary data.
+                        var loadingTask = pdfjsLib.getDocument({data: pdfData});
+                        loadingTask.promise.then(function(pdf) {
+                            console.log('PDF loaded');
+                            var numPages = pdf.numPages;
+                            if(numPages > 20){
+                                alert('الحد الاعلى من عدد صفحات البحث التي يتم الموافقة هي 20 صفحة ');
+                                $("#myPdf").val('')
+                            }
+
+                           /* // Fetch the first page
+                            var pageNumber = 1;
+                            pdf.getPage(pageNumber).then(function(page) {
+                                console.log('Page loaded');
+
+                                var scale = 1.5;
+                                var viewport = page.getViewport({scale: scale});
+
+                                // Prepare canvas using PDF page dimensions
+                                var canvas = $("#pdfViewer")[0];
+                                var context = canvas.getContext('2d');
+                                canvas.height = viewport.height;
+                                canvas.width = viewport.width;
+
+                                // Render PDF page into canvas context
+                                var renderContext = {
+                                    canvasContext: context,
+                                    viewport: viewport
+                                };
+                                var renderTask = page.render(renderContext);
+                                renderTask.promise.then(function () {
+                                    console.log('Page rendered');
+                                });
+                            });*/
+
+                        }, function (reason) {
+                            // PDF loading error
+                            console.error(reason);
+                        });
+                    };
+                    fileReader.readAsArrayBuffer(file);
+                }
+            });
+        </script>
       <script>
 
           $('#update').submit( (e) => {

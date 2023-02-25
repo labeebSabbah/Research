@@ -23,7 +23,7 @@ class AcceptYourPost extends Mailable
     public function build()
     {
         return $this->view('emails.acceptPost')
-            ->subject(' قبول البحث'.' '.$this->data['title'])
+            ->subject('تهانينا لقد تم قبول بحثك بنجاح')
             ->with([
                 'test_message' =>''
             ]);

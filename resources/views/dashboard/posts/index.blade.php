@@ -1,14 +1,12 @@
 <x-layout.app>
 
-    <x-slot:title>منشوراتي</x-slot>
+    <x-slot:title>أبحاثي</x-slot>
 
     <x-slot:style>
         <link href="{{ url('/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     </x-slot>
 
-    <x-errors />
-
-    <x-success />
+        <x-errors />  <x-success />
 
     <!-- Page Wrapper -->
   <div id="wrapper">
@@ -45,7 +43,7 @@
                       <th>الحالة</th>
                       <th>تاريخ النشر</th>
                       <th>الدفع</th>
-                      <th>تعديل</th>
+                      <th></th>
                       <th>الشهادة</th>
                     </tr>
                   </thead>
@@ -56,7 +54,7 @@
                       <th>الحالة</th>
                       <th>تاريخ النشر</th>
                       <th>الدفع</th>
-                      <th>تعديل</th>
+                      <th></th>
                       <th>الشهادة</th>
                     </tr>
                   </tfoot>
@@ -88,23 +86,24 @@
                           @if ($p->paid)
                             <span class="btn-circle btn-sm btn-success mx-2"><i class="fas fa-check"></i></span>تم الدفع
                           @else
-                            <a class="btn btn-primary" href="{{ route('dashboard.pay.confirm', ['post' => $p->id]) }}">ادفع</a>
+                            <a class="btn btn-sm btn-primary" href="{{ route('dashboard.pay.confirm', ['post' => $p->id]) }}">ادفع</a>
                           @endif
                         </td>
                         <td>
-                        
+
                           @if ($p->status == 1 && $p->paid == 0)
-                            <a role="button" class="btn btn-primary" href="{{ route('dashboard.posts.edit', ['post' => $p->id]) }}">تعديل</a>
+                            <a role="button" class="btn btn-sm btn-primary" href="{{ route('dashboard.posts.edit', ['post' => $p->id]) }}">تعديل</a>
                           @endif
                           @if ($p->published_on !== NULL)
                           @php
                           @endphp
-                          <a @isset($p->versions[0]) href="../{{ $p->versions[0]->file }}" @endisset target="_blank" class="btn btn-primary" download>تحميل المجلة</a>
+                          <a href="@isset($p->versions[0])../{{ $p->versions[0]->file }} @endisset" target="_blank" class="btn btn-sm btn-primary" download>تحميل المجلة</a>
                           @endif
                         </td>
                         <td>
                           @if ($p->status === 2)
-                          <a target="_blank" href="../{{ $p->certificate_file }}" class="btn btn-primary">اصدر</a>
+                          <a target="_blank" href="../{{ $p->file }}" class="btn btn-sm btn-primary">تحميل البحث</a>
+                          <a target="_blank" href="../{{ $p->certificate_file }}" class="btn btn-sm btn-primary" download>شهادة النشر</a>
                           @endif
                         </td>
                       </tr>
@@ -149,11 +148,11 @@
                                     <th scope="row">1</th>
                                     <td>{{$c->title}}</td>
                                     <td class="text-center">
-                                        <a href="../{{ $c->template_file }}" type="button" class="btn btn-primary">
+                                        <a href="{{ url($c->template_file) }}" type="button" class="btn btn-primary">
                                              تحميل / عربي <i class="fa fa-download" aria-hidden="true"></i>
                                         </a>
 
-                                        <a href="../{{ $c->template_file_en }}" type="button" class="btn btn-primary">
+                                        <a href="{{ url($c->template_file_en) }}" type="button" class="btn btn-primary">
                                             تحميل / انجليزي <i class="fa fa-download" aria-hidden="true"></i>
                                         </a>
                                     </td>
@@ -197,28 +196,6 @@
   </a>
 
 
-        <!-- Modal -->
-        <div class="modal fade" id="rotateDevice" tabindex="-1" role="dialog" aria-labelledby="rotateDeviceLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="rotateDeviceLabel">قم بتدوير جهازك</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p style="text-align: center;direction: rtl">من الأفضل عرض هذه الصفحة في الاتجاه العمودي</p>
-                        <img class="w-50 m-auto d-block" src="{{url('img/rotate.png')}}">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
 
     <x-slot:script>
         <!-- Page level plugins -->
@@ -227,13 +204,7 @@
 
         <!-- Page level custom scripts -->
         <script src="{{ url('/js/demo/datatables-demo.js') }}"></script>
-        <script>
-            $(document).ready(function(){
-                if($(window).width() < 768){
-                    $('#rotateDevice').modal('show');
-                }
-            })
-        </script>
+
 
     </x-slot>
 
