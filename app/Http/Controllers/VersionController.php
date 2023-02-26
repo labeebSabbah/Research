@@ -28,6 +28,7 @@ class VersionController extends Controller
 
         $v = Version::where('category_id', $c)->latest()->first();
         if ($v === NULL) {
+            self::cover($f, $category->cover_file, 1);
             $v = Version::create([
                 'title' => 1,
                 'file' => VersionController::merge([$f], 1, $category, $f),
@@ -37,6 +38,7 @@ class VersionController extends Controller
 
             if (count($v->posts) >= $category->num_of_posts)
             {
+                self::cover($f, $category->cover_file, $v->title + 1);
                 $v = Version::create([
                     'title' => ($v->title + 1),
                     'file' => VersionController::merge([$f], $v->title + 1, $category, $f),
@@ -44,6 +46,10 @@ class VersionController extends Controller
                 ]);
 
             } else {
+
+                self::cover($f, $category->cover_file, $v->title);
+
+                $files = [];
 
                 foreach($v->posts as $p)
                 {
@@ -60,6 +66,8 @@ class VersionController extends Controller
 
             }
         }
+        self::setMetaData($f->file, $f->title . ' ' . $f->category->title, $f->user->name);
+
         $v->posts()->attach($id);
 
         return $v;
@@ -70,6 +78,7 @@ class VersionController extends Controller
         $files = [];
         foreach($v->posts as $p)
         {
+            self::cover($p, $p->category->cover_file, $v->title);
             $files[] = $p;
             $certificate = PostController::certificate($p,$v);
         }
@@ -99,7 +108,6 @@ class VersionController extends Controller
 
         foreach ($files as $file)
         {
-            $pdf->addPDF(VersionController::cover($file, $category->cover_file, $number), 'all');
             $pdf->addPDF($file->file, 'all');
         }
 
@@ -199,10 +207,20 @@ class VersionController extends Controller
 
     public static function cover($post, $cover, $no)
     {
+
+        if ($post->new_cover == false)
+        {
+            return 0;
+        }
+
+        $post->new_cover = false;
+
+        $post->save();
+
         $qr = VersionController::qr(url($post->file));
         $pdf = new \Mpdf\Mpdf();
 
-        $output = Storage::disk('local')->path(rand(1, 1000000) . '.pdf');
+        $output = Storage::disk('public')->path('posts/' . basename($post->file));
 
         $pdf->AddPage();
         $pdf->autoScriptToLang = true;
@@ -210,18 +228,28 @@ class VersionController extends Controller
         $pdf->setSourceFile($cover);
         $pdf->useTemplate($pdf->importPage(1));
         $pdf->setFont("DejaVuSans", "", 20);
-        //$pdf->WriteText(15, 15, "No. " . $no);
         $date = date_format($post->published_on, 'Y-m-d');
-        $html = "<div style='text-align: center; position: fixed; top: 60%; width: 100%; font-size: 35px;'>
-       <p style='font-size: 20px;direction: rtl'>المجلد رقم ". $no . "  العدد رقم 1 </p>
+        $html = "<div style='text-align: center; position: fixed; top: 60%; width: 100%;font-size: 24px;'>
+       <p style='direction: rtl'>المجلد رقم ". $no . "  العدد رقم 1 </p>
         <p>{$post->title}</p>
         <p>{$post->user->name}</p>
         <p>{$date} : تاريخ النشر</p>
     </div>";
         $pdf->WriteHTML($html, \Mpdf\HTMLParserMode::HTML_BODY);
         $pdf->Image($qr->getDataUri(), 15, 251, 30, 30, 'png');
+
+        $pdf->AddPage();
+        $pagecount = $pdf->SetSourceFile(public_path($post->file));
+        for ($i=1; $i<=$pagecount; $i++) {
+            $import_page = $pdf->ImportPage($i);
+            $pdf->UseTemplate($import_page);
+
+            if ($i < $pagecount)
+                $pdf->AddPage();
+        }
+
         $pdf->Output($output, 'F');
-        return $output;
+
     }
 
     public static function qr($link)
@@ -291,6 +319,7 @@ class VersionController extends Controller
         $pdf->save($filename);
         return $filename;
     }
+    
     public static function writeSerialNumberForAllFile($file_name,$no){
         $output = Storage::disk('local')->path('post.pdf');
         if(file_exists($output))
@@ -313,7 +342,6 @@ class VersionController extends Controller
         return $output;
     }
 
-
     public static function check($file)
     {
         $filepdf = fopen(public_path($file),"r");
@@ -333,7 +361,7 @@ class VersionController extends Controller
         {
             $new = pathinfo($file, PATHINFO_DIRNAME) . '/' . pathinfo($file, PATHINFO_FILENAME) . '1.pdf';
 
-            shell_exec('gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="'.public_path($new).'" "' . public_path($file) . '"');
+            shell_exec('gswin64 -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile="'.public_path($new).'" "' . public_path($file) . '"');
             unlink($file);
             return $new;
         }

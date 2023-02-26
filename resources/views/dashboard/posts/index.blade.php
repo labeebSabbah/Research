@@ -148,11 +148,11 @@
                                     <th scope="row">1</th>
                                     <td>{{$c->title}}</td>
                                     <td class="text-center">
-                                        <a href="{{ url($c->template_file) }}" type="button" class="btn btn-primary">
+                                        <a href="../../{{ $c->template_file }}" type="button" class="btn btn-primary">
                                              تحميل / عربي <i class="fa fa-download" aria-hidden="true"></i>
                                         </a>
 
-                                        <a href="{{ url($c->template_file_en) }}" type="button" class="btn btn-primary">
+                                        <a href="../../{{ $c->template_file_en }}" type="button" class="btn btn-primary">
                                             تحميل / انجليزي <i class="fa fa-download" aria-hidden="true"></i>
                                         </a>
                                     </td>

@@ -61,7 +61,7 @@
                                                     <p style="color: #000000;font-weight: bold;"> {!! date_format($p->created_at, 'Y-m-d') !!} </p>
                                                 </div>
                                                 <p style="color: #000000;font-weight: bold;"> {{ $p->description }}</p>
-                                                <div class="btn-box"><a href="../{{ $p->file }}" download class="theme-btn-two">تحميل</a></div>
+                                                <div class="btn-box"><a href="../{{ $p->file }}" download class="theme-btn-two">تحميل البحث</a></div>
                                             </div>
                                         </div>
                                     </div>

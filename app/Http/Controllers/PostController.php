@@ -70,13 +70,11 @@ class PostController extends Controller
           $target = "uploads/files/";
           $filename = time() . ".pdf";
           $data['file']->move($target, $filename);
-          //$data['file'] = $target . $filename;
+
           $data['file'] = VersionController::check($target . $filename);
 
           $post  = Post::create($data);
           $admin = User::where('admin', 1)->first();
-
-
 
           VersionController::setMetaData($post->file, $post->title . ' ' . $post->category->title, $post->user->name);
 
@@ -300,10 +298,10 @@ class PostController extends Controller
         $pdf->useTemplate($pdf->importPage(1));
         $pdf->setFont("DejaVuSans", "", 20);
 
-        $html = '<div style="text-align: center; position: fixed; top: 325px;direction: rtl; width: 100%;">
+        $html = '<div style="text-align: center; position: fixed; top: 310px;direction: rtl; width: 100%;">
         <p  style="font-size: 20px;">' . $p->user->name . '</p>
 
-        <p  style="font-size: 18px; margin-top: 70px; font-weight: bold;direction: rtl"> <label >'. $p->title .' </label><br> في مجلة '. $p->category->title .' المجلد '. $v->title .' العدد الأول بتاريخ '. date('Y-m-d') .'</p>
+        <p  style="font-size: 18px; margin-top: 65px; font-weight: bold;direction: rtl"> <label >'. $p->title .' </label><br> في مجلة '. $p->category->title .' المجلد '. $v->title .' العدد الأول بتاريخ '. date('Y-m-d') .'</p>
         </div>';
 
         $output = 'certifications/' . time() .  '.pdf';

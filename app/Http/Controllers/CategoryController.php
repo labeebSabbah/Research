@@ -164,6 +164,9 @@ class CategoryController extends Controller
             } catch (\Throwable $th) {
                 //throw $th;
             }
+
+            DB::table('posts')->where('category_id', $data['id'])->update(['new_cover' => '1']);
+
         }
 		
 		if ($r->hasFile('index_file'))
